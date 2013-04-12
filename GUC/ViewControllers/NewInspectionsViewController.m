@@ -11,6 +11,7 @@
 #import "NewInspectionCell.h"
 #import "InspectionViewController.h"
 #import "NavigationBarHelper.h"
+#import "MenuButtonHelper.h"
 
 @interface NewInspectionsViewController ()
 
@@ -39,6 +40,13 @@
 
 - (void)viewDidLoad
 {
+    [MenuButtonHelper setParentController:self];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
+                                                                             style:UIBarButtonItemStyleBordered
+                                                                            target:self
+                                                                            action:@selector(displayMenuForButton)];
+    [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
+    
     self.navigationItem.title = @"New Inspection";
     
     stationArray = [[NSMutableArray alloc] initWithArray:[self stationInformation]];
@@ -52,6 +60,10 @@
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+-(void)displayMenuForButton{
+    [[MenuButtonHelper sharedHelper]displayMenu];
 }
 
 - (void)didReceiveMemoryWarning
@@ -159,7 +171,6 @@
 }
 
 -(void)transitionToInspectionView{
-    [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     InspectionViewController *inspectionVC = [[InspectionViewController alloc]initWithTitle:stationNameString];
     [self.navigationController pushViewController:inspectionVC animated:YES];
 }
