@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7211D9DC17185CD600BA8135 /* CustomLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7211D9DB17185CD600BA8135 /* CustomLoadingView.m */; };
+		724CC8981715A64700EBD6B8 /* LocationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 724CC8971715A64700EBD6B8 /* LocationHelper.m */; };
+		725372131714C3FB00AB1566 /* NewInspectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 725372121714C3FB00AB1566 /* NewInspectionCell.xib */; };
+		725372161714C48A00AB1566 /* NewInspectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 725372151714C48A00AB1566 /* NewInspectionCell.m */; };
 		727F48621713133900BE87CE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 727F48611713133900BE87CE /* UIKit.framework */; };
 		727F48641713133900BE87CE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 727F48631713133900BE87CE /* Foundation.framework */; };
 		727F48661713133900BE87CE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 727F48651713133900BE87CE /* CoreGraphics.framework */; };
@@ -16,12 +20,41 @@
 		727F48741713133900BE87CE /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 727F48731713133900BE87CE /* Default.png */; };
 		727F48761713133900BE87CE /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 727F48751713133900BE87CE /* Default@2x.png */; };
 		727F48781713133900BE87CE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 727F48771713133900BE87CE /* Default-568h@2x.png */; };
-		727F487B1713133900BE87CE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F487A1713133900BE87CE /* ViewController.m */; };
-		727F487E1713133900BE87CE /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 727F487C1713133900BE87CE /* ViewController_iPhone.xib */; };
-		727F48811713133900BE87CE /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 727F487F1713133900BE87CE /* ViewController_iPad.xib */; };
+		727F487B1713133900BE87CE /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F487A1713133900BE87CE /* MainViewController.m */; };
+		727F487E1713133900BE87CE /* MainViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 727F487C1713133900BE87CE /* MainViewController_iPhone.xib */; };
+		727F48811713133900BE87CE /* MainViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 727F487F1713133900BE87CE /* MainViewController_iPad.xib */; };
+		727F488C1713179200BE87CE /* InspectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 727F488B1713179200BE87CE /* InspectionView.xib */; };
+		727F488E171318A700BE87CE /* PastInspectionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 727F488D171318A700BE87CE /* PastInspectionsView.xib */; };
+		727F4890171318C500BE87CE /* PastInspectionsSummary.xib in Resources */ = {isa = PBXBuildFile; fileRef = 727F488F171318C500BE87CE /* PastInspectionsSummary.xib */; };
+		727F4892171318D500BE87CE /* NewInspectionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 727F4891171318D500BE87CE /* NewInspectionsView.xib */; };
+		727F48951713192200BE87CE /* PastInspectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48941713192200BE87CE /* PastInspectionsViewController.m */; };
+		727F489817131AD700BE87CE /* PastInspectionsSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F489717131AD600BE87CE /* PastInspectionsSummaryViewController.m */; };
+		727F489B17131C4100BE87CE /* NewInspectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F489A17131C4100BE87CE /* NewInspectionsViewController.m */; };
+		727F489E17131C8100BE87CE /* InspectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F489D17131C8100BE87CE /* InspectionViewController.m */; };
+		727F48A11713226E00BE87CE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 727F48A01713226E00BE87CE /* CoreLocation.framework */; };
+		727F48A31713227900BE87CE /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 727F48A21713227900BE87CE /* MessageUI.framework */; };
+		727F48A51713228300BE87CE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 727F48A41713228300BE87CE /* QuartzCore.framework */; };
+		727F48A917132BA400BE87CE /* Inspection.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48A817132BA400BE87CE /* Inspection.m */; };
+		727F48AC17132F5E00BE87CE /* GeneralSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48AB17132F5E00BE87CE /* GeneralSettings.m */; };
+		727F48AF17132F7000BE87CE /* SwitchBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48AE17132F6F00BE87CE /* SwitchBoard.m */; };
+		727F48B217132F8300BE87CE /* BatteryCharger.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48B117132F8200BE87CE /* BatteryCharger.m */; };
+		727F48B517132F9400BE87CE /* CircuitSwitcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48B417132F9400BE87CE /* CircuitSwitcher.m */; };
+		727F48B817132FA700BE87CE /* Transformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48B717132FA600BE87CE /* Transformer.m */; };
+		727F48BB17132FB800BE87CE /* LTCRegulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48BA17132FB800BE87CE /* LTCRegulator.m */; };
+		727F48BE17132FC700BE87CE /* Breakers.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48BD17132FC700BE87CE /* Breakers.m */; };
+		727F48C21713449400BE87CE /* Station.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48C11713449300BE87CE /* Station.m */; };
+		727F48C41713456D00BE87CE /* Stations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 727F48C31713456D00BE87CE /* Stations.plist */; };
+		727F48C91713694900BE87CE /* NavigationBarHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48C81713694900BE87CE /* NavigationBarHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7211D9DA17185CD600BA8135 /* CustomLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomLoadingView.h; path = CustomWidgets/CustomLoadingView.h; sourceTree = "<group>"; };
+		7211D9DB17185CD600BA8135 /* CustomLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomLoadingView.m; path = CustomWidgets/CustomLoadingView.m; sourceTree = "<group>"; };
+		724CC8961715A64700EBD6B8 /* LocationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationHelper.h; path = Helper/LocationHelper.h; sourceTree = "<group>"; };
+		724CC8971715A64700EBD6B8 /* LocationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationHelper.m; path = Helper/LocationHelper.m; sourceTree = "<group>"; };
+		725372121714C3FB00AB1566 /* NewInspectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewInspectionCell.xib; path = TableViewCells/NewInspectionCell.xib; sourceTree = "<group>"; };
+		725372141714C48A00AB1566 /* NewInspectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewInspectionCell.h; path = TableViewCells/NewInspectionCell.h; sourceTree = "<group>"; };
+		725372151714C48A00AB1566 /* NewInspectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewInspectionCell.m; path = TableViewCells/NewInspectionCell.m; sourceTree = "<group>"; };
 		727F485E1713133900BE87CE /* GUC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GUC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		727F48611713133900BE87CE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		727F48631713133900BE87CE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -35,10 +68,46 @@
 		727F48731713133900BE87CE /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		727F48751713133900BE87CE /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		727F48771713133900BE87CE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		727F48791713133900BE87CE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		727F487A1713133900BE87CE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		727F487D1713133900BE87CE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
-		727F48801713133900BE87CE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		727F48791713133900BE87CE /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ViewControllers/MainViewController.h; sourceTree = "<group>"; };
+		727F487A1713133900BE87CE /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ViewControllers/MainViewController.m; sourceTree = "<group>"; };
+		727F487D1713133900BE87CE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainViewController_iPhone.xib; sourceTree = "<group>"; };
+		727F48801713133900BE87CE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainViewController_iPad.xib; sourceTree = "<group>"; };
+		727F488B1713179200BE87CE /* InspectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InspectionView.xib; path = NIBs/InspectionView.xib; sourceTree = "<group>"; };
+		727F488D171318A700BE87CE /* PastInspectionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PastInspectionsView.xib; path = NIBs/PastInspectionsView.xib; sourceTree = "<group>"; };
+		727F488F171318C500BE87CE /* PastInspectionsSummary.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PastInspectionsSummary.xib; path = NIBs/PastInspectionsSummary.xib; sourceTree = "<group>"; };
+		727F4891171318D500BE87CE /* NewInspectionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewInspectionsView.xib; path = NIBs/NewInspectionsView.xib; sourceTree = "<group>"; };
+		727F48931713192200BE87CE /* PastInspectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PastInspectionsViewController.h; path = ViewControllers/PastInspectionsViewController.h; sourceTree = "<group>"; };
+		727F48941713192200BE87CE /* PastInspectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PastInspectionsViewController.m; path = ViewControllers/PastInspectionsViewController.m; sourceTree = "<group>"; };
+		727F489617131AD600BE87CE /* PastInspectionsSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PastInspectionsSummaryViewController.h; path = ViewControllers/PastInspectionsSummaryViewController.h; sourceTree = "<group>"; };
+		727F489717131AD600BE87CE /* PastInspectionsSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PastInspectionsSummaryViewController.m; path = ViewControllers/PastInspectionsSummaryViewController.m; sourceTree = "<group>"; };
+		727F489917131C4100BE87CE /* NewInspectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewInspectionsViewController.h; path = ViewControllers/NewInspectionsViewController.h; sourceTree = "<group>"; };
+		727F489A17131C4100BE87CE /* NewInspectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewInspectionsViewController.m; path = ViewControllers/NewInspectionsViewController.m; sourceTree = "<group>"; };
+		727F489C17131C8100BE87CE /* InspectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InspectionViewController.h; path = ViewControllers/InspectionViewController.h; sourceTree = "<group>"; };
+		727F489D17131C8100BE87CE /* InspectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InspectionViewController.m; path = ViewControllers/InspectionViewController.m; sourceTree = "<group>"; };
+		727F48A01713226E00BE87CE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		727F48A21713227900BE87CE /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		727F48A41713228300BE87CE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		727F48A717132BA400BE87CE /* Inspection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Inspection.h; path = Models/Inspection/Inspection.h; sourceTree = "<group>"; };
+		727F48A817132BA400BE87CE /* Inspection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Inspection.m; path = Models/Inspection/Inspection.m; sourceTree = "<group>"; };
+		727F48AA17132F5E00BE87CE /* GeneralSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeneralSettings.h; path = Models/Inspection/GeneralSettings.h; sourceTree = "<group>"; };
+		727F48AB17132F5E00BE87CE /* GeneralSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeneralSettings.m; path = Models/Inspection/GeneralSettings.m; sourceTree = "<group>"; };
+		727F48AD17132F6F00BE87CE /* SwitchBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwitchBoard.h; path = Models/Inspection/SwitchBoard.h; sourceTree = "<group>"; };
+		727F48AE17132F6F00BE87CE /* SwitchBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwitchBoard.m; path = Models/Inspection/SwitchBoard.m; sourceTree = "<group>"; };
+		727F48B017132F8200BE87CE /* BatteryCharger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BatteryCharger.h; path = Models/Inspection/BatteryCharger.h; sourceTree = "<group>"; };
+		727F48B117132F8200BE87CE /* BatteryCharger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BatteryCharger.m; path = Models/Inspection/BatteryCharger.m; sourceTree = "<group>"; };
+		727F48B317132F9400BE87CE /* CircuitSwitcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircuitSwitcher.h; path = Models/Inspection/CircuitSwitcher.h; sourceTree = "<group>"; };
+		727F48B417132F9400BE87CE /* CircuitSwitcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircuitSwitcher.m; path = Models/Inspection/CircuitSwitcher.m; sourceTree = "<group>"; };
+		727F48B617132FA600BE87CE /* Transformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Transformer.h; path = Models/Inspection/Transformer.h; sourceTree = "<group>"; };
+		727F48B717132FA600BE87CE /* Transformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Transformer.m; path = Models/Inspection/Transformer.m; sourceTree = "<group>"; };
+		727F48B917132FB800BE87CE /* LTCRegulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTCRegulator.h; path = Models/Inspection/LTCRegulator.h; sourceTree = "<group>"; };
+		727F48BA17132FB800BE87CE /* LTCRegulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTCRegulator.m; path = Models/Inspection/LTCRegulator.m; sourceTree = "<group>"; };
+		727F48BC17132FC700BE87CE /* Breakers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Breakers.h; path = Models/Inspection/Breakers.h; sourceTree = "<group>"; };
+		727F48BD17132FC700BE87CE /* Breakers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Breakers.m; path = Models/Inspection/Breakers.m; sourceTree = "<group>"; };
+		727F48C01713449300BE87CE /* Station.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Station.h; path = Models/Station.h; sourceTree = "<group>"; };
+		727F48C11713449300BE87CE /* Station.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Station.m; path = Models/Station.m; sourceTree = "<group>"; };
+		727F48C31713456D00BE87CE /* Stations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stations.plist; path = Resources/Plists/Stations.plist; sourceTree = "<group>"; };
+		727F48C71713694900BE87CE /* NavigationBarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavigationBarHelper.h; path = Helper/NavigationBarHelper.h; sourceTree = "<group>"; };
+		727F48C81713694900BE87CE /* NavigationBarHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NavigationBarHelper.m; path = Helper/NavigationBarHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +115,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				727F48A51713228300BE87CE /* QuartzCore.framework in Frameworks */,
+				727F48A31713227900BE87CE /* MessageUI.framework in Frameworks */,
+				727F48A11713226E00BE87CE /* CoreLocation.framework in Frameworks */,
 				727F48621713133900BE87CE /* UIKit.framework in Frameworks */,
 				727F48641713133900BE87CE /* Foundation.framework in Frameworks */,
 				727F48661713133900BE87CE /* CoreGraphics.framework in Frameworks */,
@@ -55,6 +127,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		724CC8991715A65900EBD6B8 /* CustomWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				7211D9DA17185CD600BA8135 /* CustomLoadingView.h */,
+				7211D9DB17185CD600BA8135 /* CustomLoadingView.m */,
+			);
+			name = CustomWidgets;
+			sourceTree = "<group>";
+		};
+		725372111714C3A400AB1566 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				725372141714C48A00AB1566 /* NewInspectionCell.h */,
+				725372151714C48A00AB1566 /* NewInspectionCell.m */,
+				725372121714C3FB00AB1566 /* NewInspectionCell.xib */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
 		727F48551713133900BE87CE = {
 			isa = PBXGroup;
 			children = (
@@ -75,9 +166,12 @@
 		727F48601713133900BE87CE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				727F48611713133900BE87CE /* UIKit.framework */,
-				727F48631713133900BE87CE /* Foundation.framework */,
 				727F48651713133900BE87CE /* CoreGraphics.framework */,
+				727F48A01713226E00BE87CE /* CoreLocation.framework */,
+				727F48631713133900BE87CE /* Foundation.framework */,
+				727F48A21713227900BE87CE /* MessageUI.framework */,
+				727F48611713133900BE87CE /* UIKit.framework */,
+				727F48A41713228300BE87CE /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -87,10 +181,13 @@
 			children = (
 				727F48701713133900BE87CE /* AppDelegate.h */,
 				727F48711713133900BE87CE /* AppDelegate.m */,
-				727F48791713133900BE87CE /* ViewController.h */,
-				727F487A1713133900BE87CE /* ViewController.m */,
-				727F487C1713133900BE87CE /* ViewController_iPhone.xib */,
-				727F487F1713133900BE87CE /* ViewController_iPad.xib */,
+				727F48871713138F00BE87CE /* ViewControllers */,
+				727F4889171313B900BE87CE /* Models */,
+				727F48C61713691400BE87CE /* Helper */,
+				724CC8991715A65900EBD6B8 /* CustomWidgets */,
+				727F4888171313A500BE87CE /* NIBs */,
+				725372111714C3A400AB1566 /* TableViewCells */,
+				727F488A171313C700BE87CE /* Resources */,
 				727F48681713133900BE87CE /* Supporting Files */,
 			);
 			path = GUC;
@@ -108,6 +205,96 @@
 				727F48771713133900BE87CE /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		727F48871713138F00BE87CE /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				727F489C17131C8100BE87CE /* InspectionViewController.h */,
+				727F489D17131C8100BE87CE /* InspectionViewController.m */,
+				727F48791713133900BE87CE /* MainViewController.h */,
+				727F487A1713133900BE87CE /* MainViewController.m */,
+				727F489917131C4100BE87CE /* NewInspectionsViewController.h */,
+				727F489A17131C4100BE87CE /* NewInspectionsViewController.m */,
+				727F489617131AD600BE87CE /* PastInspectionsSummaryViewController.h */,
+				727F489717131AD600BE87CE /* PastInspectionsSummaryViewController.m */,
+				727F48931713192200BE87CE /* PastInspectionsViewController.h */,
+				727F48941713192200BE87CE /* PastInspectionsViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		727F4888171313A500BE87CE /* NIBs */ = {
+			isa = PBXGroup;
+			children = (
+				727F488B1713179200BE87CE /* InspectionView.xib */,
+				727F4891171318D500BE87CE /* NewInspectionsView.xib */,
+				727F488F171318C500BE87CE /* PastInspectionsSummary.xib */,
+				727F488D171318A700BE87CE /* PastInspectionsView.xib */,
+				727F487C1713133900BE87CE /* MainViewController_iPhone.xib */,
+				727F487F1713133900BE87CE /* MainViewController_iPad.xib */,
+			);
+			name = NIBs;
+			sourceTree = "<group>";
+		};
+		727F4889171313B900BE87CE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				727F48BF17133E8A00BE87CE /* Inspection */,
+				727F48C01713449300BE87CE /* Station.h */,
+				727F48C11713449300BE87CE /* Station.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		727F488A171313C700BE87CE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				727F489F1713212F00BE87CE /* Plists */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		727F489F1713212F00BE87CE /* Plists */ = {
+			isa = PBXGroup;
+			children = (
+				727F48C31713456D00BE87CE /* Stations.plist */,
+			);
+			name = Plists;
+			sourceTree = "<group>";
+		};
+		727F48BF17133E8A00BE87CE /* Inspection */ = {
+			isa = PBXGroup;
+			children = (
+				727F48A717132BA400BE87CE /* Inspection.h */,
+				727F48A817132BA400BE87CE /* Inspection.m */,
+				727F48AA17132F5E00BE87CE /* GeneralSettings.h */,
+				727F48AB17132F5E00BE87CE /* GeneralSettings.m */,
+				727F48AD17132F6F00BE87CE /* SwitchBoard.h */,
+				727F48AE17132F6F00BE87CE /* SwitchBoard.m */,
+				727F48B017132F8200BE87CE /* BatteryCharger.h */,
+				727F48B117132F8200BE87CE /* BatteryCharger.m */,
+				727F48B317132F9400BE87CE /* CircuitSwitcher.h */,
+				727F48B417132F9400BE87CE /* CircuitSwitcher.m */,
+				727F48B617132FA600BE87CE /* Transformer.h */,
+				727F48B717132FA600BE87CE /* Transformer.m */,
+				727F48B917132FB800BE87CE /* LTCRegulator.h */,
+				727F48BA17132FB800BE87CE /* LTCRegulator.m */,
+				727F48BC17132FC700BE87CE /* Breakers.h */,
+				727F48BD17132FC700BE87CE /* Breakers.m */,
+			);
+			name = Inspection;
+			sourceTree = "<group>";
+		};
+		727F48C61713691400BE87CE /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				727F48C71713694900BE87CE /* NavigationBarHelper.h */,
+				727F48C81713694900BE87CE /* NavigationBarHelper.m */,
+				724CC8961715A64700EBD6B8 /* LocationHelper.h */,
+				724CC8971715A64700EBD6B8 /* LocationHelper.m */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,8 +352,14 @@
 				727F48741713133900BE87CE /* Default.png in Resources */,
 				727F48761713133900BE87CE /* Default@2x.png in Resources */,
 				727F48781713133900BE87CE /* Default-568h@2x.png in Resources */,
-				727F487E1713133900BE87CE /* ViewController_iPhone.xib in Resources */,
-				727F48811713133900BE87CE /* ViewController_iPad.xib in Resources */,
+				727F487E1713133900BE87CE /* MainViewController_iPhone.xib in Resources */,
+				727F48811713133900BE87CE /* MainViewController_iPad.xib in Resources */,
+				727F488C1713179200BE87CE /* InspectionView.xib in Resources */,
+				727F488E171318A700BE87CE /* PastInspectionsView.xib in Resources */,
+				727F4890171318C500BE87CE /* PastInspectionsSummary.xib in Resources */,
+				727F4892171318D500BE87CE /* NewInspectionsView.xib in Resources */,
+				727F48C41713456D00BE87CE /* Stations.plist in Resources */,
+				725372131714C3FB00AB1566 /* NewInspectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,7 +372,24 @@
 			files = (
 				727F486E1713133900BE87CE /* main.m in Sources */,
 				727F48721713133900BE87CE /* AppDelegate.m in Sources */,
-				727F487B1713133900BE87CE /* ViewController.m in Sources */,
+				727F487B1713133900BE87CE /* MainViewController.m in Sources */,
+				727F48951713192200BE87CE /* PastInspectionsViewController.m in Sources */,
+				727F489817131AD700BE87CE /* PastInspectionsSummaryViewController.m in Sources */,
+				727F489B17131C4100BE87CE /* NewInspectionsViewController.m in Sources */,
+				727F489E17131C8100BE87CE /* InspectionViewController.m in Sources */,
+				727F48A917132BA400BE87CE /* Inspection.m in Sources */,
+				727F48AC17132F5E00BE87CE /* GeneralSettings.m in Sources */,
+				727F48AF17132F7000BE87CE /* SwitchBoard.m in Sources */,
+				727F48B217132F8300BE87CE /* BatteryCharger.m in Sources */,
+				727F48B517132F9400BE87CE /* CircuitSwitcher.m in Sources */,
+				727F48B817132FA700BE87CE /* Transformer.m in Sources */,
+				727F48BB17132FB800BE87CE /* LTCRegulator.m in Sources */,
+				727F48BE17132FC700BE87CE /* Breakers.m in Sources */,
+				727F48C21713449400BE87CE /* Station.m in Sources */,
+				727F48C91713694900BE87CE /* NavigationBarHelper.m in Sources */,
+				725372161714C48A00AB1566 /* NewInspectionCell.m in Sources */,
+				724CC8981715A64700EBD6B8 /* LocationHelper.m in Sources */,
+				7211D9DC17185CD600BA8135 /* CustomLoadingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,20 +404,20 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		727F487C1713133900BE87CE /* ViewController_iPhone.xib */ = {
+		727F487C1713133900BE87CE /* MainViewController_iPhone.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				727F487D1713133900BE87CE /* en */,
 			);
-			name = ViewController_iPhone.xib;
+			name = MainViewController_iPhone.xib;
 			sourceTree = "<group>";
 		};
-		727F487F1713133900BE87CE /* ViewController_iPad.xib */ = {
+		727F487F1713133900BE87CE /* MainViewController_iPad.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				727F48801713133900BE87CE /* en */,
 			);
-			name = ViewController_iPad.xib;
+			name = MainViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -277,6 +487,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GUC/GUC-Prefix.pch";
 				INFOPLIST_FILE = "GUC/GUC-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -288,6 +499,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GUC/GUC-Prefix.pch";
 				INFOPLIST_FILE = "GUC/GUC-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -312,6 +524,7 @@
 				727F48861713133900BE87CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

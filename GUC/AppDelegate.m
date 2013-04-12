@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 
-#import "ViewController.h"
+#import "MainViewController.h"
 
 @implementation AppDelegate
 
@@ -17,9 +17,16 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil];
+        UIViewController *aViewController = [[MainViewController alloc] initWithNibName:@"MainViewController_iPhone" bundle:nil];
+        self.viewController = [[UINavigationController alloc]initWithRootViewController:aViewController];
     } else {
-        self.viewController = [[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Not an iPhone!"
+                                                       message:@"The application currently does not support this device.\nPlease download the application again on an iPhone."
+                                                      delegate:self
+                                             cancelButtonTitle:@"Okay"
+                                             otherButtonTitles:nil];
+        [alert show];
+        //self.viewController = [[MainViewController alloc] initWithNibName:@"MainViewController_iPad" bundle:nil];
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
