@@ -12,6 +12,7 @@
 #import "InspectionViewController.h"
 #import "NavigationBarHelper.h"
 #import "MenuButtonHelper.h"
+#import "CustomLoadingView.h"
 
 @interface NewInspectionsViewController ()
 
@@ -19,6 +20,7 @@
 @property(nonatomic)IBOutlet UITableView *stationTableView;
 @property(nonatomic)LocationHelper *locationHelper;
 @property(nonatomic)NSString *stationNameString;
+@property(nonatomic)CustomLoadingView *customLoadingView;
 
 @end
 
@@ -28,6 +30,7 @@
 @synthesize stationTableView;
 @synthesize locationHelper;
 @synthesize stationNameString;
+@synthesize customLoadingView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,6 +43,9 @@
 
 - (void)viewDidLoad
 {
+    customLoadingView = [[CustomLoadingView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) andTitle:@"Finding Location..."];
+    [self.view addSubview:customLoadingView];
+    [customLoadingView beginLoading];
     [MenuButtonHelper setParentController:self];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
                                                                              style:UIBarButtonItemStyleBordered
@@ -225,6 +231,7 @@
     NSLog(@"%@", stationArray);
     
     [stationTableView reloadData];
+    [customLoadingView stopLoading];
 }
 
 -(void)locationHelperAuthorizationStatusDidChange{
