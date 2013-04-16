@@ -46,6 +46,12 @@
 		727F48C21713449400BE87CE /* Station.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48C11713449300BE87CE /* Station.m */; };
 		727F48C41713456D00BE87CE /* Stations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 727F48C31713456D00BE87CE /* Stations.plist */; };
 		727F48C91713694900BE87CE /* NavigationBarHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48C81713694900BE87CE /* NavigationBarHelper.m */; };
+		72BC63A2171C509A003090A6 /* InspectionFormHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BC63A1171C509A003090A6 /* InspectionFormHelper.m */; };
+		72BC63A5171C5A1A003090A6 /* InspectionContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BC63A4171C5A1A003090A6 /* InspectionContentCell.m */; };
+		72BC63A7171C5A33003090A6 /* InspectionContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72BC63A6171C5A32003090A6 /* InspectionContentCell.xib */; };
+		72BC63AA171C7EF2003090A6 /* InspectionCellHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BC63A9171C7EF2003090A6 /* InspectionCellHeaderView.m */; };
+		72BC63AE171CAFD4003090A6 /* carat-open.png in Resources */ = {isa = PBXBuildFile; fileRef = 72BC63AC171CAFD4003090A6 /* carat-open.png */; };
+		72BC63AF171CAFD4003090A6 /* carat.png in Resources */ = {isa = PBXBuildFile; fileRef = 72BC63AD171CAFD4003090A6 /* carat.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +117,15 @@
 		727F48C31713456D00BE87CE /* Stations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stations.plist; path = Resources/Plists/Stations.plist; sourceTree = "<group>"; };
 		727F48C71713694900BE87CE /* NavigationBarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavigationBarHelper.h; path = Helper/NavigationBarHelper.h; sourceTree = "<group>"; };
 		727F48C81713694900BE87CE /* NavigationBarHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NavigationBarHelper.m; path = Helper/NavigationBarHelper.m; sourceTree = "<group>"; };
+		72BC63A0171C509A003090A6 /* InspectionFormHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InspectionFormHelper.h; path = Helper/InspectionFormHelper.h; sourceTree = "<group>"; };
+		72BC63A1171C509A003090A6 /* InspectionFormHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InspectionFormHelper.m; path = Helper/InspectionFormHelper.m; sourceTree = "<group>"; };
+		72BC63A3171C5A1A003090A6 /* InspectionContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InspectionContentCell.h; path = TableViewCells/InspectionContentCell.h; sourceTree = "<group>"; };
+		72BC63A4171C5A1A003090A6 /* InspectionContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InspectionContentCell.m; path = TableViewCells/InspectionContentCell.m; sourceTree = "<group>"; };
+		72BC63A6171C5A32003090A6 /* InspectionContentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InspectionContentCell.xib; path = TableViewCells/InspectionContentCell.xib; sourceTree = "<group>"; };
+		72BC63A8171C7EF2003090A6 /* InspectionCellHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InspectionCellHeaderView.h; path = ViewControllers/InspectionCellHeaderView.h; sourceTree = "<group>"; };
+		72BC63A9171C7EF2003090A6 /* InspectionCellHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InspectionCellHeaderView.m; path = ViewControllers/InspectionCellHeaderView.m; sourceTree = "<group>"; };
+		72BC63AC171CAFD4003090A6 /* carat-open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "carat-open.png"; path = "Resources/Images/carat-open.png"; sourceTree = "<group>"; };
+		72BC63AD171CAFD4003090A6 /* carat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = carat.png; path = Resources/Images/carat.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +160,9 @@
 				725372141714C48A00AB1566 /* NewInspectionCell.h */,
 				725372151714C48A00AB1566 /* NewInspectionCell.m */,
 				725372121714C3FB00AB1566 /* NewInspectionCell.xib */,
+				72BC63A3171C5A1A003090A6 /* InspectionContentCell.h */,
+				72BC63A4171C5A1A003090A6 /* InspectionContentCell.m */,
+				72BC63A6171C5A32003090A6 /* InspectionContentCell.xib */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -215,6 +233,8 @@
 			children = (
 				727F489C17131C8100BE87CE /* InspectionViewController.h */,
 				727F489D17131C8100BE87CE /* InspectionViewController.m */,
+				72BC63A8171C7EF2003090A6 /* InspectionCellHeaderView.h */,
+				72BC63A9171C7EF2003090A6 /* InspectionCellHeaderView.m */,
 				727F48791713133900BE87CE /* MainViewController.h */,
 				727F487A1713133900BE87CE /* MainViewController.m */,
 				727F489917131C4100BE87CE /* NewInspectionsViewController.h */,
@@ -253,6 +273,7 @@
 		727F488A171313C700BE87CE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				72BC63AB171CAFA2003090A6 /* Images */,
 				727F489F1713212F00BE87CE /* Plists */,
 			);
 			name = Resources;
@@ -298,8 +319,19 @@
 				724CC8971715A64700EBD6B8 /* LocationHelper.m */,
 				7211D9DD17189ED600BA8135 /* MenuButtonHelper.h */,
 				7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */,
+				72BC63A0171C509A003090A6 /* InspectionFormHelper.h */,
+				72BC63A1171C509A003090A6 /* InspectionFormHelper.m */,
 			);
 			name = Helper;
+			sourceTree = "<group>";
+		};
+		72BC63AB171CAFA2003090A6 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				72BC63AC171CAFD4003090A6 /* carat-open.png */,
+				72BC63AD171CAFD4003090A6 /* carat.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -365,6 +397,9 @@
 				727F4892171318D500BE87CE /* NewInspectionsView.xib in Resources */,
 				727F48C41713456D00BE87CE /* Stations.plist in Resources */,
 				725372131714C3FB00AB1566 /* NewInspectionCell.xib in Resources */,
+				72BC63A7171C5A33003090A6 /* InspectionContentCell.xib in Resources */,
+				72BC63AE171CAFD4003090A6 /* carat-open.png in Resources */,
+				72BC63AF171CAFD4003090A6 /* carat.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +431,9 @@
 				724CC8981715A64700EBD6B8 /* LocationHelper.m in Sources */,
 				7211D9DC17185CD600BA8135 /* CustomLoadingView.m in Sources */,
 				7211D9DF17189ED700BA8135 /* MenuButtonHelper.m in Sources */,
+				72BC63A2171C509A003090A6 /* InspectionFormHelper.m in Sources */,
+				72BC63A5171C5A1A003090A6 /* InspectionContentCell.m in Sources */,
+				72BC63AA171C7EF2003090A6 /* InspectionCellHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
