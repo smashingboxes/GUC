@@ -11,6 +11,8 @@
 
 @implementation MenuButtonHelper
 
+@synthesize delegate;
+
 static UIViewController *parentController;
 
 +(MenuButtonHelper*)sharedHelper{
@@ -28,7 +30,7 @@ static UIViewController *parentController;
 }
 
 -(void)displayMenu{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"Options" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"View Past Inspections", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"Options" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"View Past Inspections", @"Refresh Table", nil];
     
     [actionSheet showInView:parentController.view];
 }
@@ -38,12 +40,20 @@ static UIViewController *parentController;
     [parentController.navigationController pushViewController:pastInspectionsVC animated:YES];
 }
 
+-(void)refreshTableView{
+    NSLog(@"Refreshing Locations Table View...");
+    [delegate buttonForRefreshTableViewPressed];
+}
+
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     switch (buttonIndex) {
         case 0:
             [self transitionToPastInspections];
             break;
         case 1:
+            [self refreshTableView];
+            break;
+        case 2:
             // Cancel pressed. Do nothing.
             break;
         default:

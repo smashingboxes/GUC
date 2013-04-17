@@ -11,12 +11,12 @@
 #import "NewInspectionCell.h"
 #import "InspectionViewController.h"
 #import "NavigationBarHelper.h"
-#import "MenuButtonHelper.h"
 #import "CustomLoadingView.h"
 
 @interface NewInspectionsViewController ()
 
 @property(nonatomic)NSMutableArray *stationArray;
+@property(nonatomic)NSArray *stationInfoArray;
 @property(nonatomic)IBOutlet UITableView *stationTableView;
 @property(nonatomic)LocationHelper *locationHelper;
 @property(nonatomic)NSString *stationNameString;
@@ -27,6 +27,7 @@
 @implementation NewInspectionsViewController
 
 @synthesize stationArray;
+@synthesize stationInfoArray;
 @synthesize stationTableView;
 @synthesize locationHelper;
 @synthesize stationNameString;
@@ -43,10 +44,8 @@
 
 - (void)viewDidLoad
 {
-    customLoadingView = [[CustomLoadingView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) andTitle:@"Finding Location..."];
-    [self.view addSubview:customLoadingView];
-    [customLoadingView beginLoading];
     [MenuButtonHelper setParentController:self];
+    [MenuButtonHelper sharedHelper].delegate = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
                                                                              style:UIBarButtonItemStyleBordered
                                                                             target:self
@@ -55,17 +54,29 @@
     
     self.navigationItem.title = @"New Inspection";
     
-    stationArray = [[NSMutableArray alloc] initWithArray:[self stationInformation]];
+    stationInfoArray = [[NSArray alloc] initWithArray:[self stationInformation]];
+    stationArray = [[NSMutableArray alloc]init];
     
-    NSLog(@"There are %i stations in the array",[stationArray count]);
+    NSLog(@"There are %i stations in the array",[stationInfoArray count]);
     
-    if(stationArray && ([stationArray count] > 0)){
-        locationHelper = [[LocationHelper alloc]initWithDelegate:self];
-        [locationHelper findLocation];
-    }
+    [self startFindingLocation];
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+-(void)startFindingLocation{
+    stationTableView.hidden = YES;
+    customLoadingView = [[CustomLoadingView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) andTitle:@"Finding Location..."];
+    [self.view addSubview:customLoadingView];
+    [customLoadingView beginLoading];
+    
+    if(stationInfoArray && ([stationInfoArray count] > 0)){
+        if(!locationHelper){
+            locationHelper = [[LocationHelper alloc]initWithDelegate:self];
+        }
+        [locationHelper findLocation];
+    }
 }
 
 -(void)displayMenuForButton{
@@ -97,7 +108,10 @@
 
 
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section {
-    return [stationArray count];
+    if(stationArray){
+        return [stationArray count];
+    }
+    return 0;
 }
 
 
@@ -111,29 +125,29 @@
         cell = [topLevelObjects objectAtIndex:0];
     }
     
-    if([[stationArray objectAtIndex:0] respondsToSelector:@selector(initWithObjects:)]){
-        stationTableView.hidden = NO;
-        
-        NSArray *currentStationArray = [stationArray objectAtIndex:indexPath.row];
-        Station *currentStation = [currentStationArray objectAtIndex:0];
-        
-        cell.typeLabel.text = @"Type";
-        cell.typeImageView.backgroundColor = [UIColor blueColor];
-        if((currentStation.stationName != nil) && (![currentStation.stationName isEqualToString:@""])){
-            cell.nameLabel.text = currentStation.stationName;
-        }else{
-            cell.nameLabel.text = currentStation.stationIdentifier;
-        }
-        int totalFeet = [[currentStationArray objectAtIndex:1]intValue];
-        
-        if(totalFeet < 1000){
-            cell.backgroundColorImageView.backgroundColor = [UIColor greenColor];
-        }else{
-            cell.backgroundColorImageView.backgroundColor = [UIColor redColor];
-        }
-        cell.backgroundColorImageView.alpha = 0.75f;
-        cell.feetLabel.text = [NSString stringWithFormat:@"%i", totalFeet];
+    
+    stationTableView.hidden = NO;
+    
+    NSArray *currentStationArray = [stationArray objectAtIndex:indexPath.row];
+    Station *currentStation = [currentStationArray objectAtIndex:0];
+    
+    cell.typeLabel.text = @"Type";
+    cell.typeImageView.backgroundColor = [UIColor blueColor];
+    if((currentStation.stationName != nil) && (![currentStation.stationName isEqualToString:@""])){
+        cell.nameLabel.text = currentStation.stationName;
+    }else{
+        cell.nameLabel.text = currentStation.stationIdentifier;
     }
+    int totalFeet = [[currentStationArray objectAtIndex:1]intValue];
+    
+    if(totalFeet < 1000){
+        cell.backgroundColorImageView.backgroundColor = [UIColor greenColor];
+    }else{
+        cell.backgroundColorImageView.backgroundColor = [UIColor redColor];
+    }
+    cell.backgroundColorImageView.alpha = 0.75f;
+    cell.feetLabel.text = [NSString stringWithFormat:@"%i", totalFeet];
+    
     
     return cell;
 }
@@ -189,12 +203,16 @@
 }
 
 -(void)locationHelperDidSucceed:(CLLocation *)theLocation{
+    if([stationArray count] > 0){
+        [stationArray removeAllObjects];
+    }
+    
     CLLocation *returnedLocation = theLocation;
     
     NSMutableArray *tempStorageArray = [[NSMutableArray alloc]init];
     
-    for(int i = 0; i < [stationArray count]; i++){
-        NSDictionary *aDictionary = [stationArray objectAtIndex:i];
+    for(int i = 0; i < [stationInfoArray count]; i++){
+        NSDictionary *aDictionary = [stationInfoArray objectAtIndex:i];
         Station *newStation = [[Station alloc]init];
         newStation.stationIdentifier = [aDictionary objectForKey:@"Identifier"];
         newStation.stationName = [aDictionary objectForKey:@"Name"];
@@ -226,16 +244,22 @@
         return [num1String compare:num2String];
     }];
     
-    [stationArray removeAllObjects];
     [stationArray addObjectsFromArray:tempStorageArray];
     NSLog(@"%@", stationArray);
     
     [stationTableView reloadData];
+    stationTableView.hidden = NO;
     [customLoadingView stopLoading];
 }
 
 -(void)locationHelperAuthorizationStatusDidChange{
     NSLog(@"Authorization status changed.");
+}
+
+
+#pragma mark - MenuButtonHelper Delegate Methods
+-(void)buttonForRefreshTableViewPressed{
+    [self startFindingLocation];
 }
 
 @end

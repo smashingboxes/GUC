@@ -31,8 +31,9 @@
         NSArray *circuitSwitcherTitles = [[NSArray alloc]initWithObjects:@"Gas A", @"Gas B", @"Gas C", nil];
         NSArray *transformerTitles = [[NSArray alloc]initWithObjects:@"Tank Oil Level", @"Pressure", @"Nitrogen Tank",
                                       @"Bushing Oil Level", nil];
-        NSArray *ltcRegulatorTitles = [[NSArray alloc]initWithObjects:@"", nil];
-        NSArray *breakersTitles = [[NSArray alloc]initWithObjects:@"", nil];
+        NSArray *ltcRegulatorTitles = [[NSArray alloc]initWithObjects:@"Min Step A", @"Pres. Step A", @"Max Step A", @"Pressure A", @"Counter A", @"Voltage A", @"Oil Level A", @"Test Operation A", @"Min Step B", @"Pres. Step B", @"Max Step B", @"Pressure B", @"Counter B", @"Voltage B", @"Oil Level B", @"Test Operation B", @"Min Step C", @"Pres. Step C", @"Max Step C", @"Pressure C", @"Counter C", @"Voltage C", @"Oil Level C", @"Test Operation C", nil];
+        NSArray *breakersTitles = [[NSArray alloc]initWithObjects:@"BUS 1 Counter", @"BUS 1 Target", @"BUS 1 Oper.",
+                                   @"CKT 1 Counter", @"CKT 1 Target", @"CTK 1 Oper.", nil];
         NSArray *titlesArray = [[NSArray alloc]initWithObjects:generalTitles, switchBoardTitles, batteryChargerTitles,
                                  circuitSwitcherTitles, transformerTitles, ltcRegulatorTitles, breakersTitles, nil];
         for(int i = 0; i < 7; i++){

@@ -12,7 +12,7 @@
 #define kOperatorInformation @"guc_operator.plist"
 
 #define DEFAULT_ROW_HEIGHT 64
-#define HEADER_HEIGHT 45
+#define HEADER_HEIGHT 60
 
 @interface InspectionViewController ()
 
@@ -137,7 +137,10 @@
             cell.cellField.text = viewTitle;
             cell.cellField.userInteractionEnabled = NO;
         }else if(indexPath.row == 1){
-            cell.cellField.text = [NSString stringWithFormat:@"%@",[NSDate date]];
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+            [dateFormat setDateFormat:@"MMMM dd, yyyy"];
+            NSString *dateString = [dateFormat stringFromDate:[NSDate date]];
+            cell.cellField.text = dateString;
             cell.cellField.userInteractionEnabled = NO;
         }else if(indexPath.row == 2){
             cell.cellField.text = [self loadOperatorName];
@@ -155,6 +158,11 @@
         cell.cellControl.hidden = NO;
     }else if(indexPath.section == 4){
         if(indexPath.row == 0 || indexPath.row == 3){
+            cell.cellField.hidden = YES;
+            cell.cellControl.hidden = NO;
+        }
+    }else if(indexPath.section == 5){
+        if(indexPath.row == 3 || indexPath.row == 6 || indexPath.row == 7 || indexPath.row == 11 || indexPath.row == 14 || indexPath.row == 15 || indexPath.row == 19 || indexPath.row == 22 || indexPath.row == 23){
             cell.cellField.hidden = YES;
             cell.cellControl.hidden = NO;
         }
@@ -239,10 +247,10 @@
     }
     
     // Apply the updates.
-    [self.theTableView beginUpdates];
-    [self.theTableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:insertAnimation];
-    [self.theTableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:deleteAnimation];
-    [self.theTableView endUpdates];
+    [theTableView beginUpdates];
+    [theTableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:insertAnimation];
+    [theTableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:deleteAnimation];
+    [theTableView endUpdates];
     openSectionIndex = section;
 }
 

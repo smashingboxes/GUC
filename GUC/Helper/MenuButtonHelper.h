@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MenuButtonHelperDelegate <NSObject>
+
+@optional
+
+-(void)buttonForRefreshTableViewPressed;
+
+@end
+
 @interface MenuButtonHelper : NSObject <UIActionSheetDelegate>
+
+@property(nonatomic,weak)id<MenuButtonHelperDelegate> delegate;
 
 +(MenuButtonHelper*)sharedHelper;
 +(void)setParentController:(UIViewController*)parentController;

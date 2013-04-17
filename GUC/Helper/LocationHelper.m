@@ -21,14 +21,13 @@
 }
 
 -(void)findLocation{
-    if([CLLocationManager locationServicesEnabled]){
-        locationManager = [[CLLocationManager alloc]init];
-        locationManager.delegate = self;
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        locationManager.distanceFilter = 500;
-        [locationManager startUpdatingLocation];
-        NSLog(@"Beginning to update location...");
-    }
+    locationManager = [[CLLocationManager alloc]init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.pausesLocationUpdatesAutomatically = NO;
+    [locationManager startUpdatingLocation];
+    NSLog(@"Beginning to update location...");
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
@@ -41,22 +40,23 @@
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     if (abs(howRecent) < 15.0)
     {
-        if(theLocation.horizontalAccuracy < 35.0){
-            NSLog(@"latitude %+.11f, longitude %+.11f\n",
-                  theLocation.coordinate.latitude,
-                  theLocation.coordinate.longitude);
-            NSLog(@"Horizontal Accuracy:%f", theLocation.horizontalAccuracy);
-            
-            [manager stopUpdatingLocation];
-            
-            NSLog(@"Update finished.");
-            
-            [delegate locationHelperDidSucceed:theLocation];
-        }
+        NSLog(@"latitude %+.11f, longitude %+.11f\n",
+              theLocation.coordinate.latitude,
+              theLocation.coordinate.longitude);
+        NSLog(@"Horizontal Accuracy:%f", theLocation.horizontalAccuracy);
+        
+        [locationManager stopUpdatingLocation];
+        
+        NSLog(@"Update finished.");
+        
+        [delegate locationHelperDidSucceed:theLocation];
     }
 }
 
 -(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
+    if(status == kCLAuthorizationStatusAuthorized){
+        NSLog(@"Authorized");
+    }
     [delegate locationHelperAuthorizationStatusDidChange];
 }
 
