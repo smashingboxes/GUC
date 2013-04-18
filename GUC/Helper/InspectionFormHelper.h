@@ -13,6 +13,4 @@
 @property(nonatomic)NSMutableArray *containerArray;
 @property(nonatomic)NSMutableArray *infoArray;
 
--(id)init;
-
 @end

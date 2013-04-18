@@ -14,6 +14,7 @@
 
 #define DEFAULT_ROW_HEIGHT 64
 #define HEADER_HEIGHT 60
+#define HEADER_HEIGHT_TALLSCREEN 72
 
 @interface InspectionViewController ()
 
@@ -22,6 +23,7 @@
 @property(nonatomic)InspectionFormHelper *inspectionFormHelper;
 @property(nonatomic)NSInteger openSectionIndex;
 @property(nonatomic)Inspection *currentInspection;
+@property(nonatomic)int headerHeight;
 
 @end
 
@@ -32,6 +34,7 @@
 @synthesize inspectionFormHelper;
 @synthesize openSectionIndex;
 @synthesize currentInspection;
+@synthesize headerHeight;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,16 +54,28 @@
 
 - (void)viewDidLoad
 {
-    self.navigationItem.title = viewTitle;
+    if(self.navigationItem.title != viewTitle){
+        self.navigationItem.title = viewTitle;
+    }
     
-    currentInspection = [[Inspection alloc]init];
-    currentInspection.generalSettings.stationName = viewTitle;
+    if(!currentInspection){
+        currentInspection = [[Inspection alloc]init];
+        currentInspection.generalSettings.stationName = viewTitle;
+    }
     
-    inspectionFormHelper = [[InspectionFormHelper alloc]init];
+    if(!inspectionFormHelper){
+        inspectionFormHelper = [[InspectionFormHelper alloc]init];
+    }
     
     openSectionIndex = NSNotFound;
+     
+    if([UIScreen mainScreen].bounds.size.height == 568){
+        headerHeight = HEADER_HEIGHT_TALLSCREEN;
+    }else{
+        headerHeight = HEADER_HEIGHT;
+    }
     
-    theTableView.sectionHeaderHeight = HEADER_HEIGHT;
+    theTableView.sectionHeaderHeight = headerHeight;
     
     [theTableView reloadData];
     
@@ -144,19 +159,22 @@
     
     if(indexPath.section == 0){
         if(indexPath.row == 0){
-            cell.cellField.text = viewTitle;
+            cell.cellField.text = currentInspection.generalSettings.stationName;
             cell.cellField.userInteractionEnabled = NO;
         }else if(indexPath.row == 1){
-            NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
-            [dateFormat setDateFormat:@"MMMM dd, yyyy"];
-            NSString *dateString = [dateFormat stringFromDate:[NSDate date]];
-            currentInspection.generalSettings.dateTime = dateString;
-            cell.cellField.text = dateString;
+            if(!currentInspection.generalSettings.dateTime){
+                NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+                [dateFormat setDateFormat:@"MMMM dd, yyyy"];
+                NSString *dateString = [dateFormat stringFromDate:[NSDate date]];
+                currentInspection.generalSettings.dateTime = dateString;
+            }
+            cell.cellField.text = currentInspection.generalSettings.dateTime;
             cell.cellField.userInteractionEnabled = NO;
         }else if(indexPath.row == 2){
-            NSString *operatorNameString = [self loadOperatorName];
-            currentInspection.generalSettings.technician = operatorNameString;
-            cell.cellField.text = operatorNameString;
+            if(!currentInspection.generalSettings.technician){
+                currentInspection.generalSettings.technician = [self loadOperatorName];
+            }
+            cell.cellField.text = currentInspection.generalSettings.technician;
             cell.cellField.userInteractionEnabled = NO;
         }else{
             // Do nothing.
@@ -188,11 +206,10 @@
 
 
 -(UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section {
-    
     NSArray *headerTitleArray = [inspectionFormHelper.containerArray objectAtIndex:section];
     NSString *titleString = [headerTitleArray objectAtIndex:0];
     
-    InspectionCellHeaderView *headerView = [[InspectionCellHeaderView alloc] initWithFrame:CGRectMake(0.0, 0.0, theTableView.bounds.size.width, HEADER_HEIGHT) title:titleString section:section theDelegate:self];
+    InspectionCellHeaderView *headerView = [[InspectionCellHeaderView alloc] initWithFrame:CGRectMake(0.0, 0.0, theTableView.bounds.size.width, headerHeight) title:titleString section:section theDelegate:self];
     
     return headerView;
 }
@@ -298,7 +315,6 @@
     if(currentInspection){
         if([textField.accessibilityLabel isEqualToString:@"KWH"]){
             currentInspection.generalSettings.kwh = textField.text;
-            NSLog(@"%@", currentInspection.generalSettings.kwh);
         }else if([textField.accessibilityLabel isEqualToString:@"MWD"]){
             currentInspection.generalSettings.mwd = textField.text;
         }else if([textField.accessibilityLabel isEqualToString:@"+KVARH"]){
@@ -551,7 +567,6 @@
     if(currentInspection){
         if([theControl.accessibilityLabel isEqualToString:@"Gas A"]){
             currentInspection.circuitSwitcher.gasA = [theControl selectedSegmentIndex];
-            NSLog(@"%i", currentInspection.circuitSwitcher.gasA);
         }else if([theControl.accessibilityLabel isEqualToString:@"Gas B"]){
             currentInspection.circuitSwitcher.gasB = [theControl selectedSegmentIndex];
         }else if([theControl.accessibilityLabel isEqualToString:@"Gas C"]){
