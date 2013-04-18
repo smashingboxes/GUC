@@ -11,7 +11,6 @@
 @protocol MenuButtonHelperDelegate <NSObject>
 
 @optional
-
 -(void)buttonForRefreshTableViewPressed;
 
 @end

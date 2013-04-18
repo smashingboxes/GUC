@@ -10,30 +10,30 @@
 
 @interface LTCRegulator : NSObject
 
-@property(nonatomic)NSInteger minStepA;
-@property(nonatomic)NSInteger presStepA;
-@property(nonatomic)NSInteger maxStepA;
+@property(nonatomic)NSString *minStepA;
+@property(nonatomic)NSString *presStepA;
+@property(nonatomic)NSString *maxStepA;
 @property(nonatomic)BOOL pressureA;
-@property(nonatomic)NSInteger counterA;
-@property(nonatomic)NSInteger voltageA;
+@property(nonatomic)NSString *counterA;
+@property(nonatomic)NSString *voltageA;
 @property(nonatomic)BOOL oilLevelA;
 @property(nonatomic)BOOL testOperationA;
 
-@property(nonatomic)NSInteger minStepB;
-@property(nonatomic)NSInteger presStepB;
-@property(nonatomic)NSInteger maxStepB;
+@property(nonatomic)NSString *minStepB;
+@property(nonatomic)NSString *presStepB;
+@property(nonatomic)NSString *maxStepB;
 @property(nonatomic)BOOL pressureB;
-@property(nonatomic)NSInteger counterB;
-@property(nonatomic)NSInteger voltageB;
+@property(nonatomic)NSString *counterB;
+@property(nonatomic)NSString *voltageB;
 @property(nonatomic)BOOL oilLevelB;
 @property(nonatomic)BOOL testOperationB;
 
-@property(nonatomic)NSInteger minStepC;
-@property(nonatomic)NSInteger presStepC;
-@property(nonatomic)NSInteger maxStepC;
+@property(nonatomic)NSString *minStepC;
+@property(nonatomic)NSString *presStepC;
+@property(nonatomic)NSString *maxStepC;
 @property(nonatomic)BOOL pressureC;
-@property(nonatomic)NSInteger counterC;
-@property(nonatomic)NSInteger voltageC;
+@property(nonatomic)NSString *counterC;
+@property(nonatomic)NSString *voltageC;
 @property(nonatomic)BOOL oilLevelC;
 @property(nonatomic)BOOL testOperationC;
 

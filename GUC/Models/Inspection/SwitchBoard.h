@@ -10,25 +10,25 @@
 
 @interface SwitchBoard : NSObject
 
-@property (nonatomic) NSInteger maxAmpA;
-@property (nonatomic) NSInteger maxAmpB;
-@property (nonatomic) NSInteger maxAmpC;
+@property (nonatomic) NSString *maxAmpA;
+@property (nonatomic) NSString *maxAmpB;
+@property (nonatomic) NSString *maxAmpC;
 
-@property (nonatomic) NSInteger presentAmpA;
-@property (nonatomic) NSInteger presentAmpB;
-@property (nonatomic) NSInteger presentAmpC;
+@property (nonatomic) NSString *presentAmpA;
+@property (nonatomic) NSString *presentAmpB;
+@property (nonatomic) NSString *presentAmpC;
 
-@property (nonatomic) NSNumber *minVoltsA;
-@property (nonatomic) NSNumber *minVoltsB;
-@property (nonatomic) NSNumber *minVoltsC;
+@property (nonatomic) NSString *minVoltsA;
+@property (nonatomic) NSString *minVoltsB;
+@property (nonatomic) NSString *minVoltsC;
 
-@property (nonatomic) NSNumber *presentVoltsA;
-@property (nonatomic) NSNumber *presentVoltsB;
-@property (nonatomic) NSNumber *presentVoltsC;
+@property (nonatomic) NSString *presentVoltsA;
+@property (nonatomic) NSString *presentVoltsB;
+@property (nonatomic) NSString *presentVoltsC;
 
-@property (nonatomic) NSNumber *maxVoltsA;
-@property (nonatomic) NSNumber *maxVoltsB;
-@property (nonatomic) NSNumber *maxVoltsC;
+@property (nonatomic) NSString *maxVoltsA;
+@property (nonatomic) NSString *maxVoltsB;
+@property (nonatomic) NSString *maxVoltsC;
 
 @property (nonatomic) NSArray *targetsAlarms;
 

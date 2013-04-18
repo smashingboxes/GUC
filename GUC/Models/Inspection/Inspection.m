@@ -18,4 +18,18 @@
 @synthesize ltcRegulator;
 @synthesize breakers;
 
+-(id)init{
+    if(self == [super init]){
+        generalSettings = [[GeneralSettings alloc]init];
+        switchBoard = [[SwitchBoard alloc]init];
+        batteryCharger = [[BatteryCharger alloc]init];
+        circuitSwitcher = [[CircuitSwitcher alloc]init];
+        transformer = [[Transformer alloc]init];
+        ltcRegulator = [[LTCRegulator alloc]init];
+        breakers = [[Breakers alloc]init];
+    }
+    
+    return self;
+}
+
 @end

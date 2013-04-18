@@ -10,11 +10,11 @@
 
 @interface Breakers : NSObject
 
-@property(nonatomic)NSInteger busOneCounter;
-@property(nonatomic)NSInteger busOneTarget;
-@property(nonatomic)NSInteger busOneOperation;
-@property(nonatomic)NSInteger cktOneCounter;
-@property(nonatomic)NSInteger cktOneTarget;
-@property(nonatomic)NSInteger cktOneOperation;
+@property(nonatomic)NSString *busOneCounter;
+@property(nonatomic)NSString *busOneTarget;
+@property(nonatomic)NSString *busOneOperation;
+@property(nonatomic)NSString *cktOneCounter;
+@property(nonatomic)NSString *cktOneTarget;
+@property(nonatomic)NSString *cktOneOperation;
 
 @end

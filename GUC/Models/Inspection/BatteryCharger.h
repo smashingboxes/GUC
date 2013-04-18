@@ -10,8 +10,8 @@
 
 @interface BatteryCharger : NSObject
 
-@property(nonatomic) NSNumber *volts48VOne;
-@property(nonatomic) NSNumber *amps48VOne;
-@property(nonatomic) NSInteger specGravity48VOne;
+@property(nonatomic) NSString *volts48VOne;
+@property(nonatomic) NSString *amps48VOne;
+@property(nonatomic) NSString *specGravity48VOne;
 
 @end

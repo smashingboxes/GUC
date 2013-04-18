@@ -14,13 +14,13 @@
 @property (nonatomic) NSString *dateTime;
 @property (nonatomic) NSString *technician;
 
-@property (nonatomic) NSInteger kwh;
-@property (nonatomic) NSNumber *mwd;
+@property (nonatomic) NSString *kwh;
+@property (nonatomic) NSString *mwd;
 
-@property (nonatomic) NSInteger positiveKVARH;
-@property (nonatomic) NSInteger negativeKVARH;
+@property (nonatomic) NSString *positiveKVARH;
+@property (nonatomic) NSString *negativeKVARH;
 
-@property (nonatomic) NSNumber *maxVARD;
-@property (nonatomic) NSNumber *minVARD;
+@property (nonatomic) NSString *maxVARD;
+@property (nonatomic) NSString *minVARD;
 
 @end
