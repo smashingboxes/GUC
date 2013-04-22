@@ -10,6 +10,10 @@
 #import "InspectionFormHelper.h"
 #import "InspectionContentCell.h"
 #import "Inspection.h"
+#import "NetworkConnectionManager.h"
+#import "Field.h"
+
+
 #define kOperatorInformation @"guc_operator.plist"
 
 #define DEFAULT_ROW_HEIGHT 64
@@ -18,7 +22,7 @@
 
 @interface InspectionViewController ()
 
-@property(nonatomic)NSString *viewTitle;
+@property(nonatomic)NSString *stationName;
 @property(nonatomic)IBOutlet UITableView *theTableView;
 @property(nonatomic)InspectionFormHelper *inspectionFormHelper;
 @property(nonatomic)NSInteger openSectionIndex;
@@ -29,7 +33,7 @@
 
 @implementation InspectionViewController
 
-@synthesize viewTitle;
+@synthesize stationName;
 @synthesize theTableView;
 @synthesize inspectionFormHelper;
 @synthesize openSectionIndex;
@@ -45,26 +49,17 @@
     return self;
 }
 
--(id)initWithTitle:(NSString*)title{
+-(id)initWithStation:(NSString*)station{
     if(self == [super init]){
-        viewTitle = title;
+        stationName = station;
     }
     return self;
 }
 
 - (void)viewDidLoad
 {
-    if(self.navigationItem.title != viewTitle){
-        self.navigationItem.title = viewTitle;
-    }
-    
-    if(!currentInspection){
-        currentInspection = [[Inspection alloc]init];
-        currentInspection.generalSettings.stationName = viewTitle;
-    }
-    
-    if(!inspectionFormHelper){
-        inspectionFormHelper = [[InspectionFormHelper alloc]init];
+    if(stationName){
+        [[NetworkConnectionManager sharedManager]beginConnectionWithStation:stationName forCaller:self];
     }
     
     openSectionIndex = NSNotFound;
@@ -76,8 +71,6 @@
     }
     
     theTableView.sectionHeaderHeight = headerHeight;
-    
-    [theTableView reloadData];
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -140,62 +133,58 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     NSArray *firstArray = [inspectionFormHelper.containerArray objectAtIndex:indexPath.section];
-    NSArray *titleArray = [firstArray objectAtIndex:1];
+    NSArray *fieldsArray = [firstArray objectAtIndex:1];
     
-    cell.cellLabel.text = [titleArray objectAtIndex:indexPath.row];
+    NSDictionary *fieldDictionary = [fieldsArray objectAtIndex:indexPath.row];
     
+    Field *currentField = [[Field alloc]init];
+    currentField.choices = [fieldDictionary objectForKey:@"choices"];
+    currentField.name = [fieldDictionary objectForKey:@"name"];
+    currentField.range = [fieldDictionary objectForKey:@"range"];
+    currentField.type = [fieldDictionary objectForKey:@"type"];
+    currentField.value = [fieldDictionary objectForKey:@"value"];
+    
+    cell.cellLabel.text = currentField.name;
     cell.cellField.delegate = self;
     cell.cellField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-    cell.cellField.hidden = NO;
     cell.cellField.userInteractionEnabled = YES;
     cell.cellField.accessibilityLabel = cell.cellLabel.text;
     cell.cellField.text = [self checkModelForTextValue:cell.cellLabel.text];
     cell.cellControl.accessibilityLabel = cell.cellLabel.text;
     cell.cellControl.selectedSegmentIndex = [self checkModelForBoolValue:cell.cellLabel.text];
-    cell.cellControl.hidden = YES;
     [cell.cellControl addTarget:self action:@selector(controlPressed:) forControlEvents:UIControlEventValueChanged];
     
     // "If" block for determining which controls exist for each individual cell
-    
-    if(indexPath.section == 0){
-        if(indexPath.row == 0){
-            cell.cellField.text = currentInspection.generalSettings.stationName;
-            cell.cellField.userInteractionEnabled = NO;
-        }else if(indexPath.row == 1){
-            if(!currentInspection.generalSettings.dateTime){
-                NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
-                [dateFormat setDateFormat:@"MMMM dd, yyyy"];
-                NSString *dateString = [dateFormat stringFromDate:[NSDate date]];
-                currentInspection.generalSettings.dateTime = dateString;
-            }
-            cell.cellField.text = currentInspection.generalSettings.dateTime;
-            cell.cellField.userInteractionEnabled = NO;
-        }else if(indexPath.row == 2){
-            if(!currentInspection.generalSettings.technician){
-                currentInspection.generalSettings.technician = [self loadOperatorName];
-            }
-            cell.cellField.text = currentInspection.generalSettings.technician;
-            cell.cellField.userInteractionEnabled = NO;
-        }else{
-            // Do nothing.
-        }
-    }else if(indexPath.section == 1){
-        if(indexPath.row == [titleArray count]-1){
-            cell.cellField.hidden = YES;
-            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-        }
-    }else if(indexPath.section == 3){
+    if([currentField.type isEqualToString:@"String"] || [currentField.type isEqualToString:@"Float"] || [currentField.type isEqualToString:@"SingleChoice"]){
+        cell.cellField.hidden = NO;
+        cell.cellControl.hidden = YES;
+    }else if([currentField.type isEqualToString:@"Boolean"]){
         cell.cellField.hidden = YES;
         cell.cellControl.hidden = NO;
-    }else if(indexPath.section == 4){
-        if(indexPath.row == 0 || indexPath.row == 3){
-            cell.cellField.hidden = YES;
-            cell.cellControl.hidden = NO;
+    }
+    
+    if([currentField.name isEqualToString:@"StationName"]){
+        cell.cellField.text = currentInspection.generalSettings.stationName;
+        cell.cellField.userInteractionEnabled = NO;
+    }else if([currentField.name isEqualToString:@"DateTime"]){
+        if(!currentInspection.generalSettings.dateTime){
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+            [dateFormat setDateFormat:@"MMMM dd, yyyy"];
+            NSString *dateString = [dateFormat stringFromDate:[NSDate date]];
+            currentInspection.generalSettings.dateTime = dateString;
         }
-    }else if(indexPath.section == 5){
-        if(indexPath.row == 3 || indexPath.row == 6 || indexPath.row == 7 || indexPath.row == 11 || indexPath.row == 14 || indexPath.row == 15 || indexPath.row == 19 || indexPath.row == 22 || indexPath.row == 23){
+        cell.cellField.text = currentInspection.generalSettings.dateTime;
+        cell.cellField.userInteractionEnabled = NO;
+    }else if([currentField.name isEqualToString:@"Technician"]){
+        if(!currentInspection.generalSettings.technician){
+            currentInspection.generalSettings.technician = [self loadOperatorName];
+        }
+        cell.cellField.text = currentInspection.generalSettings.technician;
+        cell.cellField.userInteractionEnabled = NO;
+    }else if([currentField.name isEqualToString:@"TargetsAndAlarms"]){
+        if(indexPath.row == [fieldsArray count]-1){
             cell.cellField.hidden = YES;
-            cell.cellControl.hidden = NO;
+            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         }
     }else{
         // Do nothing.
@@ -302,6 +291,7 @@
     openSectionIndex = NSNotFound;
 }
 
+
 #pragma mark - UITextField Delegate Methods
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -399,13 +389,13 @@
             currentInspection.breakers.busOneCounter = textField.text;
         }else if([textField.accessibilityLabel isEqualToString:@"BUS 1 Target"]){
             currentInspection.breakers.busOneTarget = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"BUS 1 Oper."]){
+        }else if([textField.accessibilityLabel isEqualToString:@"BUS 1 Oper"]){
             currentInspection.breakers.busOneOperation = textField.text;
         }else if([textField.accessibilityLabel isEqualToString:@"CKT 1 Counter"]){
             currentInspection.breakers.cktOneCounter = textField.text;
         }else if([textField.accessibilityLabel isEqualToString:@"CKT 1 Target"]){
             currentInspection.breakers.cktOneTarget = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"CKT 1 Oper."]){
+        }else if([textField.accessibilityLabel isEqualToString:@"CKT 1 Oper"]){
             currentInspection.breakers.cktOneOperation = textField.text;
         }else {
             // Do nothing.
@@ -542,7 +532,7 @@
     }else if([cellTitle isEqualToString:@"BUS 1 Target"]){
         if(currentInspection.breakers.busOneTarget)
             return currentInspection.breakers.busOneTarget;
-    }else if([cellTitle isEqualToString:@"BUS 1 Oper."]){
+    }else if([cellTitle isEqualToString:@"BUS 1 Oper"]){
         if(currentInspection.breakers.busOneOperation)
             return currentInspection.breakers.busOneOperation;
     }else if([cellTitle isEqualToString:@"CKT 1 Counter"]){
@@ -551,7 +541,7 @@
     }else if([cellTitle isEqualToString:@"CKT 1 Target"]){
         if(currentInspection.breakers.cktOneTarget)
             return currentInspection.breakers.cktOneTarget;
-    }else if([cellTitle isEqualToString:@"CKT 1 Oper."]){
+    }else if([cellTitle isEqualToString:@"CKT 1 Oper"]){
         if(currentInspection.breakers.cktOneOperation)
             return currentInspection.breakers.cktOneOperation;
     }else{
@@ -646,6 +636,36 @@
         // Do nothing.
     }
     return NO;
+}
+
+
+#pragma mark - AsyncResponse Delegate Methods
+
+-(void)asyncResponseDidReturnObjects:(NSArray *)theObjects{
+    if([theObjects count] > 0){
+        NSArray *returnedArray = theObjects;
+        NSDictionary *stationDictionary = [returnedArray objectAtIndex:0];
+        NSDictionary *stationInfo = [stationDictionary objectForKey:@"stationInfo"];
+        NSLog(@"Station information is:\n%@", stationInfo);
+        
+        if(self.navigationItem.title != [stationInfo objectForKey:@"name"]){
+            self.navigationItem.title = [stationInfo objectForKey:@"name"];
+        }
+         
+        if(!currentInspection){
+            currentInspection = [[Inspection alloc]init];
+            currentInspection.generalSettings.stationName = [stationInfo objectForKey:@"name"];
+        }
+        
+        if(!inspectionFormHelper){
+            inspectionFormHelper = [[InspectionFormHelper alloc]initWithSections:[stationInfo objectForKey:@"sections"]];
+            [theTableView reloadData];
+        }
+    }
+}
+
+-(void)asyncResponseDidFailWithError{
+    NSLog(@"Error! Connection failed.");
 }
 
 

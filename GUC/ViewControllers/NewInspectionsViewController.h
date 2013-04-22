@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LocationHelper.h"
-#import "MenuButtonHelper.h"
 
-@interface NewInspectionsViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,LocationHelperDelegate, MenuButtonHelperDelegate>
+@interface NewInspectionsViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,LocationHelperDelegate>
 
 @end

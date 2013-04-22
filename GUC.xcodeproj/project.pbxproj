@@ -46,6 +46,11 @@
 		727F48C21713449400BE87CE /* Station.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48C11713449300BE87CE /* Station.m */; };
 		727F48C41713456D00BE87CE /* Stations.plist in Resources */ = {isa = PBXBuildFile; fileRef = 727F48C31713456D00BE87CE /* Stations.plist */; };
 		727F48C91713694900BE87CE /* NavigationBarHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 727F48C81713694900BE87CE /* NavigationBarHelper.m */; };
+		72BA7F66172587EA00AE3901 /* StationInformationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BA7F65172587EA00AE3901 /* StationInformationOperation.m */; };
+		72BA7F691725883A00AE3901 /* NetworkConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BA7F681725883A00AE3901 /* NetworkConnectionManager.m */; };
+		72BA7F6D17258ED000AE3901 /* StationNetworkFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BA7F6C17258ED000AE3901 /* StationNetworkFactory.m */; };
+		72BA7F701725915800AE3901 /* AsyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BA7F6F1725915800AE3901 /* AsyncRequest.m */; };
+		72BA7F751725D2B100AE3901 /* Field.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BA7F741725D2B100AE3901 /* Field.m */; };
 		72BC63A2171C509A003090A6 /* InspectionFormHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BC63A1171C509A003090A6 /* InspectionFormHelper.m */; };
 		72BC63A5171C5A1A003090A6 /* InspectionContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 72BC63A4171C5A1A003090A6 /* InspectionContentCell.m */; };
 		72BC63A7171C5A33003090A6 /* InspectionContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72BC63A6171C5A32003090A6 /* InspectionContentCell.xib */; };
@@ -117,6 +122,16 @@
 		727F48C31713456D00BE87CE /* Stations.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Stations.plist; path = Resources/Plists/Stations.plist; sourceTree = "<group>"; };
 		727F48C71713694900BE87CE /* NavigationBarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavigationBarHelper.h; path = Helper/NavigationBarHelper.h; sourceTree = "<group>"; };
 		727F48C81713694900BE87CE /* NavigationBarHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NavigationBarHelper.m; path = Helper/NavigationBarHelper.m; sourceTree = "<group>"; };
+		72BA7F64172587EA00AE3901 /* StationInformationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StationInformationOperation.h; path = Network/StationInformationOperation.h; sourceTree = "<group>"; };
+		72BA7F65172587EA00AE3901 /* StationInformationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StationInformationOperation.m; path = Network/StationInformationOperation.m; sourceTree = "<group>"; };
+		72BA7F671725883A00AE3901 /* NetworkConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkConnectionManager.h; path = Helper/NetworkConnectionManager.h; sourceTree = "<group>"; };
+		72BA7F681725883A00AE3901 /* NetworkConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkConnectionManager.m; path = Helper/NetworkConnectionManager.m; sourceTree = "<group>"; };
+		72BA7F6B17258ED000AE3901 /* StationNetworkFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StationNetworkFactory.h; path = Network/StationNetworkFactory.h; sourceTree = "<group>"; };
+		72BA7F6C17258ED000AE3901 /* StationNetworkFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StationNetworkFactory.m; path = Network/StationNetworkFactory.m; sourceTree = "<group>"; };
+		72BA7F6E1725915800AE3901 /* AsyncRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncRequest.h; path = Network/AsyncRequest.h; sourceTree = "<group>"; };
+		72BA7F6F1725915800AE3901 /* AsyncRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsyncRequest.m; path = Network/AsyncRequest.m; sourceTree = "<group>"; };
+		72BA7F731725D2B100AE3901 /* Field.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Field.h; path = Models/Field.h; sourceTree = "<group>"; };
+		72BA7F741725D2B100AE3901 /* Field.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Field.m; path = Models/Field.m; sourceTree = "<group>"; };
 		72BC63A0171C509A003090A6 /* InspectionFormHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InspectionFormHelper.h; path = Helper/InspectionFormHelper.h; sourceTree = "<group>"; };
 		72BC63A1171C509A003090A6 /* InspectionFormHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InspectionFormHelper.m; path = Helper/InspectionFormHelper.m; sourceTree = "<group>"; };
 		72BC63A3171C5A1A003090A6 /* InspectionContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InspectionContentCell.h; path = TableViewCells/InspectionContentCell.h; sourceTree = "<group>"; };
@@ -205,6 +220,7 @@
 				727F48871713138F00BE87CE /* ViewControllers */,
 				727F4889171313B900BE87CE /* Models */,
 				727F48C61713691400BE87CE /* Helper */,
+				72BA7F63172586B200AE3901 /* Network */,
 				724CC8991715A65900EBD6B8 /* CustomWidgets */,
 				727F4888171313A500BE87CE /* NIBs */,
 				725372111714C3A400AB1566 /* TableViewCells */,
@@ -266,6 +282,8 @@
 				727F48BF17133E8A00BE87CE /* Inspection */,
 				727F48C01713449300BE87CE /* Station.h */,
 				727F48C11713449300BE87CE /* Station.m */,
+				72BA7F731725D2B100AE3901 /* Field.h */,
+				72BA7F741725D2B100AE3901 /* Field.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -321,8 +339,23 @@
 				7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */,
 				72BC63A0171C509A003090A6 /* InspectionFormHelper.h */,
 				72BC63A1171C509A003090A6 /* InspectionFormHelper.m */,
+				72BA7F671725883A00AE3901 /* NetworkConnectionManager.h */,
+				72BA7F681725883A00AE3901 /* NetworkConnectionManager.m */,
 			);
 			name = Helper;
+			sourceTree = "<group>";
+		};
+		72BA7F63172586B200AE3901 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				72BA7F64172587EA00AE3901 /* StationInformationOperation.h */,
+				72BA7F65172587EA00AE3901 /* StationInformationOperation.m */,
+				72BA7F6B17258ED000AE3901 /* StationNetworkFactory.h */,
+				72BA7F6C17258ED000AE3901 /* StationNetworkFactory.m */,
+				72BA7F6E1725915800AE3901 /* AsyncRequest.h */,
+				72BA7F6F1725915800AE3901 /* AsyncRequest.m */,
+			);
+			name = Network;
 			sourceTree = "<group>";
 		};
 		72BC63AB171CAFA2003090A6 /* Images */ = {
@@ -434,6 +467,11 @@
 				72BC63A2171C509A003090A6 /* InspectionFormHelper.m in Sources */,
 				72BC63A5171C5A1A003090A6 /* InspectionContentCell.m in Sources */,
 				72BC63AA171C7EF2003090A6 /* InspectionCellHeaderView.m in Sources */,
+				72BA7F66172587EA00AE3901 /* StationInformationOperation.m in Sources */,
+				72BA7F691725883A00AE3901 /* NetworkConnectionManager.m in Sources */,
+				72BA7F6D17258ED000AE3901 /* StationNetworkFactory.m in Sources */,
+				72BA7F701725915800AE3901 /* AsyncRequest.m in Sources */,
+				72BA7F751725D2B100AE3901 /* Field.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,4 +13,6 @@
 @property(nonatomic)NSMutableArray *containerArray;
 @property(nonatomic)NSMutableArray *infoArray;
 
+-(id)initWithSections:(NSArray*)sections;
+
 @end

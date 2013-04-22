@@ -7,11 +7,33 @@
 //
 
 #import "MenuButtonHelper.h"
-#import "PastInspectionsViewController.h"
+
+#define SuppressPerformSelectorLeakWarning(ArgumentsWithParameters) \
+do { \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
+ArgumentsWithParameters; \
+_Pragma("clang diagnostic pop") \
+} while (0)
+
+@interface MenuButtonHelper()
+
+@property(nonatomic)UIActionSheet *actionSheet;
+@property(nonatomic)id buttonOneTarget;
+@property(nonatomic)SEL buttonOneSelector;
+@property(nonatomic)id buttonTwoTarget;
+@property(nonatomic)SEL buttonTwoSelector;
+
+@end
+
 
 @implementation MenuButtonHelper
 
-@synthesize delegate;
+@synthesize actionSheet;
+@synthesize buttonOneTarget;
+@synthesize buttonOneSelector;
+@synthesize buttonTwoTarget;
+@synthesize buttonTwoSelector; 
 
 static UIViewController *parentController;
 
@@ -29,29 +51,38 @@ static UIViewController *parentController;
     parentController = theParentController;
 }
 
+-(void)setButtonOneTarget:(id)aTarget forSelector:(SEL)aSelector{
+    buttonOneTarget = aTarget;
+    buttonOneSelector = aSelector;
+}
+
+-(void)setButtonTwoTarget:(id)aTarget forSelector:(SEL)aSelector{
+    buttonTwoTarget = aTarget;
+    buttonTwoSelector = aSelector;
+}
+
 -(void)displayMenu{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"Options" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"View Past Inspections", @"Refresh Table", nil];
-    
     [actionSheet showInView:parentController.view];
 }
 
--(void)transitionToPastInspections{
-    PastInspectionsViewController *pastInspectionsVC = [[PastInspectionsViewController alloc]init];
-    [parentController.navigationController pushViewController:pastInspectionsVC animated:YES];
-}
-
--(void)refreshTableView{
-    NSLog(@"Refreshing Locations Table View...");
-    [delegate buttonForRefreshTableViewPressed];
+-(void)addButtonsWithTitlesToActionSheet:(NSArray*)titles{
+    if(!actionSheet){
+        actionSheet = [[UIActionSheet alloc]initWithTitle:@"Options" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    }
+    for(int i = 0; i < [titles count]; i++){
+        [actionSheet addButtonWithTitle:[titles objectAtIndex:i]];
+    }
+    [actionSheet addButtonWithTitle:@"Cancel"];
+    actionSheet.cancelButtonIndex = [titles count];
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     switch (buttonIndex) {
         case 0:
-            [self transitionToPastInspections];
+            SuppressPerformSelectorLeakWarning([buttonOneTarget performSelector:buttonOneSelector withObject:self]);
             break;
         case 1:
-            [self refreshTableView];
+            SuppressPerformSelectorLeakWarning([buttonTwoTarget performSelector:buttonTwoSelector withObject:self]);
             break;
         case 2:
             // Cancel pressed. Do nothing.

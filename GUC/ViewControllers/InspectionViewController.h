@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "InspectionCellHeaderView.h"
+#import "AsyncRequest.h"
 
-@interface InspectionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, InspectionCellHeaderViewDelegate>
+@interface InspectionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, InspectionCellHeaderViewDelegate, AsyncResponseDelegate>
 
--(id)initWithTitle:(NSString*)title;
+-(id)initWithStation:(NSString*)station;
 
 @end

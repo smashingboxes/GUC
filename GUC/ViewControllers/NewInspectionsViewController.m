@@ -12,6 +12,8 @@
 #import "InspectionViewController.h"
 #import "NavigationBarHelper.h"
 #import "CustomLoadingView.h"
+#import "PastInspectionsViewController.h"
+#import "MenuButtonHelper.h"
 
 @interface NewInspectionsViewController ()
 
@@ -45,11 +47,14 @@
 - (void)viewDidLoad
 {
     [MenuButtonHelper setParentController:self];
-    [MenuButtonHelper sharedHelper].delegate = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
                                                                              style:UIBarButtonItemStyleBordered
                                                                             target:self
                                                                             action:@selector(displayMenuForButton)];
+    NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"View Past Inspections", @"Refresh Table", nil];
+    [[MenuButtonHelper sharedHelper]addButtonsWithTitlesToActionSheet:buttonTitlesArray];
+    [[MenuButtonHelper sharedHelper]setButtonOneTarget:self forSelector:@selector(transitionToPastInspections)];
+    [[MenuButtonHelper sharedHelper]setButtonTwoTarget:self forSelector:@selector(startFindingLocation)];
     [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     
     self.navigationItem.title = @"New Inspection";
@@ -191,7 +196,7 @@
 }
 
 -(void)transitionToInspectionView{
-    InspectionViewController *inspectionVC = [[InspectionViewController alloc]initWithTitle:stationNameString];
+    InspectionViewController *inspectionVC = [[InspectionViewController alloc]initWithStation:stationNameString];
     [self.navigationController pushViewController:inspectionVC animated:YES];
 }
 
@@ -257,9 +262,11 @@
 }
 
 
-#pragma mark - MenuButtonHelper Delegate Methods
--(void)buttonForRefreshTableViewPressed{
-    [self startFindingLocation];
+#pragma mark - MenuButtonHelper Methods
+
+-(void)transitionToPastInspections{
+    PastInspectionsViewController *pastInspectionsVC = [[PastInspectionsViewController alloc]init];
+    [self.navigationController pushViewController:pastInspectionsVC animated:YES];
 }
 
 @end
