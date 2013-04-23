@@ -12,7 +12,9 @@
 #import "Inspection.h"
 #import "NetworkConnectionManager.h"
 #import "Field.h"
-
+#import "RenderPDFViewController.h"
+#import "NavigationBarHelper.h"
+#import "MenuButtonHelper.h"
 
 #define kOperatorInformation @"guc_operator.plist"
 
@@ -59,8 +61,10 @@
 - (void)viewDidLoad
 {
     if(stationName){
-        [[NetworkConnectionManager sharedManager]beginConnectionWithStation:stationName forCaller:self];
+        [self beginInitialLoad];
     }
+    
+    [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     
     openSectionIndex = NSNotFound;
      
@@ -74,6 +78,20 @@
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    [MenuButtonHelper setParentController:self];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
+                                                                             style:UIBarButtonItemStyleBordered
+                                                                            target:self
+                                                                            action:@selector(displayMenuForButton)];
+    NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"Create Report", @"Refresh Form", nil];
+    [[MenuButtonHelper sharedHelper]addButtonsWithTitlesToActionSheet:buttonTitlesArray];
+    [[MenuButtonHelper sharedHelper]setButtonOneTarget:self forSelector:@selector(transitionToPDFView)];
+    [[MenuButtonHelper sharedHelper]setButtonTwoTarget:self forSelector:@selector(beginInitialLoad)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -144,11 +162,13 @@
     currentField.type = [fieldDictionary objectForKey:@"type"];
     currentField.value = [fieldDictionary objectForKey:@"value"];
     
+    NSString *fieldIndexPath = [[NSString alloc]initWithFormat:@"%i,%i", indexPath.section, indexPath.row];
+    
     cell.cellLabel.text = currentField.name;
     cell.cellField.delegate = self;
     cell.cellField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     cell.cellField.userInteractionEnabled = YES;
-    cell.cellField.accessibilityLabel = cell.cellLabel.text;
+    cell.cellField.accessibilityLabel = fieldIndexPath;
     cell.cellField.text = [self checkModelForTextValue:cell.cellLabel.text];
     cell.cellControl.accessibilityLabel = cell.cellLabel.text;
     cell.cellControl.selectedSegmentIndex = [self checkModelForBoolValue:cell.cellLabel.text];
@@ -296,107 +316,151 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
-    [self saveValueForCurrentField:textField];
+    NSArray *fieldValues = [self getValuesForCurrentField:textField];
+    [self saveValueForCurrentField:fieldValues];
     
     return YES;
 }
 
--(void)saveValueForCurrentField:(UITextField *)textField{
+-(NSArray*)getValuesForCurrentField:(UITextField*)textField{
+    NSString *indexPathString = textField.accessibilityLabel;
+    NSArray *valueArray = [indexPathString componentsSeparatedByString:@","];
+    int section = [[valueArray objectAtIndex:0]integerValue];
+    int row = [[valueArray objectAtIndex:1]integerValue];
+    
+    NSArray *firstArray = [inspectionFormHelper.containerArray objectAtIndex:section];
+    NSArray *fieldsArray = [firstArray objectAtIndex:1];
+    
+    NSDictionary *fieldDictionary = [fieldsArray objectAtIndex:row];
+    
+    Field *currentField = [[Field alloc]init];
+    currentField.choices = [fieldDictionary objectForKey:@"choices"];
+    currentField.name = [fieldDictionary objectForKey:@"name"];
+    currentField.range = [fieldDictionary objectForKey:@"range"];
+    currentField.type = [fieldDictionary objectForKey:@"type"];
+    currentField.value = [fieldDictionary objectForKey:@"value"];
+    
+    NSString *fieldValue = textField.text;
+    
+    NSArray *fieldValues = [[NSArray alloc]initWithObjects:currentField.name, fieldValue, currentField.range, nil];
+    
+    return fieldValues;
+}
+
+-(void)saveValueForCurrentField:(NSArray *)fieldValues{
     if(currentInspection){
-        if([textField.accessibilityLabel isEqualToString:@"KWH"]){
-            currentInspection.generalSettings.kwh = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MWD"]){
-            currentInspection.generalSettings.mwd = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"+KVARH"]){
-            currentInspection.generalSettings.positiveKVARH = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"-KVARH"]){
-            currentInspection.generalSettings.negativeKVARH = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MAXVARD"]){
-            currentInspection.generalSettings.maxVARD = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MINVARD"]){
-            currentInspection.generalSettings.minVARD = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MAX AMP A"]){
-            currentInspection.switchBoard.maxAmpA = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MAX AMP B"]){
-            currentInspection.switchBoard.maxAmpB = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MAX AMP C"]){
-            currentInspection.switchBoard.maxAmpC = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"PRESENT AMP A"]){
-            currentInspection.switchBoard.presentAmpA = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"PRESENT AMP B"]){
-            currentInspection.switchBoard.presentAmpB = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"PRESENT AMP C"]){
-            currentInspection.switchBoard.presentAmpC = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MIN VOLTS A"]){
-            currentInspection.switchBoard.minVoltsA = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MIN VOLTS B"]){
-            currentInspection.switchBoard.minVoltsB = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MIN VOLTS C"]){
-            currentInspection.switchBoard.minVoltsC = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"PRESENT VOLTS A"]){
-            currentInspection.switchBoard.presentVoltsA = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"PRESENT VOLTS B"]){
-            currentInspection.switchBoard.presentVoltsB = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"PRESENT VOLTS C"]){
-            currentInspection.switchBoard.presentVoltsC = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MAX VOLTS A"]){
-            currentInspection.switchBoard.maxVoltsA = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MAX VOLTS B"]){
-            currentInspection.switchBoard.maxVoltsB = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"MAX VOLTS C"]){
-            currentInspection.switchBoard.maxVoltsC = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"VOLTS 48V #1"]){
-            currentInspection.batteryCharger.volts48VOne = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"AMPS 48V #1"]){
-            currentInspection.batteryCharger.amps48VOne = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"SPEC. GRAVITY 48V #1"]){
-            currentInspection.batteryCharger.specGravity48VOne = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Pressure"]){
-            currentInspection.transformer.pressure = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Nitrogen Tank"]){
-            currentInspection.transformer.nitrogenTank = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Min Step A"]){
-            currentInspection.ltcRegulator.minStepA = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Pres. Step A"]){
-            currentInspection.ltcRegulator.presStepA = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Max Step A"]){
-            currentInspection.ltcRegulator.maxStepA = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Counter A"]){
-            currentInspection.ltcRegulator.counterA = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Voltage A"]){
-            currentInspection.ltcRegulator.voltageA = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Min Step B"]){
-            currentInspection.ltcRegulator.minStepB = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Pres. Step B"]){
-            currentInspection.ltcRegulator.presStepB = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Max Step B"]){
-            currentInspection.ltcRegulator.maxStepB = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Counter B"]){
-            currentInspection.ltcRegulator.counterB = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Voltage B"]){
-            currentInspection.ltcRegulator.voltageB = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Min Step C"]){
-            currentInspection.ltcRegulator.minStepC = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Pres. Step C"]){
-            currentInspection.ltcRegulator.presStepC = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Max Step C"]){
-            currentInspection.ltcRegulator.maxStepC = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Counter C"]){
-            currentInspection.ltcRegulator.counterC = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"Voltage C"]){
-            currentInspection.ltcRegulator.voltageC = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"BUS 1 Counter"]){
-            currentInspection.breakers.busOneCounter = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"BUS 1 Target"]){
-            currentInspection.breakers.busOneTarget = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"BUS 1 Oper"]){
-            currentInspection.breakers.busOneOperation = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"CKT 1 Counter"]){
-            currentInspection.breakers.cktOneCounter = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"CKT 1 Target"]){
-            currentInspection.breakers.cktOneTarget = textField.text;
-        }else if([textField.accessibilityLabel isEqualToString:@"CKT 1 Oper"]){
-            currentInspection.breakers.cktOneOperation = textField.text;
+        NSString *fieldName = [fieldValues objectAtIndex:0];
+        NSString *fieldValue = [fieldValues objectAtIndex:1];
+        NSArray *fieldRange = [fieldValues objectAtIndex:2];
+        
+        if([fieldRange count] > 0 && ![fieldValue isEqualToString:@""]){
+            float rangeA = [[fieldRange objectAtIndex:0]floatValue];
+            float rangeB = [[fieldRange objectAtIndex:1]floatValue];
+            float value = [fieldValue floatValue];
+            
+            NSString *message = [[NSString alloc]initWithFormat:@"The value you've entered for %@ is out of range.\nPlease re-enter and try again.", fieldName];
+            
+            if(value > rangeB || value < rangeA){
+                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Value Out of Range!" message:message delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
+                [alertView show];
+                return;
+            }
+        }
+        
+        if([fieldName isEqualToString:@"KWH"]){
+            currentInspection.generalSettings.kwh = fieldValue;
+        }else if([fieldName isEqualToString:@"MWD"]){
+            currentInspection.generalSettings.mwd = fieldValue;
+        }else if([fieldName isEqualToString:@"+KVARH"]){
+            currentInspection.generalSettings.positiveKVARH = fieldValue;
+        }else if([fieldName isEqualToString:@"-KVARH"]){
+            currentInspection.generalSettings.negativeKVARH = fieldValue;
+        }else if([fieldName isEqualToString:@"MAXVARD"]){
+            currentInspection.generalSettings.maxVARD = fieldValue;
+        }else if([fieldName isEqualToString:@"MINVARD"]){
+            currentInspection.generalSettings.minVARD = fieldValue;
+        }else if([fieldName isEqualToString:@"MAX AMP A"]){
+            currentInspection.switchBoard.maxAmpA = fieldValue;
+        }else if([fieldName isEqualToString:@"MAX AMP B"]){
+            currentInspection.switchBoard.maxAmpB = fieldValue;
+        }else if([fieldName isEqualToString:@"MAX AMP C"]){
+            currentInspection.switchBoard.maxAmpC = fieldValue;
+        }else if([fieldName isEqualToString:@"PRESENT AMP A"]){
+            currentInspection.switchBoard.presentAmpA = fieldValue;
+        }else if([fieldName isEqualToString:@"PRESENT AMP B"]){
+            currentInspection.switchBoard.presentAmpB = fieldValue;
+        }else if([fieldName isEqualToString:@"PRESENT AMP C"]){
+            currentInspection.switchBoard.presentAmpC = fieldValue;
+        }else if([fieldName isEqualToString:@"MIN VOLTS A"]){
+            currentInspection.switchBoard.minVoltsA = fieldValue;
+        }else if([fieldName isEqualToString:@"MIN VOLTS B"]){
+            currentInspection.switchBoard.minVoltsB = fieldValue;
+        }else if([fieldName isEqualToString:@"MIN VOLTS C"]){
+            currentInspection.switchBoard.minVoltsC = fieldValue;
+        }else if([fieldName isEqualToString:@"PRESENT VOLTS A"]){
+            currentInspection.switchBoard.presentVoltsA = fieldValue;
+        }else if([fieldName isEqualToString:@"PRESENT VOLTS B"]){
+            currentInspection.switchBoard.presentVoltsB = fieldValue;
+        }else if([fieldName isEqualToString:@"PRESENT VOLTS C"]){
+            currentInspection.switchBoard.presentVoltsC = fieldValue;
+        }else if([fieldName isEqualToString:@"MAX VOLTS A"]){
+            currentInspection.switchBoard.maxVoltsA = fieldValue;
+        }else if([fieldName isEqualToString:@"MAX VOLTS B"]){
+            currentInspection.switchBoard.maxVoltsB = fieldValue;
+        }else if([fieldName isEqualToString:@"MAX VOLTS C"]){
+            currentInspection.switchBoard.maxVoltsC = fieldValue;
+        }else if([fieldName isEqualToString:@"VOLTS 48V #1"]){
+            currentInspection.batteryCharger.volts48VOne = fieldValue;
+        }else if([fieldName isEqualToString:@"AMPS 48V #1"]){
+            currentInspection.batteryCharger.amps48VOne = fieldValue;
+        }else if([fieldName isEqualToString:@"SPEC. GRAVITY 48V #1"]){
+            currentInspection.batteryCharger.specGravity48VOne = fieldValue;
+        }else if([fieldName isEqualToString:@"Pressure"]){
+            currentInspection.transformer.pressure = fieldValue;
+        }else if([fieldName isEqualToString:@"Nitrogen Tank"]){
+            currentInspection.transformer.nitrogenTank = fieldValue;
+        }else if([fieldName isEqualToString:@"Min Step A"]){
+            currentInspection.ltcRegulator.minStepA = fieldValue;
+        }else if([fieldName isEqualToString:@"Pres. Step A"]){
+            currentInspection.ltcRegulator.presStepA = fieldValue;
+        }else if([fieldName isEqualToString:@"Max Step A"]){
+            currentInspection.ltcRegulator.maxStepA = fieldValue;
+        }else if([fieldName isEqualToString:@"Counter A"]){
+            currentInspection.ltcRegulator.counterA = fieldValue;
+        }else if([fieldName isEqualToString:@"Voltage A"]){
+            currentInspection.ltcRegulator.voltageA = fieldValue;
+        }else if([fieldName isEqualToString:@"Min Step B"]){
+            currentInspection.ltcRegulator.minStepB = fieldValue;
+        }else if([fieldName isEqualToString:@"Pres. Step B"]){
+            currentInspection.ltcRegulator.presStepB = fieldValue;
+        }else if([fieldName isEqualToString:@"Max Step B"]){
+            currentInspection.ltcRegulator.maxStepB = fieldValue;
+        }else if([fieldName isEqualToString:@"Counter B"]){
+            currentInspection.ltcRegulator.counterB = fieldValue;
+        }else if([fieldName isEqualToString:@"Voltage B"]){
+            currentInspection.ltcRegulator.voltageB = fieldValue;
+        }else if([fieldName isEqualToString:@"Min Step C"]){
+            currentInspection.ltcRegulator.minStepC = fieldValue;
+        }else if([fieldName isEqualToString:@"Pres. Step C"]){
+            currentInspection.ltcRegulator.presStepC = fieldValue;
+        }else if([fieldName isEqualToString:@"Max Step C"]){
+            currentInspection.ltcRegulator.maxStepC = fieldValue;
+        }else if([fieldName isEqualToString:@"Counter C"]){
+            currentInspection.ltcRegulator.counterC = fieldValue;
+        }else if([fieldName isEqualToString:@"Voltage C"]){
+            currentInspection.ltcRegulator.voltageC = fieldValue;
+        }else if([fieldName isEqualToString:@"BUS 1 Counter"]){
+            currentInspection.breakers.busOneCounter = fieldValue;
+        }else if([fieldName isEqualToString:@"BUS 1 Target"]){
+            currentInspection.breakers.busOneTarget = fieldValue;
+        }else if([fieldName isEqualToString:@"BUS 1 Oper"]){
+            currentInspection.breakers.busOneOperation = fieldValue;
+        }else if([fieldName isEqualToString:@"CKT 1 Counter"]){
+            currentInspection.breakers.cktOneCounter = fieldValue;
+        }else if([fieldName isEqualToString:@"CKT 1 Target"]){
+            currentInspection.breakers.cktOneTarget = fieldValue;
+        }else if([fieldName isEqualToString:@"CKT 1 Oper"]){
+            currentInspection.breakers.cktOneOperation = fieldValue;
         }else {
             // Do nothing.
         }
@@ -550,6 +614,7 @@
     return @"";
 }
 
+
 #pragma mark - UISegmentedControl Methods
 
 -(void)controlPressed:(id)sender{
@@ -666,6 +731,57 @@
 
 -(void)asyncResponseDidFailWithError{
     NSLog(@"Error! Connection failed.");
+}
+
+
+#pragma mark - Class Related Methods
+
+-(void)beginInitialLoad{
+    [[NetworkConnectionManager sharedManager]beginConnectionWithStation:stationName forCaller:self];
+}
+
+-(void)transitionToPDFView{
+    for(int i = 0; i < [inspectionFormHelper.containerArray count]; i++){
+        NSArray *firstArray = [inspectionFormHelper.containerArray objectAtIndex:i];
+        NSArray *fieldsArray = [firstArray objectAtIndex:1];
+        
+        for(int i = 0; i < [fieldsArray count]; i++){
+            NSDictionary *fieldDictionary = [fieldsArray objectAtIndex:i];
+            
+            Field *currentField = [[Field alloc]init];
+            currentField.choices = [fieldDictionary objectForKey:@"choices"];
+            currentField.name = [fieldDictionary objectForKey:@"name"];
+            currentField.range = [fieldDictionary objectForKey:@"range"];
+            currentField.type = [fieldDictionary objectForKey:@"type"];
+            currentField.value = [fieldDictionary objectForKey:@"value"];
+            
+            NSString *returnedString = [self checkModelForTextValue:currentField.name];
+            
+            if(returnedString == nil || returnedString == (id)[NSNull null] || [returnedString isEqualToString:@""]){
+                [self createAlertViewForField:currentField.name];
+                return;
+            }
+        }
+    }
+    RenderPDFViewController *renderPDFVC = [[RenderPDFViewController alloc]initWithInspectionData:currentInspection];
+    [self.navigationController pushViewController:renderPDFVC animated:YES];
+}
+
+
+#pragma mark - UIAlertView Methods
+
+-(void)createAlertViewForField:(NSString*)fieldName{
+    NSString *message = [[NSString alloc]initWithFormat:@"The %@ field requires a value.\nPlease fill it out and try again.",fieldName];
+    
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Form Incomplete!" message:message delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
+    [alertView show];
+}
+
+
+#pragma mark - MenuButton Methods
+
+-(void)displayMenuForButton{
+    [[MenuButtonHelper sharedHelper]displayMenu];
 }
 
 

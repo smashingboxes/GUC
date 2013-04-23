@@ -66,9 +66,10 @@ static UIViewController *parentController;
 }
 
 -(void)addButtonsWithTitlesToActionSheet:(NSArray*)titles{
-    if(!actionSheet){
-        actionSheet = [[UIActionSheet alloc]initWithTitle:@"Options" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    if(actionSheet){
+        actionSheet = nil;
     }
+    actionSheet = [[UIActionSheet alloc]initWithTitle:@"Options" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
     for(int i = 0; i < [titles count]; i++){
         [actionSheet addButtonWithTitle:[titles objectAtIndex:i]];
     }
@@ -79,10 +80,10 @@ static UIViewController *parentController;
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     switch (buttonIndex) {
         case 0:
-            SuppressPerformSelectorLeakWarning([buttonOneTarget performSelector:buttonOneSelector withObject:self]);
+            SuppressPerformSelectorLeakWarning([buttonOneTarget performSelector:buttonOneSelector]);
             break;
         case 1:
-            SuppressPerformSelectorLeakWarning([buttonTwoTarget performSelector:buttonTwoSelector withObject:self]);
+            SuppressPerformSelectorLeakWarning([buttonTwoTarget performSelector:buttonTwoSelector]);
             break;
         case 2:
             // Cancel pressed. Do nothing.

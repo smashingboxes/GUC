@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7211D9DC17185CD600BA8135 /* CustomLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7211D9DB17185CD600BA8135 /* CustomLoadingView.m */; };
 		7211D9DF17189ED700BA8135 /* MenuButtonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */; };
+		72383C651726E337003F9FE3 /* RenderPDFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72383C641726E337003F9FE3 /* RenderPDFViewController.m */; };
+		72383C671726E389003F9FE3 /* RenderPDFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72383C661726E389003F9FE3 /* RenderPDFViewController.xib */; };
 		724CC8981715A64700EBD6B8 /* LocationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 724CC8971715A64700EBD6B8 /* LocationHelper.m */; };
 		725372131714C3FB00AB1566 /* NewInspectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 725372121714C3FB00AB1566 /* NewInspectionCell.xib */; };
 		725372161714C48A00AB1566 /* NewInspectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 725372151714C48A00AB1566 /* NewInspectionCell.m */; };
@@ -64,6 +66,9 @@
 		7211D9DB17185CD600BA8135 /* CustomLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomLoadingView.m; path = CustomWidgets/CustomLoadingView.m; sourceTree = "<group>"; };
 		7211D9DD17189ED600BA8135 /* MenuButtonHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuButtonHelper.h; path = Helper/MenuButtonHelper.h; sourceTree = "<group>"; };
 		7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuButtonHelper.m; path = Helper/MenuButtonHelper.m; sourceTree = "<group>"; };
+		72383C631726E337003F9FE3 /* RenderPDFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderPDFViewController.h; path = ViewControllers/RenderPDFViewController.h; sourceTree = "<group>"; };
+		72383C641726E337003F9FE3 /* RenderPDFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RenderPDFViewController.m; path = ViewControllers/RenderPDFViewController.m; sourceTree = "<group>"; };
+		72383C661726E389003F9FE3 /* RenderPDFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RenderPDFViewController.xib; path = NIBs/RenderPDFViewController.xib; sourceTree = "<group>"; };
 		724CC8961715A64700EBD6B8 /* LocationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationHelper.h; path = Helper/LocationHelper.h; sourceTree = "<group>"; };
 		724CC8971715A64700EBD6B8 /* LocationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationHelper.m; path = Helper/LocationHelper.m; sourceTree = "<group>"; };
 		725372121714C3FB00AB1566 /* NewInspectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewInspectionCell.xib; path = TableViewCells/NewInspectionCell.xib; sourceTree = "<group>"; };
@@ -259,6 +264,8 @@
 				727F489717131AD600BE87CE /* PastInspectionsSummaryViewController.m */,
 				727F48931713192200BE87CE /* PastInspectionsViewController.h */,
 				727F48941713192200BE87CE /* PastInspectionsViewController.m */,
+				72383C631726E337003F9FE3 /* RenderPDFViewController.h */,
+				72383C641726E337003F9FE3 /* RenderPDFViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -267,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				727F488B1713179200BE87CE /* InspectionView.xib */,
+				72383C661726E389003F9FE3 /* RenderPDFViewController.xib */,
 				727F4891171318D500BE87CE /* NewInspectionsView.xib */,
 				727F488F171318C500BE87CE /* PastInspectionsSummary.xib */,
 				727F488D171318A700BE87CE /* PastInspectionsView.xib */,
@@ -433,6 +441,7 @@
 				72BC63A7171C5A33003090A6 /* InspectionContentCell.xib in Resources */,
 				72BC63AE171CAFD4003090A6 /* carat-open.png in Resources */,
 				72BC63AF171CAFD4003090A6 /* carat.png in Resources */,
+				72383C671726E389003F9FE3 /* RenderPDFViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +481,7 @@
 				72BA7F6D17258ED000AE3901 /* StationNetworkFactory.m in Sources */,
 				72BA7F701725915800AE3901 /* AsyncRequest.m in Sources */,
 				72BA7F751725D2B100AE3901 /* Field.m in Sources */,
+				72383C651726E337003F9FE3 /* RenderPDFViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

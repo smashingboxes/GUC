@@ -46,15 +46,6 @@
 
 - (void)viewDidLoad
 {
-    [MenuButtonHelper setParentController:self];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
-                                                                             style:UIBarButtonItemStyleBordered
-                                                                            target:self
-                                                                            action:@selector(displayMenuForButton)];
-    NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"View Past Inspections", @"Refresh Table", nil];
-    [[MenuButtonHelper sharedHelper]addButtonsWithTitlesToActionSheet:buttonTitlesArray];
-    [[MenuButtonHelper sharedHelper]setButtonOneTarget:self forSelector:@selector(transitionToPastInspections)];
-    [[MenuButtonHelper sharedHelper]setButtonTwoTarget:self forSelector:@selector(startFindingLocation)];
     [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     
     self.navigationItem.title = @"New Inspection";
@@ -68,6 +59,20 @@
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    [MenuButtonHelper setParentController:self];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
+                                                                             style:UIBarButtonItemStyleBordered
+                                                                            target:self
+                                                                            action:@selector(displayMenuForButton)];
+    NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"View Past Inspections", @"Refresh Table", nil];
+    [[MenuButtonHelper sharedHelper]addButtonsWithTitlesToActionSheet:buttonTitlesArray];
+    [[MenuButtonHelper sharedHelper]setButtonOneTarget:self forSelector:@selector(transitionToPastInspections)];
+    [[MenuButtonHelper sharedHelper]setButtonTwoTarget:self forSelector:@selector(startFindingLocation)];
 }
 
 -(void)startFindingLocation{
