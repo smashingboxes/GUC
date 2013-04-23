@@ -15,6 +15,7 @@
 #import "RenderPDFViewController.h"
 #import "NavigationBarHelper.h"
 #import "MenuButtonHelper.h"
+#import "CustomLoadingView.h"
 
 #define kOperatorInformation @"guc_operator.plist"
 
@@ -30,6 +31,7 @@
 @property(nonatomic)NSInteger openSectionIndex;
 @property(nonatomic)Inspection *currentInspection;
 @property(nonatomic)int headerHeight;
+@property(nonatomic)CustomLoadingView *customLoadingView;
 
 @end
 
@@ -41,6 +43,7 @@
 @synthesize openSectionIndex;
 @synthesize currentInspection;
 @synthesize headerHeight;
+@synthesize customLoadingView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,6 +64,8 @@
 - (void)viewDidLoad
 {
     if(stationName){
+        customLoadingView = [[CustomLoadingView alloc]initWithFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height) andTitle:@"Loading..."];
+        [self.view addSubview:customLoadingView];
         [self beginInitialLoad];
     }
     
@@ -727,6 +732,10 @@
             [theTableView reloadData];
         }
     }
+    theTableView.hidden = NO;
+    if(customLoadingView.isLoading == YES){
+        [customLoadingView stopLoading];
+    }
 }
 
 -(void)asyncResponseDidFailWithError{
@@ -737,6 +746,8 @@
 #pragma mark - Class Related Methods
 
 -(void)beginInitialLoad{
+    theTableView.hidden = YES;
+    [customLoadingView beginLoading];
     [[NetworkConnectionManager sharedManager]beginConnectionWithStation:stationName forCaller:self];
 }
 

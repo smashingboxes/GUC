@@ -19,6 +19,7 @@
 @implementation CustomLoadingView
 
 @synthesize activityIndicator;
+@synthesize isLoading;
 
 - (id)initWithFrame:(CGRect)frame andTitle:(NSString *)title
 {
@@ -54,17 +55,18 @@
 
 -(void)beginLoading{
     [activityIndicator startAnimating];
-    [UIView animateWithDuration:0.5f animations:^{
+    [UIView animateWithDuration:0.2f animations:^{
         self.alpha = 1.0f;
     }];
+    isLoading = YES;
 }
 
 -(void)stopLoading{
-    [UIView animateWithDuration:0.5f animations:^{
+    [UIView animateWithDuration:0.2f animations:^{
         self.alpha = 0.0f;
     }];
     [activityIndicator stopAnimating];
-    [self removeFromSuperview];
+    isLoading = NO;
 }
 
 /*

@@ -10,6 +10,8 @@
 
 @interface CustomLoadingView : UIView
 
+@property(nonatomic)BOOL isLoading;
+
 -(id)initWithFrame:(CGRect)frame andTitle:(NSString*)title;
 -(void)beginLoading;
 -(void)stopLoading;
