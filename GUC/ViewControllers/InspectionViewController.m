@@ -32,6 +32,7 @@
 @property(nonatomic)Inspection *currentInspection;
 @property(nonatomic)int headerHeight;
 @property(nonatomic)CustomLoadingView *customLoadingView;
+@property(nonatomic)BOOL checking;
 
 @end
 
@@ -44,6 +45,7 @@
 @synthesize currentInspection;
 @synthesize headerHeight;
 @synthesize customLoadingView;
+@synthesize checking;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -68,6 +70,8 @@
         [self.view addSubview:customLoadingView];
         [self beginInitialLoad];
     }
+    
+    checking = NO;
     
     [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     
@@ -320,16 +324,65 @@
 #pragma mark - UITextField Delegate Methods
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [textField resignFirstResponder];
-    NSArray *fieldValues = [self getValuesForCurrentField:textField];
-    [self saveValueForCurrentField:fieldValues];
+    if(checking == NO){
+        checking = YES;
+        [textField resignFirstResponder];
+        NSArray *fieldValues = [self getValuesForCurrentField:textField];
+        BOOL dataSaved = [self saveValueForCurrentField:fieldValues];
+        
+        NSArray *valueArray = [self getIndexPathForCurrentTextField:textField];
+        int section = [[valueArray objectAtIndex:0]integerValue];
+        int row = [[valueArray objectAtIndex:1]integerValue];
+        
+        InspectionContentCell *cell = (InspectionContentCell*)[theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
+        if(dataSaved){
+            cell.cellImageView.backgroundColor = [UIColor greenColor];
+        }else{
+            cell.cellImageView.backgroundColor = [UIColor redColor];
+        }
+        
+        if([textField.text isEqualToString:@""]){
+            cell.cellImageView.backgroundColor = [UIColor clearColor];
+        }
+    }
     
     return YES;
 }
 
--(NSArray*)getValuesForCurrentField:(UITextField*)textField{
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    if(checking == NO){
+        checking = YES;
+        NSArray *fieldValues = [self getValuesForCurrentField:textField];
+        BOOL dataSaved = [self saveValueForCurrentField:fieldValues];
+        
+        NSArray *valueArray = [self getIndexPathForCurrentTextField:textField];
+        int section = [[valueArray objectAtIndex:0]integerValue];
+        int row = [[valueArray objectAtIndex:1]integerValue];
+        
+        InspectionContentCell *cell = (InspectionContentCell*)[theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
+        if(dataSaved){
+            cell.cellImageView.backgroundColor = [UIColor greenColor];
+        }else{
+            cell.cellImageView.backgroundColor = [UIColor redColor];
+        }
+        
+        if([textField.text isEqualToString:@""]){
+            cell.cellImageView.backgroundColor = [UIColor clearColor];
+        }
+    }
+    
+    return YES;
+}
+                                                               
+-(NSArray*)getIndexPathForCurrentTextField:(UITextField*)textField{
     NSString *indexPathString = textField.accessibilityLabel;
     NSArray *valueArray = [indexPathString componentsSeparatedByString:@","];
+    
+    return valueArray;
+}
+
+-(NSArray*)getValuesForCurrentField:(UITextField*)textField{
+    NSArray *valueArray = [self getIndexPathForCurrentTextField:textField];
     int section = [[valueArray objectAtIndex:0]integerValue];
     int row = [[valueArray objectAtIndex:1]integerValue];
     
@@ -352,7 +405,7 @@
     return fieldValues;
 }
 
--(void)saveValueForCurrentField:(NSArray *)fieldValues{
+-(BOOL)saveValueForCurrentField:(NSArray *)fieldValues{
     if(currentInspection){
         NSString *fieldName = [fieldValues objectAtIndex:0];
         NSString *fieldValue = [fieldValues objectAtIndex:1];
@@ -363,12 +416,13 @@
             float rangeB = [[fieldRange objectAtIndex:1]floatValue];
             float value = [fieldValue floatValue];
             
-            NSString *message = [[NSString alloc]initWithFormat:@"The value you've entered for %@ is out of range.\nPlease re-enter and try again.", fieldName];
+            //NSString *message = [[NSString alloc]initWithFormat:@"The value you've entered for %@ is out of range.\nPlease re-enter and try again.", fieldName];
             
             if(value > rangeB || value < rangeA){
-                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Value Out of Range!" message:message delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
-                [alertView show];
-                return;
+                /*UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Value Out of Range!" message:message delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
+                [alertView show];*/
+                checking = NO;
+                return NO;
             }
         }
         
@@ -469,7 +523,12 @@
         }else {
             // Do nothing.
         }
+        
+        checking = NO;
+        
+        return YES;
     }
+    return NO;
 }
 
 -(NSString*)checkModelForTextValue:(NSString*)cellTitle{

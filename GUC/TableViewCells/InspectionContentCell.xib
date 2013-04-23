@@ -12,6 +12,7 @@
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
+			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
 			<string>IBUISegmentedControl</string>
 			<string>IBUITableViewCell</string>
@@ -146,6 +147,16 @@
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
+							<object class="IBUIImageView" id="824100283">
+								<reference key="NSNextResponder" ref="606929741"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{27, 33}, {16, 16}}</string>
+								<reference key="NSSuperview" ref="606929741"/>
+								<reference key="NSWindow"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+							</object>
 						</array>
 						<string key="NSFrameSize">{320, 63}</string>
 						<reference key="NSSuperview" ref="996950613"/>
@@ -201,6 +212,14 @@
 					</object>
 					<int key="connectionID">21</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">cellImageView</string>
+						<reference key="source" ref="996950613"/>
+						<reference key="destination" ref="824100283"/>
+					</object>
+					<int key="connectionID">23</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -228,6 +247,7 @@
 							<reference ref="696508040"/>
 							<reference ref="184506381"/>
 							<reference ref="977110194"/>
+							<reference ref="824100283"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -248,6 +268,11 @@
 						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="996950613"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">22</int>
+						<reference key="object" ref="824100283"/>
+						<reference key="parent" ref="996950613"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -257,6 +282,7 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<integer value="1" key="11.IUISegmentedControlInspectorSelectedSegmentMetadataKey"/>
+				<string key="22.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="3.CustomClassName">InspectionContentCell</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -266,7 +292,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">21</int>
+			<int key="maxID">23</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -276,6 +302,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="cellControl">UISegmentedControl</string>
 						<string key="cellField">UITextField</string>
+						<string key="cellImageView">UIImageView</string>
 						<string key="cellLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -286,6 +313,10 @@
 						<object class="IBToOneOutletInfo" key="cellField">
 							<string key="name">cellField</string>
 							<string key="candidateClassName">UITextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cellImageView">
+							<string key="name">cellImageView</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="cellLabel">
 							<string key="name">cellLabel</string>

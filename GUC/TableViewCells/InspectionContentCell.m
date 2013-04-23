@@ -13,6 +13,7 @@
 @synthesize cellLabel;
 @synthesize cellField;
 @synthesize cellControl;
+@synthesize cellImageView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

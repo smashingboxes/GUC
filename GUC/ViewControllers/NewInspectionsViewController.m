@@ -155,9 +155,7 @@
     }else{
         cell.backgroundColorImageView.backgroundColor = [UIColor redColor];
     }
-    cell.backgroundColorImageView.alpha = 0.75f;
     cell.feetLabel.text = [NSString stringWithFormat:@"%i", totalFeet];
-    
     
     return cell;
 }

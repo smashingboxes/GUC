@@ -13,5 +13,6 @@
 @property(nonatomic)IBOutlet UILabel *cellLabel;
 @property(nonatomic)IBOutlet UITextField *cellField;
 @property(nonatomic)IBOutlet UISegmentedControl *cellControl;
+@property(nonatomic)IBOutlet UIImageView *cellImageView;
 
 @end
