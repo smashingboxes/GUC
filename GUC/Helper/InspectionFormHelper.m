@@ -26,7 +26,7 @@
         NSMutableArray *ltcRegulatorFields = [[NSMutableArray alloc]init];
         NSMutableArray *breakersFields = [[NSMutableArray alloc]init];
         
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < [sections count]; i++){
             NSDictionary *sectionDictionary = [sections objectAtIndex:i];
             
             [sectionHeaders addObject:[sectionDictionary objectForKey:@"name"]];
@@ -58,7 +58,7 @@
         NSArray *fieldsArray = [[NSArray alloc]initWithObjects:generalFields, switchBoardFields, batteryChargerFields,
                                  circuitSwitcherFields, transformerFields, ltcRegulatorFields, breakersFields, nil];
         
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < [sections count]; i++){
             NSArray *headerFieldsPair = [[NSArray alloc]initWithObjects:[sectionHeaders objectAtIndex:i], [fieldsArray objectAtIndex:i],nil];
             [containerArray addObject:headerFieldsPair];
             NSNumber *openState = [NSNumber numberWithBool:NO];

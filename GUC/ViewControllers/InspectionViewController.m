@@ -17,6 +17,9 @@
 #import "MenuButtonHelper.h"
 #import "CustomLoadingView.h"
 
+#define kDataPurpose @"Data"
+#define kNamePurpose @"Name"
+
 #define kOperatorInformation @"guc_operator.plist"
 
 #define DEFAULT_ROW_HEIGHT 64
@@ -33,6 +36,11 @@
 @property(nonatomic)int headerHeight;
 @property(nonatomic)CustomLoadingView *customLoadingView;
 @property(nonatomic)BOOL checking;
+@property(nonatomic)NSArray *substations;
+@property(nonatomic)NSMutableArray *inspections;
+@property(nonatomic)PickerViewHelper *pickerHelper;
+@property(nonatomic)NSString *pickerType;
+@property(nonatomic)UITextField *currentTextField;
 
 @end
 
@@ -46,6 +54,11 @@
 @synthesize headerHeight;
 @synthesize customLoadingView;
 @synthesize checking;
+@synthesize substations;
+@synthesize inspections;
+@synthesize pickerHelper;
+@synthesize pickerType;
+@synthesize currentTextField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -75,6 +88,10 @@
     
     [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     
+    [PickerViewHelper setParentView:self];
+    [self setAccessibilityLabel:@"Inspection"];
+    pickerType = kDataPurpose;
+    
     openSectionIndex = NSNotFound;
      
     if([UIScreen mainScreen].bounds.size.height == 568){
@@ -97,8 +114,18 @@
                                                                              style:UIBarButtonItemStyleBordered
                                                                             target:self
                                                                             action:@selector(displayMenuForButton)];
-    NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"Create Report", @"Refresh Form", nil];
-    [[MenuButtonHelper sharedHelper]addButtonsWithTitlesToActionSheet:buttonTitlesArray];
+    [self setMenuButtons];
+}
+
+-(void)setMenuButtons{
+    if([substations count] > 1){
+        NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"Create Report", @"Refresh Form", @"Change Substation",nil];
+        [[MenuButtonHelper sharedHelper]addButtonsWithTitlesToActionSheet:buttonTitlesArray];
+        [[MenuButtonHelper sharedHelper]setButtonThreeTarget:self forSelector:@selector(showPicker)];
+    }else{
+        NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"Create Report", @"Refresh Form", nil];
+        [[MenuButtonHelper sharedHelper]addButtonsWithTitlesToActionSheet:buttonTitlesArray];
+    }
     [[MenuButtonHelper sharedHelper]setButtonOneTarget:self forSelector:@selector(transitionToPDFView)];
     [[MenuButtonHelper sharedHelper]setButtonTwoTarget:self forSelector:@selector(beginInitialLoad)];
 }
@@ -207,9 +234,10 @@
     }else if([currentField.name isEqualToString:@"Technician"]){
         if(!currentInspection.generalSettings.technician){
             currentInspection.generalSettings.technician = [self loadOperatorName];
+            currentInspection.generalSettings.technicianChoices = currentField.choices;
         }
         cell.cellField.text = currentInspection.generalSettings.technician;
-        cell.cellField.userInteractionEnabled = NO;
+        cell.cellField.userInteractionEnabled = YES;
     }else if([currentField.name isEqualToString:@"TargetsAndAlarms"]){
         if(indexPath.row == [fieldsArray count]-1){
             cell.cellField.hidden = YES;
@@ -322,6 +350,20 @@
 
 
 #pragma mark - UITextField Delegate Methods
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    currentTextField = textField;
+    
+    NSArray *fieldValues = [self getValuesForCurrentField:textField];
+    
+    if([[fieldValues objectAtIndex:0] isEqualToString:@"Technician"]){
+        pickerType = kNamePurpose;
+        [self showPicker];
+        
+        return NO;
+    }
+    return YES;
+}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     if(checking == NO){
@@ -772,26 +814,47 @@
 
 -(void)asyncResponseDidReturnObjects:(NSArray *)theObjects{
     if([theObjects count] > 0){
-        NSArray *returnedArray = theObjects;
-        NSDictionary *stationDictionary = [returnedArray objectAtIndex:0];
-        NSDictionary *stationInfo = [stationDictionary objectForKey:@"stationInfo"];
-        NSLog(@"Station information is:\n%@", stationInfo);
-        
-        if(self.navigationItem.title != [stationInfo objectForKey:@"name"]){
-            self.navigationItem.title = [stationInfo objectForKey:@"name"];
-        }
-         
-        if(!currentInspection){
-            currentInspection = [[Inspection alloc]init];
+        NSLog(@"Returned substations are:\n%@",theObjects);
+        if([theObjects count] > 1){
+            //Handle for if there are multiple substations at the site.
+            
+            substations = [[NSArray alloc]initWithArray:theObjects];
+            
+            if(!inspections){
+                inspections = [[NSMutableArray alloc]init];
+            }
+            for(int i = 0; i < [substations count]; i++){
+                Inspection *anInspection = [[Inspection alloc]init];
+                [inspections addObject:anInspection];
+            }
+            
+            [self setMenuButtons];
+            [self showPicker];
+        }else{
+            //Handle for if there is only one substation at the site.
+            
+            NSDictionary *stationDictionary = [theObjects objectAtIndex:0];
+            NSDictionary *stationInfo = [stationDictionary objectForKey:@"stationInfo"];
+            NSLog(@"Station information is:\n%@", stationInfo);
+            
+            if(self.navigationItem.title != [stationInfo objectForKey:@"name"]){
+                self.navigationItem.title = [stationInfo objectForKey:@"name"];
+            }
+             
+            if(!currentInspection){
+                currentInspection = [[Inspection alloc]init];
+            }
+            
             currentInspection.generalSettings.stationName = [stationInfo objectForKey:@"name"];
-        }
-        
-        if(!inspectionFormHelper){
-            inspectionFormHelper = [[InspectionFormHelper alloc]initWithSections:[stationInfo objectForKey:@"sections"]];
+            
+            if(!inspectionFormHelper){
+                inspectionFormHelper = [[InspectionFormHelper alloc]initWithSections:[stationInfo objectForKey:@"sections"]];
+            }
+            
+            theTableView.hidden = NO;
             [theTableView reloadData];
         }
     }
-    theTableView.hidden = NO;
     if(customLoadingView.isLoading == YES){
         [customLoadingView stopLoading];
     }
@@ -799,6 +862,42 @@
 
 -(void)asyncResponseDidFailWithError{
     NSLog(@"Error! Connection failed.");
+}
+
+
+#pragma mark - PickerHelper Delegate Methods
+
+-(void)pickerDidPickData:(id)theData atIndex:(NSInteger)theIndex forPurpose:(NSString*)purpose{
+    if([purpose isEqualToString:kDataPurpose]){
+        NSDictionary *stationDictionary = theData;
+        NSDictionary *stationInfo = [stationDictionary objectForKey:@"stationInfo"];
+        NSLog(@"Station information is:\n%@", stationInfo);
+        
+        if(self.navigationItem.title != [stationInfo objectForKey:@"name"]){
+            self.navigationItem.title = [stationInfo objectForKey:@"name"];
+        }
+        
+        if(!currentInspection){
+            currentInspection = [[Inspection alloc]init];
+        }
+        
+        currentInspection = [inspections objectAtIndex:theIndex];
+        currentInspection.generalSettings.stationName = [stationInfo objectForKey:@"name"];
+        
+        inspectionFormHelper = [[InspectionFormHelper alloc]initWithSections:[stationInfo objectForKey:@"sections"]];
+        
+        theTableView.hidden = NO;
+        
+        openSectionIndex = NSNotFound;
+        
+        [theTableView reloadData];
+    }else{
+        NSString *technicianName = theData;
+        
+        currentInspection.generalSettings.technician = technicianName;
+        
+        currentTextField.text = currentInspection.generalSettings.technician;
+    }
 }
 
 
@@ -837,6 +936,19 @@
     [self.navigationController pushViewController:renderPDFVC animated:YES];
 }
 
+-(void)showPicker{
+    if(pickerHelper){
+        pickerHelper = nil;
+    }
+    if([pickerType isEqualToString:kDataPurpose]){
+        pickerHelper = [[PickerViewHelper alloc]initWithDataSource:substations andPurpose:@"Data"];
+    }else{
+        pickerHelper = [[PickerViewHelper alloc]initWithDataSource:currentInspection.generalSettings.technicianChoices andPurpose:@"Name"];
+    }
+    pickerHelper.delegate = self;
+    [pickerHelper displayPicker];
+}
+
 
 #pragma mark - UIAlertView Methods
 
@@ -851,6 +963,7 @@
 #pragma mark - MenuButton Methods
 
 -(void)displayMenuForButton{
+    pickerType = kDataPurpose;
     [[MenuButtonHelper sharedHelper]displayMenu];
 }
 

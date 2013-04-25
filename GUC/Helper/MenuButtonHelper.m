@@ -23,6 +23,8 @@ _Pragma("clang diagnostic pop") \
 @property(nonatomic)SEL buttonOneSelector;
 @property(nonatomic)id buttonTwoTarget;
 @property(nonatomic)SEL buttonTwoSelector;
+@property(nonatomic)id buttonThreeTarget;
+@property(nonatomic)SEL buttonThreeSelector;
 
 @end
 
@@ -33,7 +35,9 @@ _Pragma("clang diagnostic pop") \
 @synthesize buttonOneTarget;
 @synthesize buttonOneSelector;
 @synthesize buttonTwoTarget;
-@synthesize buttonTwoSelector; 
+@synthesize buttonTwoSelector;
+@synthesize buttonThreeTarget;
+@synthesize buttonThreeSelector;
 
 static UIViewController *parentController;
 
@@ -61,6 +65,11 @@ static UIViewController *parentController;
     buttonTwoSelector = aSelector;
 }
 
+-(void)setButtonThreeTarget:(id)aTarget forSelector:(SEL)aSelector{
+    buttonThreeTarget = aTarget;
+    buttonThreeSelector = aSelector;
+}
+
 -(void)displayMenu{
     [actionSheet showInView:parentController.view];
 }
@@ -80,13 +89,19 @@ static UIViewController *parentController;
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     switch (buttonIndex) {
         case 0:
-            SuppressPerformSelectorLeakWarning([buttonOneTarget performSelector:buttonOneSelector]);
+            if(buttonOneTarget != nil){
+                SuppressPerformSelectorLeakWarning([buttonOneTarget performSelector:buttonOneSelector]);
+            }
             break;
         case 1:
-            SuppressPerformSelectorLeakWarning([buttonTwoTarget performSelector:buttonTwoSelector]);
+            if(buttonTwoTarget != nil){
+                SuppressPerformSelectorLeakWarning([buttonTwoTarget performSelector:buttonTwoSelector]);
+            }
             break;
         case 2:
-            // Cancel pressed. Do nothing.
+            if(buttonThreeTarget != nil){
+               SuppressPerformSelectorLeakWarning([buttonThreeTarget performSelector:buttonThreeSelector]);
+            }
             break;
         default:
             break;

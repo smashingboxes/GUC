@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "InspectionCellHeaderView.h"
 #import "AsyncRequest.h"
+#import "PickerViewHelper.h"
 
-@interface InspectionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, InspectionCellHeaderViewDelegate, AsyncResponseDelegate>
+@interface InspectionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,InspectionCellHeaderViewDelegate, AsyncResponseDelegate, PickerViewHelperDelegate>
 
 -(id)initWithStation:(NSString*)station;
 

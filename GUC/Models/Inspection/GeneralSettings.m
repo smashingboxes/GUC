@@ -13,6 +13,7 @@
 @synthesize stationName;
 @synthesize dateTime;
 @synthesize technician;
+@synthesize technicianChoices;
 @synthesize kwh;
 @synthesize mwd;
 @synthesize positiveKVARH;

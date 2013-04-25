@@ -14,6 +14,7 @@
 +(void)setParentController:(UIViewController*)parentController;
 -(void)setButtonOneTarget:(id)aTarget forSelector:(SEL)aSelector;
 -(void)setButtonTwoTarget:(id)aTarget forSelector:(SEL)aSelector;
+-(void)setButtonThreeTarget:(id)aTarget forSelector:(SEL)aSelector;
 -(void)displayMenu;
 -(void)addButtonsWithTitlesToActionSheet:(NSArray*)titles;
 
