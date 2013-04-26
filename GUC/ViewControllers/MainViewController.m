@@ -32,14 +32,17 @@
     self.navigationItem.title = @"Welcome!";
     [self setAccessibilityLabel:@"Main"];
     
-    [PickerViewHelper setParentView:self];
-    
     [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
-    
-    [[NetworkConnectionManager sharedManager]beginConnectionWithPurpose:@"Names" forCaller:self];
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    [PickerViewHelper setParentView:self];
+    [[NetworkConnectionManager sharedManager]beginConnectionWithPurpose:@"Names" forCaller:self];
 }
 
 /*-(IBAction)loginButtonPressed:(id)sender{
@@ -96,9 +99,10 @@
         
         NSLog(@"Returned objects are:\n%@", theObjects);
 
-        if(!pickerHelper){
-            pickerHelper = [[PickerViewHelper alloc]initWithDataSource:technicianList andPurpose:@"Name"];
+        if(pickerHelper){
+            pickerHelper = nil;
         }
+        pickerHelper = [[PickerViewHelper alloc]initWithDataSource:technicianList andPurpose:@"Name"];
         pickerHelper.delegate = self;
         [pickerHelper displayPicker];
     }
