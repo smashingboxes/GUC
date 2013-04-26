@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AsyncRequest.h"
+#import "PickerViewHelper.h"
 
-@interface MainViewController : UIViewController <UITextFieldDelegate>
+@interface MainViewController : UIViewController <UITextFieldDelegate, AsyncResponseDelegate, PickerViewHelperDelegate>
 
 @end

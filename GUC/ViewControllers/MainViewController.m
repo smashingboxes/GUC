@@ -9,35 +9,43 @@
 #import "MainViewController.h"
 #import "NewInspectionsViewController.h"
 #import "NavigationBarHelper.h"
+#import "NetworkConnectionManager.h"
+
 #define kOperatorInformation @"guc_operator.plist"
 
 @interface MainViewController ()
 
 @property(nonatomic)IBOutlet UITextField *nameField;
+@property(nonatomic)PickerViewHelper *pickerHelper;
 
--(IBAction)loginButtonPressed:(id)sender;
+//-(IBAction)loginButtonPressed:(id)sender;
 
 @end
 
 @implementation MainViewController
 
 @synthesize nameField;
+@synthesize pickerHelper;
 
 - (void)viewDidLoad
 {
     self.navigationItem.title = @"Welcome!";
+    [self setAccessibilityLabel:@"Main"];
+    
+    [PickerViewHelper setParentView:self];
     
     [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
+    
+    [[NetworkConnectionManager sharedManager]beginConnectionWithPurpose:@"Names" forCaller:self];
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
--(IBAction)loginButtonPressed:(id)sender{
+/*-(IBAction)loginButtonPressed:(id)sender{
     if([nameField.text length] > 0){
-        [self saveNameToDisk];
-        NewInspectionsViewController *newInspectionVC = [[NewInspectionsViewController alloc]init];
-        [self.navigationController pushViewController:newInspectionVC animated:YES];
+        [self saveNameToDisk:nameField.text];
+        [self transitionToNewInspections];
     }else{
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"No Name"
                                                            message:@"Please enter your name to continue."
@@ -46,10 +54,10 @@
                                                  otherButtonTitles:nil];
         [alertView show];
     }
-}
+}*/
 
--(void)saveNameToDisk{
-    NSArray *nameArray = [[NSArray alloc]initWithObjects:nameField.text, nil];
+-(void)saveNameToDisk:(NSString*)theName{
+    NSArray *nameArray = [[NSArray alloc]initWithObjects:theName, nil];
     [nameArray writeToFile:[self operatorPropertyList] atomically:YES];
 }
 
@@ -57,6 +65,11 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     return [documentsDirectory stringByAppendingPathComponent:kOperatorInformation];
+}
+
+-(void)transitionToNewInspections{
+    NewInspectionsViewController *newInspectionVC = [[NewInspectionsViewController alloc]init];
+    [self.navigationController pushViewController:newInspectionVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,10 +81,42 @@
 
 #pragma mark - UITextField Delegate Methods
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
+/*-(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     
     return YES;
+}*/
+
+
+#pragma mark - AsyncResponse Delegate Methods
+
+-(void)asyncResponseDidReturnObjects:(NSArray *)theObjects{
+    if(theObjects){
+        NSArray *technicianList = [[NSArray alloc]initWithArray:theObjects];
+        
+        NSLog(@"Returned objects are:\n%@", theObjects);
+
+        if(!pickerHelper){
+            pickerHelper = [[PickerViewHelper alloc]initWithDataSource:technicianList andPurpose:@"Name"];
+        }
+        pickerHelper.delegate = self;
+        [pickerHelper displayPicker];
+    }
+}
+
+-(void)asyncResponseDidFailWithError{
+    NSLog(@"Error!");
+}
+
+
+#pragma mark - PickerViewHelper Delegate Methods
+
+-(void)pickerDidPickData:(id)theData atIndex:(NSInteger)theIndex forPurpose:(NSString *)purpose{
+    if(theData){
+        NSLog(@"The name picked was: %@",theData);
+        [self saveNameToDisk:theData];
+        [self transitionToNewInspections];
+    }
 }
 
 @end

@@ -11,5 +11,6 @@
 @interface StationNetworkFactory : NSObject
 
 +(NSURL*)generateURLForStation:(NSString*)stationName;
++(NSURL*)generateURLForTechnicianNames;
 
 @end

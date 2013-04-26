@@ -51,7 +51,23 @@
         StationInformationOperation *theOperation = [[StationInformationOperation alloc]initWithURL:connectionURL andDelegate:self];
         [networkQueue addOperation:theOperation];
     }
+}
 
+-(void)beginConnectionWithPurpose:(NSString*)thePurpose forCaller:(id<AsyncResponseDelegate>)theDelegate{
+    if(!networkQueue){
+        [self initializeNetworkQueue];
+        [self beginConnectionWithPurpose:thePurpose forCaller:theDelegate];
+    }else{
+        NSURL *connectionURL;
+        if([thePurpose isEqualToString:@"Names"]){
+            connectionURL = [StationNetworkFactory generateURLForTechnicianNames];
+        }
+        currentRequest = [[AsyncRequest alloc]init];
+        currentRequest.delegate = theDelegate;
+        
+        StationInformationOperation *theOperation = [[StationInformationOperation alloc]initWithURL:connectionURL andDelegate:self];
+        [networkQueue addOperation:theOperation];
+    }
 }
 
 -(void)operationDidReturnWithData:(NSMutableData *)theData{

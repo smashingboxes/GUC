@@ -17,4 +17,11 @@
     return theURL;
 }
 
++(NSURL*)generateURLForTechnicianNames{
+    NSString *urlString = @"https://wsvcs.guc.com/substationtechnicianlist.php";
+    NSURL *theURL = [[NSURL alloc]initWithString:urlString];
+    
+    return theURL;
+}
+
 @end

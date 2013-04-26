@@ -11,6 +11,6 @@
 
 @interface RenderPDFViewController : UIViewController
 
--(id)initWithInspectionData:(Inspection*)theInspection;
+-(id)initWithInspection:(Inspection*)theInspection;
 
 @end

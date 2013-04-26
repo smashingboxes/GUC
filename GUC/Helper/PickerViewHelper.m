@@ -103,9 +103,8 @@ static UIViewController *parentViewController;
 }
 
 -(NSString *)pickerView:(UIPickerView *)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    NSMutableArray *nameArray = [[NSMutableArray alloc]init];
     if([parentViewController.accessibilityLabel isEqualToString:@"Inspection"]){
-        NSMutableArray *nameArray = [[NSMutableArray alloc]init];
-        
         if([thePurpose isEqualToString:@"Data"]){
             for(int i = 0; i < [dataArray count]; i++){
                 NSDictionary *stationDictionary = [dataArray objectAtIndex:i];
@@ -118,12 +117,13 @@ static UIViewController *parentViewController;
                 [nameArray addObject:[dataArray objectAtIndex:i]];
             }
         }
-        return [nameArray objectAtIndex:row];
     }else if([parentViewController.accessibilityLabel isEqualToString:@"Main"]){
-    
+        for(int i = 0; i < [dataArray count]; i++){
+            [nameArray addObject:[dataArray objectAtIndex:i]];
+        }
     }
     
-    return nil;
+    return [nameArray objectAtIndex:row];;
 }
 
 -(void)donePressed:(id)sender{

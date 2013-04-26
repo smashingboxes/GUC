@@ -18,7 +18,7 @@
 #import "CustomLoadingView.h"
 
 #define kDataPurpose @"Data"
-#define kNamePurpose @"Name"
+#define kStringPurpose @"String"
 
 #define kOperatorInformation @"guc_operator.plist"
 
@@ -41,6 +41,7 @@
 @property(nonatomic)PickerViewHelper *pickerHelper;
 @property(nonatomic)NSString *pickerType;
 @property(nonatomic)UITextField *currentTextField;
+@property(nonatomic)NSArray *currentChoices;
 
 @end
 
@@ -59,6 +60,7 @@
 @synthesize pickerHelper;
 @synthesize pickerType;
 @synthesize currentTextField;
+@synthesize currentChoices;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -234,7 +236,6 @@
     }else if([currentField.name isEqualToString:@"Technician"]){
         if(!currentInspection.generalSettings.technician){
             currentInspection.generalSettings.technician = [self loadOperatorName];
-            currentInspection.generalSettings.technicianChoices = currentField.choices;
         }
         cell.cellField.text = currentInspection.generalSettings.technician;
         cell.cellField.userInteractionEnabled = YES;
@@ -356,8 +357,9 @@
     
     NSArray *fieldValues = [self getValuesForCurrentField:textField];
     
-    if([[fieldValues objectAtIndex:0] isEqualToString:@"Technician"]){
-        pickerType = kNamePurpose;
+    if([fieldValues count] > 3){
+        pickerType = kStringPurpose;
+        currentChoices = [fieldValues objectAtIndex:3];
         [self showPicker];
         
         return NO;
@@ -442,7 +444,12 @@
     
     NSString *fieldValue = textField.text;
     
-    NSArray *fieldValues = [[NSArray alloc]initWithObjects:currentField.name, fieldValue, currentField.range, nil];
+    NSArray *fieldValues;
+    if([currentField.choices count] > 0){
+        fieldValues = [[NSArray alloc]initWithObjects:currentField.name, fieldValue, currentField.range, currentField.choices,nil];
+    }else{
+        fieldValues = [[NSArray alloc]initWithObjects:currentField.name, fieldValue, currentField.range, nil];
+    }
     
     return fieldValues;
 }
@@ -932,7 +939,7 @@
             }
         }
     }
-    RenderPDFViewController *renderPDFVC = [[RenderPDFViewController alloc]initWithInspectionData:currentInspection];
+    RenderPDFViewController *renderPDFVC = [[RenderPDFViewController alloc]initWithInspection:currentInspection];
     [self.navigationController pushViewController:renderPDFVC animated:YES];
 }
 
@@ -941,9 +948,9 @@
         pickerHelper = nil;
     }
     if([pickerType isEqualToString:kDataPurpose]){
-        pickerHelper = [[PickerViewHelper alloc]initWithDataSource:substations andPurpose:@"Data"];
+        pickerHelper = [[PickerViewHelper alloc]initWithDataSource:substations andPurpose:kDataPurpose];
     }else{
-        pickerHelper = [[PickerViewHelper alloc]initWithDataSource:currentInspection.generalSettings.technicianChoices andPurpose:@"Name"];
+        pickerHelper = [[PickerViewHelper alloc]initWithDataSource:currentChoices andPurpose:kStringPurpose];
     }
     pickerHelper.delegate = self;
     [pickerHelper displayPicker];

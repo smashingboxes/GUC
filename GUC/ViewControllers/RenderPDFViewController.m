@@ -12,11 +12,40 @@
 
 @property(nonatomic)Inspection *currentInspection;
 
+// Header Labels
+@property(nonatomic)IBOutlet UILabel *stationNameLabel;
+@property(nonatomic)IBOutlet UILabel *dateTimeLabel;
+@property(nonatomic)IBOutlet UILabel *technicianLabel;
+
+// General Labels
+@property(nonatomic)IBOutlet UILabel *kwhLabel;
+@property(nonatomic)IBOutlet UILabel *mwdLabel;
+@property(nonatomic)IBOutlet UILabel *plusKVARHLabel;
+@property(nonatomic)IBOutlet UILabel *minusKVARHLabel;
+@property(nonatomic)IBOutlet UILabel *maxVARDLabel;
+@property(nonatomic)IBOutlet UILabel *minVARDLabel;
+
+// Views
+@property(nonatomic)IBOutlet UIView *generalView;
+
 @end
 
 @implementation RenderPDFViewController
 
 @synthesize currentInspection;
+
+@synthesize stationNameLabel;
+@synthesize dateTimeLabel;
+@synthesize technicianLabel;
+
+@synthesize kwhLabel;
+@synthesize mwdLabel;
+@synthesize plusKVARHLabel;
+@synthesize minusKVARHLabel;
+@synthesize maxVARDLabel;
+@synthesize minVARDLabel;
+
+@synthesize generalView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,12 +56,12 @@
     return self;
 }
 
--(id)initWithInspectionData:(Inspection *)theInspection{
+-(id)initWithInspection:(Inspection *)theInspection{
     if(self == [super init]){
         if(!currentInspection){
             currentInspection = [[Inspection alloc]init];
-            currentInspection = theInspection;
         }
+        currentInspection = theInspection;
     }
     return self;
 }

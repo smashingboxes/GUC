@@ -13,7 +13,6 @@
 @property (nonatomic) NSString *stationName;
 @property (nonatomic) NSString *dateTime;
 @property (nonatomic) NSString *technician;
-@property (nonatomic) NSArray *technicianChoices;
 
 @property (nonatomic) NSString *kwh;
 @property (nonatomic) NSString *mwd;

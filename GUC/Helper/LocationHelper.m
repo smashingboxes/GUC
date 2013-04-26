@@ -23,9 +23,9 @@
 -(void)findLocation{
     locationManager = [[CLLocationManager alloc]init];
     locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.pausesLocationUpdatesAutomatically = NO;
+    //locationManager.pausesLocationUpdatesAutomatically = NO;
     [locationManager startUpdatingLocation];
     NSLog(@"Beginning to update location...");
 }
