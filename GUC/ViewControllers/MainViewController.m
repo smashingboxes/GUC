@@ -102,7 +102,7 @@
         if(pickerHelper){
             pickerHelper = nil;
         }
-        pickerHelper = [[PickerViewHelper alloc]initWithDataSource:technicianList andPurpose:@"Name"];
+        pickerHelper = [[PickerViewHelper alloc]initWithDataSource:technicianList andPurpose:@"String"];
         pickerHelper.delegate = self;
         [pickerHelper displayPicker];
     }
