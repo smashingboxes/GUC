@@ -16,7 +16,7 @@
 
 @interface PickerViewHelper : NSObject <UIPickerViewDelegate, UIPickerViewDataSource>
 
-@property(nonatomic)id<PickerViewHelperDelegate> delegate;
+@property(nonatomic,weak)id<PickerViewHelperDelegate> delegate;
 
 +(void)setParentView:(UIViewController*)parentController;
 -(id)initWithDataSource:(NSArray*)theData andPurpose:(NSString*)purpose;

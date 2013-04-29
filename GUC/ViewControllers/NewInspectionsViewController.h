@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "LocationHelper.h"
 
-@interface NewInspectionsViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,LocationHelperDelegate>
+@interface NewInspectionsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, LocationHelperDelegate>
 
 @end
