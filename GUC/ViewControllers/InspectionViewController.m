@@ -224,7 +224,8 @@
     if([currentField.name isEqualToString:@"StationName"]){
         cell.cellField.text = currentInspection.generalSettings.stationName;
         cell.cellField.userInteractionEnabled = NO;
-    }else if([currentField.name isEqualToString:@"DateTime"]){
+    }
+    if([currentField.name isEqualToString:@"DateTime"]){
         if(!currentInspection.generalSettings.dateTime){
             NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
             [dateFormat setDateFormat:@"MMMM dd, yyyy"];
@@ -233,19 +234,19 @@
         }
         cell.cellField.text = currentInspection.generalSettings.dateTime;
         cell.cellField.userInteractionEnabled = NO;
-    }else if([currentField.name isEqualToString:@"Technician"]){
+    }
+    if([currentField.name isEqualToString:@"Technician"]){
         if(!currentInspection.generalSettings.technician){
             currentInspection.generalSettings.technician = [self loadOperatorName];
         }
         cell.cellField.text = currentInspection.generalSettings.technician;
         cell.cellField.userInteractionEnabled = YES;
-    }else if([currentField.name isEqualToString:@"TargetsAndAlarms"]){
+    }
+    if([currentField.name isEqualToString:@"TargetsAndAlarms"]){
         if(indexPath.row == [fieldsArray count]-1){
             cell.cellField.hidden = YES;
             cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         }
-    }else{
-        // Do nothing.
     }
     
     return cell;
@@ -917,7 +918,7 @@
 }
 
 -(void)transitionToPDFView{
-    for(int i = 0; i < [inspectionFormHelper.containerArray count]; i++){
+    /*for(int i = 0; i < [inspectionFormHelper.containerArray count]; i++){
         NSArray *firstArray = [inspectionFormHelper.containerArray objectAtIndex:i];
         NSArray *fieldsArray = [firstArray objectAtIndex:1];
         
@@ -938,7 +939,7 @@
                 return;
             }
         }
-    }
+    }*/
     RenderPDFViewController *renderPDFVC = [[RenderPDFViewController alloc]initWithInspection:currentInspection];
     [self.navigationController pushViewController:renderPDFVC animated:YES];
 }

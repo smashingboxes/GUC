@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "Inspection.h"
 
-@interface RenderPDFViewController : UIViewController
+
+@interface RenderPDFViewController : UIViewController <MFMailComposeViewControllerDelegate>
 
 -(id)initWithInspection:(Inspection*)theInspection;
 
