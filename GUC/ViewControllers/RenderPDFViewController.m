@@ -379,6 +379,9 @@
     
     NSString *pdfFileName = [self createPDFFileNameWithStation:currentInspection.generalSettings.stationName date:currentInspection.generalSettings.dateTime andTechnician:currentInspection.generalSettings.technician];
     
+    
+    NSString *subjectString = [[NSString alloc]initWithFormat:@"%@ %@",currentInspection.generalSettings.stationName, currentInspection.generalSettings.dateTime];
+    [mailComposer setSubject:subjectString];
     [mailComposer addAttachmentData:pdfData mimeType:@"application/pdf" fileName:pdfFileName];
     [self presentViewController:mailComposer animated:YES completion:nil];
 }
