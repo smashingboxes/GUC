@@ -278,8 +278,7 @@
 }
 
 -(NSString*)pdfFilePathWithStation:(NSString*)station date:(NSString*)date andTechnician:(NSString*)technician{
-    NSString *trimmedDate = [date stringByReplacingOccurrencesOfString:@" " withString:@""];
-    trimmedDate = [trimmedDate stringByReplacingOccurrencesOfString:@"," withString:@""];
+    NSString *trimmedDate = [self trimString:date];
     
     NSString *theFileName = [[NSString alloc]initWithFormat:@"%@_%@_%@.pdf", station, trimmedDate, technician];
     
@@ -289,13 +288,19 @@
 }
 
 -(NSString*)createPDFFileNameWithStation:(NSString*)station date:(NSString*)date andTechnician:(NSString*)technician{
-    NSString *trimmedDate = [date stringByReplacingOccurrencesOfString:@" " withString:@""];
-    trimmedDate = [trimmedDate stringByReplacingOccurrencesOfString:@"," withString:@""];
+    NSString *trimmedDate = [self trimString:date];
     
     NSString *theFileName = [[NSString alloc]initWithFormat:@"%@_%@_%@.pdf", station, trimmedDate, technician];
     NSLog(@"File name is: %@",theFileName);
     
     return theFileName;
+}
+
+-(NSString*)trimString:(NSString*)theString{
+    NSString *trimmedString = [theString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    trimmedString = [trimmedString stringByReplacingOccurrencesOfString:@"," withString:@""];
+    
+    return trimmedString;
 }
 
 -(void)changePage{
