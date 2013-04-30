@@ -30,6 +30,6 @@
 @property (nonatomic) NSString *maxVoltsB;
 @property (nonatomic) NSString *maxVoltsC;
 
-@property (nonatomic) NSArray *targetsAlarms;
+@property (nonatomic) NSString *targetsAlarms;
 
 @end

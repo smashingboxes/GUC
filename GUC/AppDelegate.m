@@ -16,10 +16,10 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        UIViewController *aViewController = [[MainViewController alloc] initWithNibName:@"MainViewController_iPhone" bundle:nil];
-        self.viewController = [[UINavigationController alloc]initWithRootViewController:aViewController];
-    } else {
+    //if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    UIViewController *aViewController = [[MainViewController alloc] initWithNibName:@"MainViewController_iPhone" bundle:nil];
+    self.viewController = [[UINavigationController alloc]initWithRootViewController:aViewController];
+    /*} else {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Not an iPhone!"
                                                        message:@"The application currently does not support this device.\nPlease download the application again on an iPhone."
                                                       delegate:self
@@ -27,7 +27,7 @@
                                              otherButtonTitles:nil];
         [alert show];
         //self.viewController = [[MainViewController alloc] initWithNibName:@"MainViewController_iPad" bundle:nil];
-    }
+    }*/
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     return YES;

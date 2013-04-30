@@ -14,7 +14,7 @@
 @property(nonatomic)Inspection *currentInspection;
 @property(nonatomic)MFMailComposeViewController *mailComposer;
 @property(nonatomic)NSMutableArray *imageArray;
-@property(nonatomic)NSInteger currentPage;
+@property(nonatomic)NSInteger pdfPage;
 
 // Header Labels
 @property(nonatomic)IBOutlet UILabel *stationNameLabel;
@@ -28,6 +28,24 @@
 @property(nonatomic)IBOutlet UILabel *minusKVARHLabel;
 @property(nonatomic)IBOutlet UILabel *maxVARDLabel;
 @property(nonatomic)IBOutlet UILabel *minVARDLabel;
+
+// SwitchBoard Labels
+@property(nonatomic)IBOutlet UILabel *maxAmpALabel;
+@property(nonatomic)IBOutlet UILabel *maxAmpBLabel;
+@property(nonatomic)IBOutlet UILabel *maxAmpCLabel;
+@property(nonatomic)IBOutlet UILabel *presentAmpALabel;
+@property(nonatomic)IBOutlet UILabel *presentAmpBLabel;
+@property(nonatomic)IBOutlet UILabel *presentAmpCLabel;
+@property(nonatomic)IBOutlet UILabel *minVoltsALabel;
+@property(nonatomic)IBOutlet UILabel *minVoltsBLabel;
+@property(nonatomic)IBOutlet UILabel *minVoltsCLabel;
+@property(nonatomic)IBOutlet UILabel *presentVoltsALabel;
+@property(nonatomic)IBOutlet UILabel *presentVoltsBLabel;
+@property(nonatomic)IBOutlet UILabel *presentVoltsCLabel;
+@property(nonatomic)IBOutlet UILabel *maxVoltsALabel;
+@property(nonatomic)IBOutlet UILabel *maxVoltsBLabel;
+@property(nonatomic)IBOutlet UILabel *maxVoltsCLabel;
+@property(nonatomic)IBOutlet UITextView *targetsAndAlarmsView;
 
 // Views
 @property(nonatomic)IBOutlet UIView *firstPage;
@@ -44,7 +62,7 @@
 @synthesize currentInspection;
 @synthesize mailComposer;
 @synthesize imageArray;
-@synthesize currentPage;
+@synthesize pdfPage;
 
 @synthesize stationNameLabel;
 @synthesize dateTimeLabel;
@@ -62,6 +80,23 @@
 @synthesize thirdPage;
 @synthesize fourthPage;
 @synthesize fifthPage;
+
+@synthesize maxAmpALabel;
+@synthesize maxAmpBLabel;
+@synthesize maxAmpCLabel;
+@synthesize presentAmpALabel;
+@synthesize presentAmpBLabel;
+@synthesize presentAmpCLabel;
+@synthesize minVoltsALabel;
+@synthesize minVoltsBLabel;
+@synthesize minVoltsCLabel;
+@synthesize presentVoltsALabel;
+@synthesize presentVoltsBLabel;
+@synthesize presentVoltsCLabel;
+@synthesize maxVoltsALabel;
+@synthesize maxVoltsBLabel;
+@synthesize maxVoltsCLabel;
+@synthesize targetsAndAlarmsView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -96,7 +131,7 @@
     
     imageArray = [[NSMutableArray alloc]init];
     
-    currentPage = 0;
+    pdfPage = 0;
     
     [self addInspectionDataToLabels];
     
@@ -106,50 +141,132 @@
 
 -(void)addInspectionDataToLabels{
     if(currentInspection){
+        NSString *notAvailable = @"N/A";
+        
         if(currentInspection.generalSettings.stationName){
             stationNameLabel.text = currentInspection.generalSettings.stationName;
         }else{
-            stationNameLabel.text = @"N/A";
+            stationNameLabel.text = notAvailable;
         }
         if(currentInspection.generalSettings.dateTime){
             dateTimeLabel.text = currentInspection.generalSettings.dateTime;
         }else{
-            dateTimeLabel.text = @"N/A";
+            dateTimeLabel.text = notAvailable;
         }
         if(currentInspection.generalSettings.technician){
             technicianLabel.text = currentInspection.generalSettings.technician;
         }else{
-            technicianLabel.text = @"N/A";
+            technicianLabel.text = notAvailable;
         }
         if(currentInspection.generalSettings.kwh){
             kwhLabel.text = currentInspection.generalSettings.kwh;
         }else{
-            kwhLabel.text = @"N/A";
+            kwhLabel.text = notAvailable;
         }
         if(currentInspection.generalSettings.mwd){
             mwdLabel.text = currentInspection.generalSettings.mwd;
         }else{
-            mwdLabel.text = @"N/A";
+            mwdLabel.text = notAvailable;
         }
         if(currentInspection.generalSettings.positiveKVARH){
             plusKVARHLabel.text = currentInspection.generalSettings.positiveKVARH;
         }else{
-            plusKVARHLabel.text = @"N/A";
+            plusKVARHLabel.text = notAvailable;
         }
         if(currentInspection.generalSettings.negativeKVARH){
             minusKVARHLabel.text = currentInspection.generalSettings.negativeKVARH;
         }else{
-            minusKVARHLabel.text = @"N/A";
+            minusKVARHLabel.text = notAvailable;
         }
         if(currentInspection.generalSettings.maxVARD){
             maxVARDLabel.text = currentInspection.generalSettings.maxVARD;
         }else{
-            maxVARDLabel.text = @"N/A";
+            maxVARDLabel.text = notAvailable;
         }
         if(currentInspection.generalSettings.minVARD){
             minVARDLabel.text = currentInspection.generalSettings.minVARD;
         }else{
-            minVARDLabel.text = @"N/A";
+            minVARDLabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.maxAmpA){
+            maxAmpALabel.text = currentInspection.switchBoard.maxAmpA;
+        }else{
+            maxAmpALabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.maxAmpB){
+            maxAmpBLabel.text = currentInspection.switchBoard.maxAmpB;
+        }else{
+            maxAmpBLabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.maxAmpC){
+            maxAmpCLabel.text = currentInspection.switchBoard.maxAmpC;
+        }else{
+            maxAmpCLabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.presentAmpA){
+            presentAmpALabel.text = currentInspection.switchBoard.presentAmpA;
+        }else{
+            presentAmpALabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.presentAmpB){
+            presentAmpBLabel.text = currentInspection.switchBoard.presentAmpB;
+        }else{
+            presentAmpBLabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.presentAmpC){
+            presentAmpCLabel.text = currentInspection.switchBoard.presentAmpC;
+        }else{
+            presentAmpCLabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.minVoltsA){
+            minVoltsALabel.text = currentInspection.switchBoard.minVoltsA;
+        }else{
+            minVoltsALabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.minVoltsB){
+            minVoltsBLabel.text = currentInspection.switchBoard.minVoltsB;
+        }else{
+            minVoltsBLabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.minVoltsC){
+            minVoltsCLabel.text = currentInspection.switchBoard.minVoltsC;
+        }else{
+            minVoltsCLabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.presentVoltsA){
+            presentVoltsALabel.text = currentInspection.switchBoard.presentVoltsA;
+        }else{
+            presentVoltsALabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.presentVoltsB){
+            presentVoltsBLabel.text = currentInspection.switchBoard.presentVoltsB;
+        }else{
+            presentVoltsBLabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.presentVoltsC){
+            presentVoltsCLabel.text = currentInspection.switchBoard.presentVoltsC;
+        }else{
+            presentVoltsCLabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.maxVoltsA){
+            maxVoltsALabel.text = currentInspection.switchBoard.maxVoltsA;
+        }else{
+            maxVoltsALabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.maxVoltsB){
+            maxVoltsBLabel.text = currentInspection.switchBoard.maxVoltsB;
+        }else{
+            maxVoltsBLabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.maxVoltsC){
+            maxVoltsCLabel.text = currentInspection.switchBoard.maxVoltsC;
+        }else{
+            maxVoltsCLabel.text = notAvailable;
+        }
+        if(currentInspection.switchBoard.targetsAlarms){
+            targetsAndAlarmsView.text = currentInspection.switchBoard.targetsAlarms;
+        }else{
+            targetsAndAlarmsView.text = notAvailable;
         }
     }
 }
@@ -160,20 +277,29 @@
     // Dispose of any resources that can be recreated.
 }
 
--(NSString*)pdfFilePathWithName:(NSString*)name date:(NSString*)date andTechnician:(NSString*)technician{
+-(NSString*)pdfFilePathWithStation:(NSString*)station date:(NSString*)date andTechnician:(NSString*)technician{
     NSString *trimmedDate = [date stringByReplacingOccurrencesOfString:@" " withString:@""];
     trimmedDate = [trimmedDate stringByReplacingOccurrencesOfString:@"," withString:@""];
     
-    NSString *theFileName = [[NSString alloc]initWithFormat:@"%@_%@_%@.pdf", name, trimmedDate, technician];
-    NSLog(@"File name is: %@",theFileName);
+    NSString *theFileName = [[NSString alloc]initWithFormat:@"%@_%@_%@.pdf", station, trimmedDate, technician];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     return [documentsDirectory stringByAppendingPathComponent:theFileName];
 }
 
+-(NSString*)createPDFFileNameWithStation:(NSString*)station date:(NSString*)date andTechnician:(NSString*)technician{
+    NSString *trimmedDate = [date stringByReplacingOccurrencesOfString:@" " withString:@""];
+    trimmedDate = [trimmedDate stringByReplacingOccurrencesOfString:@"," withString:@""];
+    
+    NSString *theFileName = [[NSString alloc]initWithFormat:@"%@_%@_%@.pdf", station, trimmedDate, technician];
+    NSLog(@"File name is: %@",theFileName);
+    
+    return theFileName;
+}
+
 -(void)changePage{
-    switch(currentPage){
+    switch(pdfPage){
         case 0:
             [self captureScreen];
             [self makeViewVanish:firstPage];
@@ -199,7 +325,7 @@
         default:
             break;
     }
-    currentPage += 1;
+    pdfPage += 1;
 }
 
 -(void)makeViewVanish:(UIView*)aView{
@@ -224,7 +350,7 @@
 
 -(void)drawPDF{
     // Create the PDF context using the default page size of 612 x 792.
-    UIGraphicsBeginPDFContextToFile([self pdfFilePathWithName:currentInspection.generalSettings.stationName date:currentInspection.generalSettings.dateTime andTechnician:currentInspection.generalSettings.technician], CGRectZero, nil);
+    UIGraphicsBeginPDFContextToFile([self pdfFilePathWithStation:currentInspection.generalSettings.stationName date:currentInspection.generalSettings.dateTime andTechnician:currentInspection.generalSettings.technician], CGRectZero, nil);
     
     for(int i = 0; i < 5; i++){
         UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, 612, 792), nil);
@@ -242,9 +368,11 @@
 #pragma mark - MailPicker Methods
 
 -(void)displayMailComposer{
-    NSString *pdfFileName = [self pdfFilePathWithName:currentInspection.generalSettings.stationName date:currentInspection.generalSettings.dateTime andTechnician:currentInspection.generalSettings.technician];
+    NSString *pdfFilePath = [self pdfFilePathWithStation:currentInspection.generalSettings.stationName date:currentInspection.generalSettings.dateTime andTechnician:currentInspection.generalSettings.technician];
     
-    NSData *pdfData = [[NSData alloc]initWithContentsOfFile:pdfFileName];
+    NSData *pdfData = [[NSData alloc]initWithContentsOfFile:pdfFilePath];
+    
+    NSString *pdfFileName = [self createPDFFileNameWithStation:currentInspection.generalSettings.stationName date:currentInspection.generalSettings.dateTime andTechnician:currentInspection.generalSettings.technician];
     
     [mailComposer addAttachmentData:pdfData mimeType:@"application/pdf" fileName:pdfFileName];
     [self presentViewController:mailComposer animated:YES completion:nil];
@@ -255,6 +383,8 @@
         NSLog(@"Mail sent!");
     }else if(result == MFMailComposeResultFailed){
         NSLog(@"Mail failed to be sent.");
+    }else if(result == MFMailComposeResultCancelled){
+        NSLog(@"Mail cancelled");
     }
     [mailComposer dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
