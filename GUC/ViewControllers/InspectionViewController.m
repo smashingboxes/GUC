@@ -358,12 +358,15 @@
     
     NSArray *fieldValues = [self getValuesForCurrentField:textField];
     
-    if([fieldValues count] > 3){
-        pickerType = kStringPurpose;
-        currentChoices = [fieldValues objectAtIndex:3];
-        [self showPicker];
-        
-        return NO;
+    if(pickerHelper.pickerInView == NO){
+        if([fieldValues count] > 3){
+            pickerType = kStringPurpose;
+            currentChoices = [fieldValues objectAtIndex:3];
+            [self showPicker];
+            return NO;
+        }
+    }else if(pickerHelper.pickerInView == YES){
+        [pickerHelper removePicker];
     }
     return YES;
 }
@@ -446,7 +449,7 @@
     NSString *fieldValue = textField.text;
     
     NSArray *fieldValues;
-    if([currentField.choices count] > 0){
+    if(currentField.choices != (id)[NSNull null]){
         fieldValues = [[NSArray alloc]initWithObjects:currentField.name, fieldValue, currentField.range, currentField.choices,nil];
     }else{
         fieldValues = [[NSArray alloc]initWithObjects:currentField.name, fieldValue, currentField.range, nil];
@@ -559,17 +562,17 @@
         }else if([fieldName isEqualToString:@"Voltage C"]){
             currentInspection.ltcRegulator.voltageC = fieldValue;
         }else if([fieldName isEqualToString:@"BUS 1 Counter"]){
-            currentInspection.breakers.busOneCounter = fieldValue;
+            currentInspection.breakers.busSlotCounter = fieldValue;
         }else if([fieldName isEqualToString:@"BUS 1 Target"]){
-            currentInspection.breakers.busOneTarget = fieldValue;
+            currentInspection.breakers.busSlotTarget = fieldValue;
         }else if([fieldName isEqualToString:@"BUS 1 Oper"]){
-            currentInspection.breakers.busOneOperation = fieldValue;
+            currentInspection.breakers.busSlotOperation = fieldValue;
         }else if([fieldName isEqualToString:@"CKT 1 Counter"]){
-            currentInspection.breakers.cktOneCounter = fieldValue;
+            currentInspection.breakers.cktSlotOneCounter = fieldValue;
         }else if([fieldName isEqualToString:@"CKT 1 Target"]){
-            currentInspection.breakers.cktOneTarget = fieldValue;
+            currentInspection.breakers.cktSlotOneTarget = fieldValue;
         }else if([fieldName isEqualToString:@"CKT 1 Oper"]){
-            currentInspection.breakers.cktOneOperation = fieldValue;
+            currentInspection.breakers.cktSlotOneOperation = fieldValue;
         }else {
             // Do nothing.
         }
@@ -705,23 +708,23 @@
         if(currentInspection.ltcRegulator.voltageC)
             return currentInspection.ltcRegulator.voltageC;
     }else if([cellTitle isEqualToString:@"BUS 1 Counter"]){
-        if(currentInspection.breakers.busOneCounter)
-            return currentInspection.breakers.busOneCounter;
+        if(currentInspection.breakers.busSlotCounter)
+            return currentInspection.breakers.busSlotCounter;
     }else if([cellTitle isEqualToString:@"BUS 1 Target"]){
-        if(currentInspection.breakers.busOneTarget)
-            return currentInspection.breakers.busOneTarget;
+        if(currentInspection.breakers.busSlotTarget)
+            return currentInspection.breakers.busSlotTarget;
     }else if([cellTitle isEqualToString:@"BUS 1 Oper"]){
-        if(currentInspection.breakers.busOneOperation)
-            return currentInspection.breakers.busOneOperation;
+        if(currentInspection.breakers.busSlotOperation)
+            return currentInspection.breakers.busSlotOperation;
     }else if([cellTitle isEqualToString:@"CKT 1 Counter"]){
-        if(currentInspection.breakers.cktOneCounter)
-            return currentInspection.breakers.cktOneCounter;
+        if(currentInspection.breakers.cktSlotOneCounter)
+            return currentInspection.breakers.cktSlotOneCounter;
     }else if([cellTitle isEqualToString:@"CKT 1 Target"]){
-        if(currentInspection.breakers.cktOneTarget)
-            return currentInspection.breakers.cktOneTarget;
+        if(currentInspection.breakers.cktSlotOneTarget)
+            return currentInspection.breakers.cktSlotOneTarget;
     }else if([cellTitle isEqualToString:@"CKT 1 Oper"]){
-        if(currentInspection.breakers.cktOneOperation)
-            return currentInspection.breakers.cktOneOperation;
+        if(currentInspection.breakers.cktSlotOneOperation)
+            return currentInspection.breakers.cktSlotOneOperation;
     }else{
         // Do nothing.
     }

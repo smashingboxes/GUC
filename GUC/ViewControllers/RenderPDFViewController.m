@@ -28,6 +28,8 @@
 @property(nonatomic)IBOutlet UILabel *minusKVARHLabel;
 @property(nonatomic)IBOutlet UILabel *maxVARDLabel;
 @property(nonatomic)IBOutlet UILabel *minVARDLabel;
+@property(nonatomic)IBOutlet UITextView *rainGaugeView;
+@property(nonatomic)IBOutlet UITextView *detentionBasinCommentsView;
 
 // SwitchBoard Labels
 @property(nonatomic)IBOutlet UILabel *maxAmpALabel;
@@ -46,6 +48,36 @@
 @property(nonatomic)IBOutlet UILabel *maxVoltsBLabel;
 @property(nonatomic)IBOutlet UILabel *maxVoltsCLabel;
 @property(nonatomic)IBOutlet UITextView *targetsAndAlarmsView;
+
+// Battery/Charger Labels
+@property(nonatomic)IBOutlet UILabel *volts24vLabel;
+@property(nonatomic)IBOutlet UILabel *volts48vOneLabel;
+@property(nonatomic)IBOutlet UILabel *volts48vTwoLabel;
+@property(nonatomic)IBOutlet UILabel *volts125vOneLabel;
+@property(nonatomic)IBOutlet UILabel *volts125vTwoLabel;
+@property(nonatomic)IBOutlet UILabel *amps24vLabel;
+@property(nonatomic)IBOutlet UILabel *amps48vOneLabel;
+@property(nonatomic)IBOutlet UILabel *amps48vTwoLabel;
+@property(nonatomic)IBOutlet UILabel *amps125vOneLabel;
+@property(nonatomic)IBOutlet UILabel *amps125vTwoLabel;
+@property(nonatomic)IBOutlet UILabel *specGravity24vLabel;
+@property(nonatomic)IBOutlet UILabel *specGravity48vOneLabel;
+@property(nonatomic)IBOutlet UILabel *specGravity48vTwoLabel;
+@property(nonatomic)IBOutlet UILabel *specGravity125vOneLabel;
+@property(nonatomic)IBOutlet UILabel *specGravity125vTwoLabel;
+
+// Circuit Switcher Labels
+@property(nonatomic)IBOutlet UILabel *gasALabel;
+@property(nonatomic)IBOutlet UILabel *gasBLabel;
+@property(nonatomic)IBOutlet UILabel *gasCLabel;
+
+// Transformer Labels
+@property(nonatomic)IBOutlet UILabel *tankOilLevelLabel;
+@property(nonatomic)IBOutlet UILabel *pressureLabel;
+@property(nonatomic)IBOutlet UILabel *nitrogenTankLabel;
+@property(nonatomic)IBOutlet UILabel *windingTempLabel;
+@property(nonatomic)IBOutlet UILabel *oilTempLabel;
+@property(nonatomic)IBOutlet UILabel *bushingOilLevel;
 
 // Views
 @property(nonatomic)IBOutlet UIView *firstPage;
@@ -74,6 +106,8 @@
 @synthesize minusKVARHLabel;
 @synthesize maxVARDLabel;
 @synthesize minVARDLabel;
+@synthesize rainGaugeView;
+@synthesize detentionBasinCommentsView;
 
 @synthesize firstPage;
 @synthesize secondPage;
@@ -97,6 +131,33 @@
 @synthesize maxVoltsBLabel;
 @synthesize maxVoltsCLabel;
 @synthesize targetsAndAlarmsView;
+
+@synthesize volts24vLabel;
+@synthesize volts48vOneLabel;
+@synthesize volts48vTwoLabel;
+@synthesize volts125vOneLabel;
+@synthesize volts125vTwoLabel;
+@synthesize amps24vLabel;
+@synthesize amps48vOneLabel;
+@synthesize amps48vTwoLabel;
+@synthesize amps125vOneLabel;
+@synthesize amps125vTwoLabel;
+@synthesize specGravity24vLabel;
+@synthesize specGravity48vOneLabel;
+@synthesize specGravity48vTwoLabel;
+@synthesize specGravity125vOneLabel;
+@synthesize specGravity125vTwoLabel;
+
+@synthesize gasALabel;
+@synthesize gasBLabel;
+@synthesize gasCLabel;
+
+@synthesize tankOilLevelLabel;
+@synthesize pressureLabel;
+@synthesize nitrogenTankLabel;
+@synthesize windingTempLabel;
+@synthesize oilTempLabel;
+@synthesize bushingOilLevel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -143,6 +204,7 @@
     if(currentInspection){
         NSString *notAvailable = @"N/A";
         
+        // General Settings
         if(currentInspection.generalSettings.stationName){
             stationNameLabel.text = currentInspection.generalSettings.stationName;
         }else{
@@ -188,6 +250,18 @@
         }else{
             minVARDLabel.text = notAvailable;
         }
+        if(currentInspection.generalSettings.rainGauge){
+            rainGaugeView.text = currentInspection.generalSettings.rainGauge;
+        }else{
+            rainGaugeView.text = notAvailable;
+        }
+        if(currentInspection.generalSettings.detentionBasinComments){
+            detentionBasinCommentsView.text = currentInspection.generalSettings.detentionBasinComments;
+        }else{
+            detentionBasinCommentsView.text = notAvailable;
+        }
+        
+        // Switch Board
         if(currentInspection.switchBoard.maxAmpA){
             maxAmpALabel.text = currentInspection.switchBoard.maxAmpA;
         }else{
@@ -267,6 +341,142 @@
             targetsAndAlarmsView.text = currentInspection.switchBoard.targetsAlarms;
         }else{
             targetsAndAlarmsView.text = notAvailable;
+        }
+        
+        // Battery/Charger
+        if(currentInspection.batteryCharger.volts24V){
+            volts24vLabel.text = currentInspection.batteryCharger.volts24V;
+        }else{
+            volts24vLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.amps24V){
+            amps24vLabel.text = currentInspection.batteryCharger.amps24V;
+        }else{
+            amps24vLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.specGravity24V){
+            specGravity24vLabel.text = currentInspection.batteryCharger.specGravity24V;
+        }else{
+            specGravity24vLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.volts48VOne){
+            volts48vOneLabel.text = currentInspection.batteryCharger.volts48VOne;
+        }else{
+            volts48vOneLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.amps48VOne){
+            amps48vOneLabel.text = currentInspection.batteryCharger.amps48VOne;
+        }else{
+            amps48vOneLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.specGravity48VOne){
+            specGravity48vOneLabel.text = currentInspection.batteryCharger.specGravity48VOne;
+        }else{
+            specGravity48vOneLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.volts48VTwo){
+            volts48vTwoLabel.text = currentInspection.batteryCharger.volts48VTwo;
+        }else{
+            volts48vTwoLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.amps48VTwo){
+            amps48vTwoLabel.text = currentInspection.batteryCharger.amps48VTwo;
+        }else{
+            amps48vTwoLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.specGravity48VTwo){
+            specGravity48vTwoLabel.text = currentInspection.batteryCharger.specGravity48VTwo;
+        }else{
+            specGravity48vTwoLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.volts125VOne){
+            volts125vOneLabel.text = currentInspection.batteryCharger.volts125VOne;
+        }else{
+            volts125vOneLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.amps125VOne){
+            amps125vOneLabel.text = currentInspection.batteryCharger.amps125VOne;
+        }else{
+            amps125vOneLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.specGravity125VOne){
+            specGravity125vOneLabel.text = currentInspection.batteryCharger.specGravity125VOne;
+        }else{
+            specGravity125vOneLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.volts125VTwo){
+            volts125vTwoLabel.text = currentInspection.batteryCharger.volts125VTwo;
+        }else{
+            volts125vTwoLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.amps125VTwo){
+            amps125vTwoLabel.text = currentInspection.batteryCharger.amps125VTwo;
+        }else{
+            amps125vTwoLabel.text = notAvailable;
+        }
+        if(currentInspection.batteryCharger.specGravity125VTwo){
+            specGravity125vTwoLabel.text = currentInspection.batteryCharger.specGravity125VTwo;
+        }else{
+            specGravity125vTwoLabel.text = notAvailable;
+        }
+        
+        // Circuit Switcher
+        if(currentInspection.circuitSwitcher.gasA == YES){
+            gasALabel.text = @"Pass";
+        }else if(currentInspection.circuitSwitcher.gasA == NO){
+            gasALabel.text = @"Fail";
+        }else{
+            gasALabel.text = notAvailable;
+        }
+        if(currentInspection.circuitSwitcher.gasB == YES){
+            gasBLabel.text = @"Pass";
+        }else if(currentInspection.circuitSwitcher.gasB == NO){
+            gasBLabel.text = @"Fail";
+        }else{
+            gasBLabel.text = notAvailable;
+        }
+        if(currentInspection.circuitSwitcher.gasC == YES){
+            gasCLabel.text = @"Pass";
+        }else if(currentInspection.circuitSwitcher.gasC == NO){
+            gasCLabel.text = @"Fail";
+        }else{
+            gasCLabel.text = notAvailable;
+        }
+        
+        // Transformer
+        if(currentInspection.transformer.tankOilLevel == YES){
+            tankOilLevelLabel.text = @"Pass";
+        }else if(currentInspection.transformer.tankOilLevel == NO){
+            tankOilLevelLabel.text = @"Fail";
+        }else{
+            tankOilLevelLabel.text = notAvailable;
+        }
+        if(currentInspection.transformer.pressure){
+            pressureLabel.text = currentInspection.transformer.pressure;
+        }else{
+            pressureLabel.text = notAvailable;
+        }
+        if(currentInspection.transformer.nitrogenTank){
+            nitrogenTankLabel.text = currentInspection.transformer.nitrogenTank;
+        }else{
+            nitrogenTankLabel.text = notAvailable;
+        }
+        if(currentInspection.transformer.windingTemp){
+            windingTempLabel.text = currentInspection.transformer.windingTemp;
+        }else{
+            windingTempLabel.text = notAvailable;
+        }
+        if(currentInspection.transformer.oilTemp){
+            oilTempLabel.text = currentInspection.transformer.oilTemp;
+        }else{
+            oilTempLabel.text = notAvailable;
+        }
+        if(currentInspection.transformer.bushingOilLevel == YES){
+            bushingOilLevel.text = @"Pass";
+        }else if(currentInspection.transformer.bushingOilLevel == NO){
+            bushingOilLevel.text = @"Fail";
+        }else{
+            bushingOilLevel.text = notAvailable;
         }
     }
 }

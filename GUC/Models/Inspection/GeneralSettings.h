@@ -23,4 +23,7 @@
 @property (nonatomic) NSString *maxVARD;
 @property (nonatomic) NSString *minVARD;
 
+@property(nonatomic)NSString *rainGauge;
+@property(nonatomic)NSString *detentionBasinComments;
+
 @end

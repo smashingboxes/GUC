@@ -12,7 +12,6 @@
 
 @property(nonatomic)NSArray *dataArray;
 @property(nonatomic)UIPickerView *thePicker;
-@property(nonatomic)BOOL pickerInView;
 @property(nonatomic)UIView *containerView;
 @property(nonatomic)NSString *thePurpose;
 

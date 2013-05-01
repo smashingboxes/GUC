@@ -19,5 +19,7 @@
 @synthesize negativeKVARH;
 @synthesize maxVARD;
 @synthesize minVARD;
+@synthesize rainGauge;
+@synthesize detentionBasinComments;
 
 @end

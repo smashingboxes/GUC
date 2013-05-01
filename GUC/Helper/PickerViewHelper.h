@@ -16,10 +16,12 @@
 
 @interface PickerViewHelper : NSObject <UIPickerViewDelegate, UIPickerViewDataSource>
 
+@property(nonatomic)BOOL pickerInView;
 @property(nonatomic,weak)id<PickerViewHelperDelegate> delegate;
 
 +(void)setParentView:(UIViewController*)parentController;
 -(id)initWithDataSource:(NSArray*)theData andPurpose:(NSString*)purpose;
 -(void)displayPicker;
+-(void)removePicker;
 
 @end

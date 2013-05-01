@@ -13,6 +13,8 @@
 @synthesize tankOilLevel;
 @synthesize pressure;
 @synthesize nitrogenTank;
+@synthesize windingTemp;
+@synthesize oilTemp;
 @synthesize bushingOilLevel;
 
 @end

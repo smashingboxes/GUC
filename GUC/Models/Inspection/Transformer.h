@@ -10,9 +10,11 @@
 
 @interface Transformer : NSObject
 
-@property (nonatomic) BOOL tankOilLevel;
-@property (nonatomic) NSString *pressure;
-@property (nonatomic) NSString *nitrogenTank;
-@property (nonatomic) BOOL bushingOilLevel;
+@property(nonatomic)BOOL tankOilLevel;
+@property(nonatomic)NSString *pressure;
+@property(nonatomic)NSString *nitrogenTank;
+@property(nonatomic)NSString *windingTemp;
+@property(nonatomic)NSString *oilTemp;
+@property(nonatomic)BOOL bushingOilLevel;
 
 @end

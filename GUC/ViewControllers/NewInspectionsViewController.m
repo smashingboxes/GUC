@@ -135,7 +135,6 @@
         cell = [topLevelObjects objectAtIndex:0];
     }
     
-    
     stationTableView.hidden = NO;
     
     NSArray *currentStationArray = [stationArray objectAtIndex:indexPath.row];
@@ -243,13 +242,17 @@
         [tempStorageArray addObject:containerArray];
     }
     
-    [tempStorageArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2){
+    [tempStorageArray sortUsingComparator:^(id obj1, id obj2){
         NSArray *array1 = (NSArray *)obj1;
         NSArray *array2 = (NSArray *)obj2;
-        NSNumber *num1String = [array1 objectAtIndex:1];
-        NSNumber *num2String = [array2 objectAtIndex:1];
-        
-        return [num1String compare:num2String];
+        NSInteger num1String = [[array1 objectAtIndex:1]intValue];
+        NSInteger num2String = [[array2 objectAtIndex:1]intValue];
+        if(num1String > num2String){
+            return (NSComparisonResult)NSOrderedDescending;
+        }else if(num1String < num2String){
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
     }];
     
     [stationArray addObjectsFromArray:tempStorageArray];
