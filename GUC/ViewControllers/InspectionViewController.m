@@ -491,41 +491,41 @@
             currentInspection.generalSettings.maxVARD = fieldValue;
         }else if([fieldName isEqualToString:@"MINVARD"]){
             currentInspection.generalSettings.minVARD = fieldValue;
-        }else if([fieldName isEqualToString:@"MAX AMP A"]){
+        }else if([fieldName isEqualToString:@"MaxAmp A"]){
             currentInspection.switchBoard.maxAmpA = fieldValue;
-        }else if([fieldName isEqualToString:@"MAX AMP B"]){
+        }else if([fieldName isEqualToString:@"MaxAmp B"]){
             currentInspection.switchBoard.maxAmpB = fieldValue;
-        }else if([fieldName isEqualToString:@"MAX AMP C"]){
+        }else if([fieldName isEqualToString:@"MaxAmp C"]){
             currentInspection.switchBoard.maxAmpC = fieldValue;
-        }else if([fieldName isEqualToString:@"PRESENT AMP A"]){
+        }else if([fieldName isEqualToString:@"Present Amp A"]){
             currentInspection.switchBoard.presentAmpA = fieldValue;
-        }else if([fieldName isEqualToString:@"PRESENT AMP B"]){
+        }else if([fieldName isEqualToString:@"Present Amp B"]){
             currentInspection.switchBoard.presentAmpB = fieldValue;
-        }else if([fieldName isEqualToString:@"PRESENT AMP C"]){
+        }else if([fieldName isEqualToString:@"Present Amp C"]){
             currentInspection.switchBoard.presentAmpC = fieldValue;
-        }else if([fieldName isEqualToString:@"MIN VOLTS A"]){
+        }else if([fieldName isEqualToString:@"Min Volts A"]){
             currentInspection.switchBoard.minVoltsA = fieldValue;
-        }else if([fieldName isEqualToString:@"MIN VOLTS B"]){
+        }else if([fieldName isEqualToString:@"Min Volts B"]){
             currentInspection.switchBoard.minVoltsB = fieldValue;
-        }else if([fieldName isEqualToString:@"MIN VOLTS C"]){
+        }else if([fieldName isEqualToString:@"Min Volts C"]){
             currentInspection.switchBoard.minVoltsC = fieldValue;
-        }else if([fieldName isEqualToString:@"PRESENT VOLTS A"]){
+        }else if([fieldName isEqualToString:@"Present Volts A"]){
             currentInspection.switchBoard.presentVoltsA = fieldValue;
-        }else if([fieldName isEqualToString:@"PRESENT VOLTS B"]){
+        }else if([fieldName isEqualToString:@"Present Volts B"]){
             currentInspection.switchBoard.presentVoltsB = fieldValue;
-        }else if([fieldName isEqualToString:@"PRESENT VOLTS C"]){
+        }else if([fieldName isEqualToString:@"Present Volts C"]){
             currentInspection.switchBoard.presentVoltsC = fieldValue;
-        }else if([fieldName isEqualToString:@"MAX VOLTS A"]){
+        }else if([fieldName isEqualToString:@"Max Volts A"]){
             currentInspection.switchBoard.maxVoltsA = fieldValue;
-        }else if([fieldName isEqualToString:@"MAX VOLTS B"]){
+        }else if([fieldName isEqualToString:@"Max Volts B"]){
             currentInspection.switchBoard.maxVoltsB = fieldValue;
-        }else if([fieldName isEqualToString:@"MAX VOLTS C"]){
+        }else if([fieldName isEqualToString:@"Max Volts C"]){
             currentInspection.switchBoard.maxVoltsC = fieldValue;
-        }else if([fieldName isEqualToString:@"VOLTS 48V #1"]){
+        }else if([fieldName isEqualToString:@"Volts 48V #1"]){
             currentInspection.batteryCharger.volts48VOne = fieldValue;
-        }else if([fieldName isEqualToString:@"AMPS 48V #1"]){
+        }else if([fieldName isEqualToString:@"Amps 48V #1"]){
             currentInspection.batteryCharger.amps48VOne = fieldValue;
-        }else if([fieldName isEqualToString:@"SPEC. GRAVITY 48V #1"]){
+        }else if([fieldName isEqualToString:@"Spec. Gravity 48V #1"]){
             currentInspection.batteryCharger.specGravity48VOne = fieldValue;
         }else if([fieldName isEqualToString:@"Pressure"]){
             currentInspection.transformer.pressure = fieldValue;
@@ -534,7 +534,7 @@
         }else if([fieldName isEqualToString:@"Min Step A"]){
             currentInspection.ltcRegulator.minStepA = fieldValue;
         }else if([fieldName isEqualToString:@"Pres. Step A"]){
-            currentInspection.ltcRegulator.presStepA = fieldValue;
+            currentInspection.ltcRegulator.presentStepA = fieldValue;
         }else if([fieldName isEqualToString:@"Max Step A"]){
             currentInspection.ltcRegulator.maxStepA = fieldValue;
         }else if([fieldName isEqualToString:@"Counter A"]){
@@ -544,7 +544,7 @@
         }else if([fieldName isEqualToString:@"Min Step B"]){
             currentInspection.ltcRegulator.minStepB = fieldValue;
         }else if([fieldName isEqualToString:@"Pres. Step B"]){
-            currentInspection.ltcRegulator.presStepB = fieldValue;
+            currentInspection.ltcRegulator.presentStepB = fieldValue;
         }else if([fieldName isEqualToString:@"Max Step B"]){
             currentInspection.ltcRegulator.maxStepB = fieldValue;
         }else if([fieldName isEqualToString:@"Counter B"]){
@@ -554,25 +554,25 @@
         }else if([fieldName isEqualToString:@"Min Step C"]){
             currentInspection.ltcRegulator.minStepC = fieldValue;
         }else if([fieldName isEqualToString:@"Pres. Step C"]){
-            currentInspection.ltcRegulator.presStepC = fieldValue;
+            currentInspection.ltcRegulator.presentStepC = fieldValue;
         }else if([fieldName isEqualToString:@"Max Step C"]){
             currentInspection.ltcRegulator.maxStepC = fieldValue;
         }else if([fieldName isEqualToString:@"Counter C"]){
             currentInspection.ltcRegulator.counterC = fieldValue;
         }else if([fieldName isEqualToString:@"Voltage C"]){
             currentInspection.ltcRegulator.voltageC = fieldValue;
-        }else if([fieldName isEqualToString:@"BUS 1 Counter"]){
-            currentInspection.breakers.busSlotCounter = fieldValue;
-        }else if([fieldName isEqualToString:@"BUS 1 Target"]){
-            currentInspection.breakers.busSlotTarget = fieldValue;
-        }else if([fieldName isEqualToString:@"BUS 1 Oper"]){
-            currentInspection.breakers.busSlotOperation = fieldValue;
-        }else if([fieldName isEqualToString:@"CKT 1 Counter"]){
-            currentInspection.breakers.cktSlotOneCounter = fieldValue;
-        }else if([fieldName isEqualToString:@"CKT 1 Target"]){
-            currentInspection.breakers.cktSlotOneTarget = fieldValue;
-        }else if([fieldName isEqualToString:@"CKT 1 Oper"]){
-            currentInspection.breakers.cktSlotOneOperation = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.busSlotCounterName]){
+            currentInspection.breakers.busSlotCounterValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.busSlotTargetName]){
+            currentInspection.breakers.busSlotTargetValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.busSlotOperationName]){
+            currentInspection.breakers.busSlotOperationValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotOneCounterName]){
+            currentInspection.breakers.cktSlotOneCounterValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotOneTargetName]){
+            currentInspection.breakers.cktSlotOneTargetValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotOneOperationName]){
+            currentInspection.breakers.cktSlotOneOperationValue = fieldValue;
         }else {
             // Do nothing.
         }
@@ -603,57 +603,57 @@
     }else if([cellTitle isEqualToString:@"MINVARD"]){
         if(currentInspection.generalSettings.minVARD)
             return currentInspection.generalSettings.minVARD;
-    }else if([cellTitle isEqualToString:@"MAX AMP A"]){
+    }else if([cellTitle isEqualToString:@"MaxAmp A"]){
         if(currentInspection.switchBoard.maxAmpA)
             return currentInspection.switchBoard.maxAmpA;
-    }else if([cellTitle isEqualToString:@"MAX AMP B"]){
+    }else if([cellTitle isEqualToString:@"MaxAmp B"]){
         if(currentInspection.switchBoard.maxAmpB)
             return currentInspection.switchBoard.maxAmpB;
-    }else if([cellTitle isEqualToString:@"MAX AMP C"]){
+    }else if([cellTitle isEqualToString:@"MaxAmp C"]){
         if(currentInspection.switchBoard.maxAmpC)
             return currentInspection.switchBoard.maxAmpC;
-    }else if([cellTitle isEqualToString:@"PRESENT AMP A"]){
+    }else if([cellTitle isEqualToString:@"Present Amp A"]){
         if(currentInspection.switchBoard.presentAmpA)
             return currentInspection.switchBoard.presentAmpA;
-    }else if([cellTitle isEqualToString:@"PRESENT AMP B"]){
+    }else if([cellTitle isEqualToString:@"Present Amp B"]){
         if(currentInspection.switchBoard.presentAmpB)
             return currentInspection.switchBoard.presentAmpB;
-    }else if([cellTitle isEqualToString:@"PRESENT AMP C"]){
+    }else if([cellTitle isEqualToString:@"Present Amp C"]){
         if(currentInspection.switchBoard.presentAmpC)
             return currentInspection.switchBoard.presentAmpC;
-    }else if([cellTitle isEqualToString:@"MIN VOLTS A"]){
+    }else if([cellTitle isEqualToString:@"Min Volts A"]){
         if(currentInspection.switchBoard.minVoltsA)
             return currentInspection.switchBoard.minVoltsA;
-    }else if([cellTitle isEqualToString:@"MIN VOLTS B"]){
+    }else if([cellTitle isEqualToString:@"Min Volts B"]){
         if(currentInspection.switchBoard.minVoltsB)
             return currentInspection.switchBoard.minVoltsB;
-    }else if([cellTitle isEqualToString:@"MIN VOLTS C"]){
+    }else if([cellTitle isEqualToString:@"Min Volts C"]){
         if(currentInspection.switchBoard.minVoltsC)
             return currentInspection.switchBoard.minVoltsC;
-    }else if([cellTitle isEqualToString:@"PRESENT VOLTS A"]){
+    }else if([cellTitle isEqualToString:@"Present Volts A"]){
         if(currentInspection.switchBoard.presentVoltsA)
             return currentInspection.switchBoard.presentVoltsA;
-    }else if([cellTitle isEqualToString:@"PRESENT VOLTS B"]){
+    }else if([cellTitle isEqualToString:@"Present Volts B"]){
         if(currentInspection.switchBoard.presentVoltsB)
             return currentInspection.switchBoard.presentVoltsB;
-    }else if([cellTitle isEqualToString:@"PRESENT VOLTS C"]){
+    }else if([cellTitle isEqualToString:@"Present Volts C"]){
         if(currentInspection.switchBoard.presentVoltsC)
             return currentInspection.switchBoard.presentVoltsC;
-    }else if([cellTitle isEqualToString:@"MAX VOLTS A"]){
+    }else if([cellTitle isEqualToString:@"Max Volts A"]){
         if(currentInspection.switchBoard.maxVoltsA)
             return currentInspection.switchBoard.maxVoltsA;
-    }else if([cellTitle isEqualToString:@"MAX VOLTS B"]){
+    }else if([cellTitle isEqualToString:@"Max Volts B"]){
         if(currentInspection.switchBoard.maxVoltsB)
             return currentInspection.switchBoard.maxVoltsB;
-    }else if([cellTitle isEqualToString:@"MAX VOLTS C"]){
+    }else if([cellTitle isEqualToString:@"Max Volts C"]){
         if(currentInspection.switchBoard.maxVoltsC)
             return currentInspection.switchBoard.maxVoltsC;
-    }else if([cellTitle isEqualToString:@"VOLTS 48V #1"]){
+    }else if([cellTitle isEqualToString:@"Volts 48V #1"]){
             return currentInspection.batteryCharger.volts48VOne;
-    }else if([cellTitle isEqualToString:@"AMPS 48V #1"]){
+    }else if([cellTitle isEqualToString:@"Amps 48V #1"]){
         if(currentInspection.batteryCharger.amps48VOne)
             return currentInspection.batteryCharger.amps48VOne;
-    }else if([cellTitle isEqualToString:@"SPEC. GRAVITY 48V #1"]){
+    }else if([cellTitle isEqualToString:@"Spec. Gravity 48V #1"]){
         if(currentInspection.batteryCharger.specGravity48VOne)
             return currentInspection.batteryCharger.specGravity48VOne;
     }else if([cellTitle isEqualToString:@"Pressure"]){
@@ -665,9 +665,9 @@
     }else if([cellTitle isEqualToString:@"Min Step A"]){
         if(currentInspection.ltcRegulator.minStepA)
             return currentInspection.ltcRegulator.minStepA;
-    }else if([cellTitle isEqualToString:@"Pres. Step A"]){
-        if(currentInspection.ltcRegulator.presStepA)
-            return currentInspection.ltcRegulator.presStepA;
+    }else if([cellTitle isEqualToString:@"Pressure Step A"]){
+        if(currentInspection.ltcRegulator.presentStepA)
+            return currentInspection.ltcRegulator.presentStepA;
     }else if([cellTitle isEqualToString:@"Max Step A"]){
         if(currentInspection.ltcRegulator.maxStepA)
             return currentInspection.ltcRegulator.maxStepA;
@@ -680,9 +680,9 @@
     }else if([cellTitle isEqualToString:@"Min Step B"]){
         if(currentInspection.ltcRegulator.minStepB)
             return currentInspection.ltcRegulator.minStepB;
-    }else if([cellTitle isEqualToString:@"Pres. Step B"]){
-        if(currentInspection.ltcRegulator.presStepB)
-            return currentInspection.ltcRegulator.presStepB;
+    }else if([cellTitle isEqualToString:@"Pressure Step B"]){
+        if(currentInspection.ltcRegulator.presentStepB)
+            return currentInspection.ltcRegulator.presentStepB;
     }else if([cellTitle isEqualToString:@"Max Step B"]){
         if(currentInspection.ltcRegulator.maxStepB)
             return currentInspection.ltcRegulator.maxStepB;
@@ -695,9 +695,9 @@
     }else if([cellTitle isEqualToString:@"Min Step C"]){
         if(currentInspection.ltcRegulator.minStepC)
             return currentInspection.ltcRegulator.minStepC;
-    }else if([cellTitle isEqualToString:@"Pres. Step C"]){
-        if(currentInspection.ltcRegulator.presStepC)
-            return currentInspection.ltcRegulator.presStepC;
+    }else if([cellTitle isEqualToString:@"Pressure Step C"]){
+        if(currentInspection.ltcRegulator.presentStepC)
+            return currentInspection.ltcRegulator.presentStepC;
     }else if([cellTitle isEqualToString:@"Max Step C"]){
         if(currentInspection.ltcRegulator.maxStepC)
             return currentInspection.ltcRegulator.maxStepC;
@@ -707,24 +707,24 @@
     }else if([cellTitle isEqualToString:@"Voltage C"]){
         if(currentInspection.ltcRegulator.voltageC)
             return currentInspection.ltcRegulator.voltageC;
-    }else if([cellTitle isEqualToString:@"BUS 1 Counter"]){
-        if(currentInspection.breakers.busSlotCounter)
-            return currentInspection.breakers.busSlotCounter;
-    }else if([cellTitle isEqualToString:@"BUS 1 Target"]){
-        if(currentInspection.breakers.busSlotTarget)
-            return currentInspection.breakers.busSlotTarget;
-    }else if([cellTitle isEqualToString:@"BUS 1 Oper"]){
-        if(currentInspection.breakers.busSlotOperation)
-            return currentInspection.breakers.busSlotOperation;
-    }else if([cellTitle isEqualToString:@"CKT 1 Counter"]){
-        if(currentInspection.breakers.cktSlotOneCounter)
-            return currentInspection.breakers.cktSlotOneCounter;
-    }else if([cellTitle isEqualToString:@"CKT 1 Target"]){
-        if(currentInspection.breakers.cktSlotOneTarget)
-            return currentInspection.breakers.cktSlotOneTarget;
-    }else if([cellTitle isEqualToString:@"CKT 1 Oper"]){
-        if(currentInspection.breakers.cktSlotOneOperation)
-            return currentInspection.breakers.cktSlotOneOperation;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.busSlotCounterName]){
+        if(currentInspection.breakers.busSlotCounterValue)
+            return currentInspection.breakers.busSlotCounterValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.busSlotTargetName]){
+        if(currentInspection.breakers.busSlotTargetValue)
+            return currentInspection.breakers.busSlotTargetValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.busSlotOperationName]){
+        if(currentInspection.breakers.busSlotOperationValue)
+            return currentInspection.breakers.busSlotOperationValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotOneCounterName]){
+        if(currentInspection.breakers.cktSlotOneCounterValue)
+            return currentInspection.breakers.cktSlotOneCounterValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFourTargetName]){
+        if(currentInspection.breakers.cktSlotOneTargetValue)
+            return currentInspection.breakers.cktSlotOneTargetValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotOneOperationName]){
+        if(currentInspection.breakers.cktSlotOneOperationValue)
+            return currentInspection.breakers.cktSlotOneOperationValue;
     }else{
         // Do nothing.
     }
@@ -895,6 +895,36 @@
         currentInspection = [inspections objectAtIndex:theIndex];
         currentInspection.generalSettings.stationName = [stationInfo objectForKey:@"name"];
         
+        NSArray *sectionsArray = [stationDictionary objectForKey:@"sections"];
+        
+        NSArray *breakersArray;
+        
+        for(int i = 0; i < [sectionsArray count]; i++){
+            NSDictionary *currentDictionary = [sectionsArray objectAtIndex:i];
+            
+            if([[currentDictionary objectForKey:@"name"] isEqualToString:@"Breakers"]){
+                breakersArray = [currentDictionary objectForKey:@"fields"];
+            }
+        }
+        
+        for(int i = 0; i < [breakersArray count]; i++){
+            NSDictionary *fieldDictionary = [breakersArray objectAtIndex:i];
+            Field *currentField = [[Field alloc]init];
+            currentField.name = [fieldDictionary objectForKey:@"name"];
+            
+            if([currentField.name rangeOfString:@"Bus"].location != NSNotFound){
+                if([currentField.name rangeOfString:@"Counter"].location > 0){
+                
+                }else if([currentField.name rangeOfString:@"Target"].location > 0){
+                
+                }else if([currentField.name rangeOfString:@"Oper"].location > 0){
+                
+                }else if([currentField.name rangeOfString:@"Pressure"].location > 0){
+                
+                }
+            }
+        }
+            
         inspectionFormHelper = [[InspectionFormHelper alloc]initWithSections:[stationInfo objectForKey:@"sections"]];
         
         theTableView.hidden = NO;

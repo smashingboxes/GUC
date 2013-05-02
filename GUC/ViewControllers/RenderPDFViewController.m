@@ -79,6 +79,32 @@
 @property(nonatomic)IBOutlet UILabel *oilTempLabel;
 @property(nonatomic)IBOutlet UILabel *bushingOilLevel;
 
+// LTC/Regulator Labels
+@property(nonatomic)IBOutlet UILabel *minStepALabel;
+@property(nonatomic)IBOutlet UILabel *presentStepALabel;
+@property(nonatomic)IBOutlet UILabel *maxStepALabel;
+@property(nonatomic)IBOutlet UILabel *pressureALabel;
+@property(nonatomic)IBOutlet UILabel *counterALabel;
+@property(nonatomic)IBOutlet UILabel *voltageALabel;
+@property(nonatomic)IBOutlet UILabel *oilLevelALabel;
+@property(nonatomic)IBOutlet UILabel *testOperationALabel;
+@property(nonatomic)IBOutlet UILabel *minStepBLabel;
+@property(nonatomic)IBOutlet UILabel *presentStepBLabel;
+@property(nonatomic)IBOutlet UILabel *maxStepBLabel;
+@property(nonatomic)IBOutlet UILabel *pressureBLabel;
+@property(nonatomic)IBOutlet UILabel *counterBLabel;
+@property(nonatomic)IBOutlet UILabel *voltageBLabel;
+@property(nonatomic)IBOutlet UILabel *oilLevelBLabel;
+@property(nonatomic)IBOutlet UILabel *testOperationBLabel;
+@property(nonatomic)IBOutlet UILabel *minStepCLabel;
+@property(nonatomic)IBOutlet UILabel *presentStepCLabel;
+@property(nonatomic)IBOutlet UILabel *maxStepCLabel;
+@property(nonatomic)IBOutlet UILabel *pressureCLabel;
+@property(nonatomic)IBOutlet UILabel *counterCLabel;
+@property(nonatomic)IBOutlet UILabel *voltageCLabel;
+@property(nonatomic)IBOutlet UILabel *oilLevelCLabel;
+@property(nonatomic)IBOutlet UILabel *testOperationCLabel;
+
 // Views
 @property(nonatomic)IBOutlet UIView *firstPage;
 @property(nonatomic)IBOutlet UIView *secondPage;
@@ -159,6 +185,31 @@
 @synthesize oilTempLabel;
 @synthesize bushingOilLevel;
 
+@synthesize minStepALabel;
+@synthesize presentStepALabel;
+@synthesize maxStepALabel;
+@synthesize pressureALabel;
+@synthesize counterALabel;
+@synthesize voltageALabel;
+@synthesize oilLevelALabel;
+@synthesize testOperationALabel;
+@synthesize minStepBLabel;
+@synthesize presentStepBLabel;
+@synthesize maxStepBLabel;
+@synthesize pressureBLabel;
+@synthesize counterBLabel;
+@synthesize voltageBLabel;
+@synthesize oilLevelBLabel;
+@synthesize testOperationBLabel;
+@synthesize minStepCLabel;
+@synthesize presentStepCLabel;
+@synthesize maxStepCLabel;
+@synthesize pressureCLabel;
+@synthesize counterCLabel;
+@synthesize voltageCLabel;
+@synthesize oilLevelCLabel;
+@synthesize testOperationCLabel;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -202,6 +253,8 @@
 
 -(void)addInspectionDataToLabels{
     if(currentInspection){
+        NSString *pass = @"Pass";
+        NSString *fail = @"Fail";
         NSString *notAvailable = @"N/A";
         
         // General Settings
@@ -422,32 +475,32 @@
         
         // Circuit Switcher
         if(currentInspection.circuitSwitcher.gasA == YES){
-            gasALabel.text = @"Pass";
+            gasALabel.text = pass;
         }else if(currentInspection.circuitSwitcher.gasA == NO){
-            gasALabel.text = @"Fail";
+            gasALabel.text = fail;
         }else{
             gasALabel.text = notAvailable;
         }
         if(currentInspection.circuitSwitcher.gasB == YES){
-            gasBLabel.text = @"Pass";
+            gasBLabel.text = pass;
         }else if(currentInspection.circuitSwitcher.gasB == NO){
-            gasBLabel.text = @"Fail";
+            gasBLabel.text = fail;
         }else{
             gasBLabel.text = notAvailable;
         }
         if(currentInspection.circuitSwitcher.gasC == YES){
-            gasCLabel.text = @"Pass";
+            gasCLabel.text = pass;
         }else if(currentInspection.circuitSwitcher.gasC == NO){
-            gasCLabel.text = @"Fail";
+            gasCLabel.text = fail;
         }else{
             gasCLabel.text = notAvailable;
         }
         
         // Transformer
         if(currentInspection.transformer.tankOilLevel == YES){
-            tankOilLevelLabel.text = @"Pass";
+            tankOilLevelLabel.text = pass;
         }else if(currentInspection.transformer.tankOilLevel == NO){
-            tankOilLevelLabel.text = @"Fail";
+            tankOilLevelLabel.text = fail;
         }else{
             tankOilLevelLabel.text = notAvailable;
         }
@@ -472,11 +525,151 @@
             oilTempLabel.text = notAvailable;
         }
         if(currentInspection.transformer.bushingOilLevel == YES){
-            bushingOilLevel.text = @"Pass";
+            bushingOilLevel.text = pass;
         }else if(currentInspection.transformer.bushingOilLevel == NO){
-            bushingOilLevel.text = @"Fail";
+            bushingOilLevel.text = fail;
         }else{
             bushingOilLevel.text = notAvailable;
+        }
+        
+        // LTC/Regulator
+        if(currentInspection.ltcRegulator.minStepA){
+            minStepALabel.text = currentInspection.ltcRegulator.minStepA;
+        }else{
+            minStepALabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.presentStepA){
+            presentStepALabel.text = currentInspection.ltcRegulator.presentStepA;
+        }else{
+            presentStepALabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.maxStepA){
+            maxStepALabel.text = currentInspection.ltcRegulator.maxStepA;
+        }else{
+            maxStepALabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.pressureA == YES){
+            pressureALabel.text = pass;
+        }else if(currentInspection.ltcRegulator.pressureA == NO){
+            pressureALabel.text = fail;
+        }else{
+            pressureALabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.counterA){
+            counterALabel.text = currentInspection.ltcRegulator.counterA;
+        }else{
+            counterALabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.voltageA){
+            voltageALabel.text = currentInspection.ltcRegulator.voltageA;
+        }else{
+            voltageALabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.oilLevelA == YES){
+            oilLevelALabel.text = pass;
+        }else if(currentInspection.ltcRegulator.oilLevelA == NO){
+            oilLevelALabel.text = fail;
+        }else{
+            oilLevelALabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.testOperationA == YES){
+            testOperationALabel.text = pass;
+        }else if(currentInspection.ltcRegulator.testOperationA == NO){
+            testOperationALabel.text = fail;
+        }else{
+            testOperationALabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.minStepB){
+            minStepBLabel.text = currentInspection.ltcRegulator.minStepB;
+        }else{
+            minStepBLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.presentStepB){
+            presentStepBLabel.text = currentInspection.ltcRegulator.presentStepB;
+        }else{
+            presentStepBLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.maxStepB){
+            maxStepBLabel.text = currentInspection.ltcRegulator.maxStepB;
+        }else{
+            maxStepBLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.pressureB == YES){
+            pressureBLabel.text = pass;
+        }else if(currentInspection.ltcRegulator.pressureB == NO){
+            pressureBLabel.text = fail;
+        }else{
+            pressureBLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.counterB){
+            counterBLabel.text = currentInspection.ltcRegulator.counterB;
+        }else{
+            counterBLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.voltageB){
+            voltageBLabel.text = currentInspection.ltcRegulator.voltageB;
+        }else{
+            voltageBLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.oilLevelB == YES){
+            oilLevelBLabel.text = pass;
+        }else if(currentInspection.ltcRegulator.oilLevelB == NO){
+            oilLevelBLabel.text = fail;
+        }else{
+            oilLevelBLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.testOperationB == YES){
+            testOperationBLabel.text = pass;
+        }else if(currentInspection.ltcRegulator.testOperationB == NO){
+            testOperationBLabel.text = fail;
+        }else{
+            testOperationBLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.minStepC){
+            minStepCLabel.text = currentInspection.ltcRegulator.minStepC;
+        }else{
+            minStepCLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.presentStepC){
+            presentStepCLabel.text = currentInspection.ltcRegulator.presentStepC;
+        }else{
+            presentStepCLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.maxStepC){
+            maxStepCLabel.text = currentInspection.ltcRegulator.maxStepC;
+        }else{
+            maxStepCLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.pressureC == YES){
+            pressureCLabel.text = pass;
+        }else if(currentInspection.ltcRegulator.pressureC == NO){
+            pressureCLabel.text = fail;
+        }else{
+            pressureCLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.counterC){
+            counterCLabel.text = currentInspection.ltcRegulator.counterC;
+        }else{
+            counterCLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.voltageC){
+            voltageCLabel.text = currentInspection.ltcRegulator.voltageC;
+        }else{
+            voltageCLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.oilLevelC == YES){
+            oilLevelCLabel.text = pass;
+        }else if(currentInspection.ltcRegulator.oilLevelC == NO){
+            oilLevelCLabel.text = fail;
+        }else{
+            oilLevelCLabel.text = notAvailable;
+        }
+        if(currentInspection.ltcRegulator.testOperationC == YES){
+            testOperationCLabel.text = pass;
+        }else if(currentInspection.ltcRegulator.testOperationC == NO){
+            testOperationCLabel.text = fail;
+        }else{
+            testOperationCLabel.text = notAvailable;
         }
     }
 }
