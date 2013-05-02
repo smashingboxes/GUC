@@ -11,7 +11,7 @@
 @interface LTCRegulator : NSObject
 
 @property(nonatomic)NSString *minStepA;
-@property(nonatomic)NSString *presentStepA;
+@property(nonatomic)NSString *pressureStepA;
 @property(nonatomic)NSString *maxStepA;
 @property(nonatomic)BOOL pressureA;
 @property(nonatomic)NSString *counterA;
@@ -20,7 +20,7 @@
 @property(nonatomic)BOOL testOperationA;
 
 @property(nonatomic)NSString *minStepB;
-@property(nonatomic)NSString *presentStepB;
+@property(nonatomic)NSString *pressureStepB;
 @property(nonatomic)NSString *maxStepB;
 @property(nonatomic)BOOL pressureB;
 @property(nonatomic)NSString *counterB;
@@ -29,7 +29,7 @@
 @property(nonatomic)BOOL testOperationB;
 
 @property(nonatomic)NSString *minStepC;
-@property(nonatomic)NSString *presentStepC;
+@property(nonatomic)NSString *pressureStepC;
 @property(nonatomic)NSString *maxStepC;
 @property(nonatomic)BOOL pressureC;
 @property(nonatomic)NSString *counterC;

@@ -11,7 +11,7 @@
 @implementation LTCRegulator
 
 @synthesize minStepA;
-@synthesize presentStepA;
+@synthesize pressureStepA;
 @synthesize maxStepA;
 @synthesize pressureA;
 @synthesize counterA;
@@ -20,7 +20,7 @@
 @synthesize testOperationA;
 
 @synthesize minStepB;
-@synthesize presentStepB;
+@synthesize pressureStepB;
 @synthesize maxStepB;
 @synthesize pressureB;
 @synthesize counterB;
@@ -29,7 +29,7 @@
 @synthesize testOperationB;
 
 @synthesize minStepC;
-@synthesize presentStepC;
+@synthesize pressureStepC;
 @synthesize maxStepC;
 @synthesize pressureC;
 @synthesize counterC;
