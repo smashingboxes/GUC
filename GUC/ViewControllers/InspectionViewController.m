@@ -104,6 +104,13 @@
     
     [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                   style:UIBarButtonItemStyleBordered
+                                                                  target:self
+                                                                  action:@selector(displayWarning)];
+    
+    self.navigationItem.leftBarButtonItem = backButton;
+    
     [PickerViewHelper setParentView:self];
     [self setAccessibilityLabel:@"Inspection"];
     pickerType = kDataPurpose;
@@ -221,7 +228,11 @@
     Field *currentField = [[Field alloc]init];
     currentField.choices = [fieldDictionary objectForKey:@"choices"];
     currentField.name = [fieldDictionary objectForKey:@"name"];
-    currentField.range = [fieldDictionary objectForKey:@"range"];
+    if(![[fieldDictionary objectForKey:@"range"] isEqualToString:@""]){
+        currentField.range = [fieldDictionary objectForKey:@"range"];
+    }else{
+        currentField.range = [[NSArray alloc]initWithObjects:@"",@"",nil];
+    }
     currentField.type = [fieldDictionary objectForKey:@"type"];
     currentField.value = [fieldDictionary objectForKey:@"value"];
     
@@ -236,14 +247,45 @@
     cell.cellControl.accessibilityLabel = cell.cellLabel.text;
     cell.cellControl.selectedSegmentIndex = [self checkModelForBoolValue:cell.cellLabel.text];
     [cell.cellControl addTarget:self action:@selector(controlPressed:) forControlEvents:UIControlEventValueChanged];
+    cell.cellDetailsLabel.hidden = YES;
+    cell.cellImageView.backgroundColor = [UIColor clearColor];
     
     // "If" block for determining which controls exist for each individual cell
-    if([currentField.type isEqualToString:@"String"] || [currentField.type isEqualToString:@"Float"] || [currentField.type isEqualToString:@"SingleChoice"]){
+    if([currentField.type isEqualToString:@"String"] || [currentField.type isEqualToString:@"Float"]){
         cell.cellField.hidden = NO;
         cell.cellControl.hidden = YES;
+        cell.cellDetailsLabel.hidden = YES;
+        
+        if(cell.cellField.text && ![cell.cellField.text isEqualToString:@""]){
+            NSArray *fieldValues = [[NSArray alloc]initWithObjects:cell.cellField.text, currentField.range, nil];
+            
+            BOOL inRange = [self isValueOutOfRange:fieldValues];
+            
+            if(inRange){
+                cell.cellImageView.backgroundColor = [UIColor greenColor];
+            }else{
+                cell.cellImageView.backgroundColor = [UIColor redColor];
+            }
+        }
     }else if([currentField.type isEqualToString:@"Boolean"]){
         cell.cellField.hidden = YES;
         cell.cellControl.hidden = NO;
+        cell.cellDetailsLabel.hidden = YES;
+    }else if([currentField.type isEqualToString:@"SingleChoice"]){
+        cell.cellField.hidden = YES;
+        cell.cellControl.hidden = YES;
+        cell.cellDetailsLabel.hidden = NO;
+        cell.accessibilityLabel = @"SingleChoice";
+    }else if([currentField.type isEqualToString:@"MultiLineString"]){
+        cell.cellField.hidden = YES;
+        cell.cellControl.hidden = YES;
+        cell.cellDetailsLabel.hidden = NO;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        cell.accessibilityLabel = @"MultiLineString";
+        cell.cellDetailsLabel.text = [self checkModelForTextValue:cell.cellDetailsLabel.text];
+        if([cell.cellDetailsLabel.text length] > 0){
+           cell.cellImageView.backgroundColor = [UIColor greenColor];
+        }
     }
     
     if([currentField.name isEqualToString:@"StationName"]){
@@ -262,18 +304,17 @@
     }
     if([currentField.name isEqualToString:@"Technician"]){
         if(!currentInspection.generalSettings.technician){
-            currentInspection.generalSettings.technician = [self loadOperatorName];
+            currentInspection.generalSettings.technician = currentField.value;
         }
-        cell.cellField.text = currentInspection.generalSettings.technician;
-        cell.cellField.userInteractionEnabled = YES;
+        cell.cellDetailsLabel.text = currentInspection.generalSettings.technician;
     }
-    if([currentField.name isEqualToString:@"TargetsAndAlarms"]){
+    /*if([currentField.name isEqualToString:@"TargetsAndAlarms"]){
         textViewIndexPath = indexPath;
         if(indexPath.row == [fieldsArray count]-1){
             cell.cellField.hidden = YES;
             cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         }
-    }
+    }*/
     
     return cell;
 }
@@ -294,15 +335,32 @@
 }
 
 
--(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == textViewIndexPath.row && indexPath.section == textViewIndexPath.section)
+-(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath{
+    InspectionContentCell *cell = (InspectionContentCell*)[tableView cellForRowAtIndexPath:indexPath];
+    
+    if(currentTextField){
+        [currentTextField resignFirstResponder];
+    }
+    
+    if ([cell.accessibilityLabel isEqualToString:@"MultiLineString"])
     {
         [theTableView setUserInteractionEnabled:NO];
         [UIView animateWithDuration:0.5 animations:^{
             [dimBackgroundView setAlpha:0.5];
             [targetsAndAlarmsView setFrame:CGRectMake(39, 41, targetsAndAlarmsView.frame.size.width, targetsAndAlarmsView.frame.size.height)];
         }];
+    }else if([cell.accessibilityLabel isEqualToString:@"SingleChoice"]){
+        NSArray *fieldValues = [self getValuesForCurrentField:cell.cellField];
+        
+        if(!pickerHelper || pickerHelper.pickerInView == NO){
+            if([fieldValues count] > 3){
+                pickerType = kStringPurpose;
+                currentChoices = [fieldValues objectAtIndex:3];
+                [self showPicker];
+            }
+        }
     }
+    textViewIndexPath = indexPath;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -390,16 +448,7 @@
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     currentTextField = textField;
     
-    NSArray *fieldValues = [self getValuesForCurrentField:textField];
-    
-    if(!pickerHelper || pickerHelper.pickerInView == NO){
-        if([fieldValues count] > 3){
-            pickerType = kStringPurpose;
-            currentChoices = [fieldValues objectAtIndex:3];
-            [self showPicker];
-            return NO;
-        }
-    }else if(pickerHelper.pickerInView == YES){
+    if(pickerHelper.pickerInView == YES){
         [pickerHelper removePicker];
     }
     return YES;
@@ -435,17 +484,24 @@
     if(checking == NO){
         checking = YES;
         NSArray *fieldValues = [self getValuesForCurrentField:textField];
-        BOOL dataSaved = [self saveValueForCurrentField:fieldValues];
+        BOOL inRange = [self isValueOutOfRange:fieldValues];
         
         NSArray *valueArray = [self getIndexPathForCurrentTextField:textField];
         int section = [[valueArray objectAtIndex:0]integerValue];
         int row = [[valueArray objectAtIndex:1]integerValue];
         
         InspectionContentCell *cell = (InspectionContentCell*)[theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
-        if(dataSaved){
+        
+        if(inRange){
             cell.cellImageView.backgroundColor = [UIColor greenColor];
         }else{
             cell.cellImageView.backgroundColor = [UIColor redColor];
+        }
+        
+        BOOL dataSaved = [self saveValueForCurrentField:fieldValues];
+        
+        if(dataSaved){
+            NSLog(@"Value of %@ saved.", [fieldValues objectAtIndex:1]);
         }
         
         if([textField.text isEqualToString:@""]){
@@ -476,7 +532,11 @@
     Field *currentField = [[Field alloc]init];
     currentField.choices = [fieldDictionary objectForKey:@"choices"];
     currentField.name = [fieldDictionary objectForKey:@"name"];
-    currentField.range = [fieldDictionary objectForKey:@"range"];
+    if(![[fieldDictionary objectForKey:@"range"] isEqualToString:@""]){
+        currentField.range = [fieldDictionary objectForKey:@"range"];
+    }else{
+        currentField.range = [[NSArray alloc]initWithObjects:@"",@"",nil];
+    }
     currentField.type = [fieldDictionary objectForKey:@"type"];
     currentField.value = [fieldDictionary objectForKey:@"value"];
     
@@ -492,13 +552,12 @@
     return fieldValues;
 }
 
--(BOOL)saveValueForCurrentField:(NSArray *)fieldValues{
-    if(currentInspection){
-        NSString *fieldName = [fieldValues objectAtIndex:0];
-        NSString *fieldValue = [fieldValues objectAtIndex:1];
-        NSArray *fieldRange = [fieldValues objectAtIndex:2];
-        
-        if([fieldRange count] > 0 && ![fieldValue isEqualToString:@""]){
+-(BOOL)isValueOutOfRange:(NSArray*)fieldValues{
+    NSString *fieldValue = [fieldValues objectAtIndex:0];
+    NSArray *fieldRange = [fieldValues objectAtIndex:1];
+    
+    if(![fieldRange containsObject:@""]){
+        if(![fieldValue isEqualToString:@""] && [fieldRange count] > 0){
             float rangeA = [[fieldRange objectAtIndex:0]floatValue];
             float rangeB = [[fieldRange objectAtIndex:1]floatValue];
             float value = [fieldValue floatValue];
@@ -507,11 +566,19 @@
             
             if(value > rangeB || value < rangeA){
                 /*UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Value Out of Range!" message:message delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
-                [alertView show];*/
+                 [alertView show];*/
                 checking = NO;
                 return NO;
             }
         }
+    }
+    return YES;
+}
+
+-(BOOL)saveValueForCurrentField:(NSArray *)fieldValues{
+    if(currentInspection){
+        NSString *fieldName = [fieldValues objectAtIndex:0];
+        NSString *fieldValue = [fieldValues objectAtIndex:1];
         
         if([fieldName isEqualToString:@"KWH"]){
             currentInspection.generalSettings.kwh = fieldValue;
@@ -525,6 +592,10 @@
             currentInspection.generalSettings.maxVARD = fieldValue;
         }else if([fieldName isEqualToString:@"MINVARD"]){
             currentInspection.generalSettings.minVARD = fieldValue;
+        }else if([fieldName isEqualToString:@"Rain Gauge"]){
+            currentInspection.generalSettings.rainGauge = fieldValue;
+        }else if([fieldName isEqualToString:@"Detention Basin Comments"]){
+            currentInspection.generalSettings.detentionBasinComments = fieldValue;
         }else if([fieldName isEqualToString:@"MaxAmp A"]){
             currentInspection.switchBoard.maxAmpA = fieldValue;
         }else if([fieldName isEqualToString:@"MaxAmp B"]){
@@ -555,19 +626,49 @@
             currentInspection.switchBoard.maxVoltsB = fieldValue;
         }else if([fieldName isEqualToString:@"Max Volts C"]){
             currentInspection.switchBoard.maxVoltsC = fieldValue;
+        }else if([fieldName isEqualToString:@"TargetsAndAlarms"]){
+            currentInspection.switchBoard.targetsAndAlarms = fieldValue;
+        }else if([fieldName isEqualToString:@"Volts 24V"]){
+            currentInspection.batteryCharger.volts24V = fieldValue;
+        }else if([fieldName isEqualToString:@"Amps 24V"]){
+            currentInspection.batteryCharger.amps24V = fieldValue;
+        }else if([fieldName isEqualToString:@"Spec. Gravity 24V"]){
+            currentInspection.batteryCharger.specGravity24V = fieldValue;
         }else if([fieldName isEqualToString:@"Volts 48V #1"]){
             currentInspection.batteryCharger.volts48VOne = fieldValue;
         }else if([fieldName isEqualToString:@"Amps 48V #1"]){
             currentInspection.batteryCharger.amps48VOne = fieldValue;
         }else if([fieldName isEqualToString:@"Spec. Gravity 48V #1"]){
             currentInspection.batteryCharger.specGravity48VOne = fieldValue;
+        }else if([fieldName isEqualToString:@"Volts 48V #2"]){
+            currentInspection.batteryCharger.volts48VTwo = fieldValue;
+        }else if([fieldName isEqualToString:@"Amps 48V #2"]){
+            currentInspection.batteryCharger.amps48VTwo = fieldValue;
+        }else if([fieldName isEqualToString:@"Spec. Gravity 48V #2"]){
+            currentInspection.batteryCharger.specGravity48VTwo = fieldValue;
+        }else if([fieldName isEqualToString:@"Volts 125V #1"]){
+            currentInspection.batteryCharger.volts125VOne = fieldValue;
+        }else if([fieldName isEqualToString:@"Amps 125V #1"]){
+            currentInspection.batteryCharger.amps125VOne = fieldValue;
+        }else if([fieldName isEqualToString:@"Spec. Gravity 125V #1"]){
+            currentInspection.batteryCharger.specGravity125VOne = fieldValue;
+        }else if([fieldName isEqualToString:@"Volts 125V #2"]){
+            currentInspection.batteryCharger.volts125VTwo = fieldValue;
+        }else if([fieldName isEqualToString:@"Amps 125V #2"]){
+            currentInspection.batteryCharger.amps125VTwo = fieldValue;
+        }else if([fieldName isEqualToString:@"Spec. Gravity 125V #2"]){
+            currentInspection.batteryCharger.specGravity125VTwo = fieldValue;
         }else if([fieldName isEqualToString:@"Pressure"]){
             currentInspection.transformer.pressure = fieldValue;
         }else if([fieldName isEqualToString:@"Nitrogen Tank"]){
             currentInspection.transformer.nitrogenTank = fieldValue;
+        }else if([fieldName isEqualToString:@"Winding Temp"]){
+            currentInspection.transformer.windingTemp = fieldValue;
+        }else if([fieldName isEqualToString:@"Oil Temp"]){
+            currentInspection.transformer.oilTemp = fieldValue;
         }else if([fieldName isEqualToString:@"Min Step A"]){
             currentInspection.ltcRegulator.minStepA = fieldValue;
-        }else if([fieldName isEqualToString:@"Pres. Step A"]){
+        }else if([fieldName isEqualToString:@"Pressure Step A"]){
             currentInspection.ltcRegulator.pressureStepA = fieldValue;
         }else if([fieldName isEqualToString:@"Max Step A"]){
             currentInspection.ltcRegulator.maxStepA = fieldValue;
@@ -577,7 +678,7 @@
             currentInspection.ltcRegulator.voltageA = fieldValue;
         }else if([fieldName isEqualToString:@"Min Step B"]){
             currentInspection.ltcRegulator.minStepB = fieldValue;
-        }else if([fieldName isEqualToString:@"Pres. Step B"]){
+        }else if([fieldName isEqualToString:@"Pressure Step B"]){
             currentInspection.ltcRegulator.pressureStepB = fieldValue;
         }else if([fieldName isEqualToString:@"Max Step B"]){
             currentInspection.ltcRegulator.maxStepB = fieldValue;
@@ -587,7 +688,7 @@
             currentInspection.ltcRegulator.voltageB = fieldValue;
         }else if([fieldName isEqualToString:@"Min Step C"]){
             currentInspection.ltcRegulator.minStepC = fieldValue;
-        }else if([fieldName isEqualToString:@"Pres. Step C"]){
+        }else if([fieldName isEqualToString:@"Pressure Step C"]){
             currentInspection.ltcRegulator.pressureStepC = fieldValue;
         }else if([fieldName isEqualToString:@"Max Step C"]){
             currentInspection.ltcRegulator.maxStepC = fieldValue;
@@ -601,13 +702,67 @@
             currentInspection.breakers.busSlotTargetValue = fieldValue;
         }else if([fieldName isEqualToString:currentInspection.breakers.busSlotOperationName]){
             currentInspection.breakers.busSlotOperationValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.busSlotPressureName]){
+            currentInspection.breakers.busSlotPressureValue = fieldValue;
         }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotOneCounterName]){
             currentInspection.breakers.cktSlotOneCounterValue = fieldValue;
         }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotOneTargetName]){
             currentInspection.breakers.cktSlotOneTargetValue = fieldValue;
         }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotOneOperationName]){
             currentInspection.breakers.cktSlotOneOperationValue = fieldValue;
-        }else {
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotOnePressureName]){
+            currentInspection.breakers.cktSlotOnePressureValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotTwoCounterName]){
+            currentInspection.breakers.cktSlotTwoCounterValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotTwoTargetName]){
+            currentInspection.breakers.cktSlotTwoTargetValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotTwoOperationName]){
+            currentInspection.breakers.cktSlotTwoOperationValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotTwoPressureName]){
+            currentInspection.breakers.cktSlotTwoPressureValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotThreeCounterName]){
+            currentInspection.breakers.cktSlotThreeCounterValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotThreeTargetName]){
+            currentInspection.breakers.cktSlotThreeTargetValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotThreeOperationName]){
+            currentInspection.breakers.cktSlotThreeOperationValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotThreePressureName]){
+            currentInspection.breakers.cktSlotThreePressureValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotFourCounterName]){
+            currentInspection.breakers.cktSlotFourCounterValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotFourTargetName]){
+            currentInspection.breakers.cktSlotFourTargetValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotFourOperationName]){
+            currentInspection.breakers.cktSlotFourOperationValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotFourPressureName]){
+            currentInspection.breakers.cktSlotFourPressureValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotFiveCounterName]){
+            currentInspection.breakers.cktSlotFiveCounterValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotFiveTargetName]){
+            currentInspection.breakers.cktSlotFiveTargetValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotFiveOperationName]){
+            currentInspection.breakers.cktSlotFiveOperationValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotFivePressureName]){
+            currentInspection.breakers.cktSlotFivePressureValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotSixCounterName]){
+            currentInspection.breakers.cktSlotSixCounterValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotSixTargetName]){
+            currentInspection.breakers.cktSlotSixTargetValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotSixOperationName]){
+            currentInspection.breakers.cktSlotSixOperationValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotSixPressureName]){
+            currentInspection.breakers.cktSlotSixPressureValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotSevenCounterName]){
+            currentInspection.breakers.cktSlotSevenCounterValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotSevenTargetName]){
+            currentInspection.breakers.cktSlotSevenTargetValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotSevenOperationName]){
+            currentInspection.breakers.cktSlotSevenOperationValue = fieldValue;
+        }else if([fieldName isEqualToString:currentInspection.breakers.cktSlotSevenPressureName]){
+            currentInspection.breakers.cktSlotSevenPressureValue = fieldValue;
+        }else if([fieldName isEqualToString:@"Comments"]){
+            currentInspection.breakers.comments = fieldValue;
+        }else{
             // Do nothing.
         }
         
@@ -637,6 +792,12 @@
     }else if([cellTitle isEqualToString:@"MINVARD"]){
         if(currentInspection.generalSettings.minVARD)
             return currentInspection.generalSettings.minVARD;
+    }else if([cellTitle isEqualToString:@"Rain Gauge"]){
+        if(currentInspection.generalSettings.rainGauge)
+            return currentInspection.generalSettings.rainGauge;
+    }else if([cellTitle isEqualToString:@"Detention Basin Comments"]){
+        if(currentInspection.generalSettings.detentionBasinComments)
+            return currentInspection.generalSettings.detentionBasinComments;
     }else if([cellTitle isEqualToString:@"MaxAmp A"]){
         if(currentInspection.switchBoard.maxAmpA)
             return currentInspection.switchBoard.maxAmpA;
@@ -682,6 +843,18 @@
     }else if([cellTitle isEqualToString:@"Max Volts C"]){
         if(currentInspection.switchBoard.maxVoltsC)
             return currentInspection.switchBoard.maxVoltsC;
+    }else if([cellTitle isEqualToString:@"TargetsAndAlarms"]){
+        if(currentInspection.switchBoard.targetsAndAlarms)
+            return currentInspection.switchBoard.targetsAndAlarms;
+    }else if([cellTitle isEqualToString:@"Volts 24V"]){
+        if(currentInspection.batteryCharger.volts24V)
+            return currentInspection.batteryCharger.volts24V;
+    }else if([cellTitle isEqualToString:@"Amps 24V"]){
+        if(currentInspection.batteryCharger.amps24V)
+            return currentInspection.batteryCharger.amps24V;
+    }else if([cellTitle isEqualToString:@"Spec. Gravity 24V"]){
+        if(currentInspection.batteryCharger.specGravity24V)
+            return currentInspection.batteryCharger.specGravity24V;
     }else if([cellTitle isEqualToString:@"Volts 48V #1"]){
             return currentInspection.batteryCharger.volts48VOne;
     }else if([cellTitle isEqualToString:@"Amps 48V #1"]){
@@ -690,12 +863,45 @@
     }else if([cellTitle isEqualToString:@"Spec. Gravity 48V #1"]){
         if(currentInspection.batteryCharger.specGravity48VOne)
             return currentInspection.batteryCharger.specGravity48VOne;
+    }else if([cellTitle isEqualToString:@"Volts 48V #2"]){
+        if(currentInspection.batteryCharger.volts48VTwo)
+            return currentInspection.batteryCharger.volts48VTwo;
+    }else if([cellTitle isEqualToString:@"Amps 48V #2"]){
+        if(currentInspection.batteryCharger.amps48VTwo)
+            return currentInspection.batteryCharger.amps48VTwo;
+    }else if([cellTitle isEqualToString:@"Spec. Gravity 48V #2"]){
+        if(currentInspection.batteryCharger.specGravity48VTwo)
+            return currentInspection.batteryCharger.specGravity48VTwo;
+    }else if([cellTitle isEqualToString:@"Volts 125V #1"]){
+        if(currentInspection.batteryCharger.volts125VOne)
+            return currentInspection.batteryCharger.volts125VOne;
+    }else if([cellTitle isEqualToString:@"Amps 125V #1"]){
+        if(currentInspection.batteryCharger.amps125VOne)
+            return currentInspection.batteryCharger.amps125VOne;
+    }else if([cellTitle isEqualToString:@"Spec. Gravity 125V #1"]){
+        if(currentInspection.batteryCharger.specGravity125VOne)
+            return currentInspection.batteryCharger.specGravity125VOne;
+    }else if([cellTitle isEqualToString:@"Volts 125V #2"]){
+        if(currentInspection.batteryCharger.volts125VTwo)
+            return currentInspection.batteryCharger.volts125VTwo;
+    }else if([cellTitle isEqualToString:@"Amps 125V #2"]){
+        if(currentInspection.batteryCharger.amps125VTwo)
+            return currentInspection.batteryCharger.amps125VTwo;
+    }else if([cellTitle isEqualToString:@"Spec. Gravity 125V #2"]){
+        if(currentInspection.batteryCharger.specGravity125VTwo)
+            return currentInspection.batteryCharger.specGravity125VTwo;
     }else if([cellTitle isEqualToString:@"Pressure"]){
         if(currentInspection.transformer.pressure)
             return currentInspection.transformer.pressure;
     }else if([cellTitle isEqualToString:@"Nitrogen Tank"]){
         if(currentInspection.transformer.nitrogenTank)
             return currentInspection.transformer.nitrogenTank;
+    }else if([cellTitle isEqualToString:@"Winding Temp"]){
+        if(currentInspection.transformer.windingTemp)
+            return currentInspection.transformer.windingTemp;
+    }else if([cellTitle isEqualToString:@"Oil Temp"]){
+        if(currentInspection.transformer.oilTemp)
+            return currentInspection.transformer.oilTemp;
     }else if([cellTitle isEqualToString:@"Min Step A"]){
         if(currentInspection.ltcRegulator.minStepA)
             return currentInspection.ltcRegulator.minStepA;
@@ -742,23 +948,104 @@
         if(currentInspection.ltcRegulator.voltageC)
             return currentInspection.ltcRegulator.voltageC;
     }else if([cellTitle isEqualToString:currentInspection.breakers.busSlotCounterName]){
-        if(currentInspection.breakers.busSlotCounterValue)
+        if(currentInspection.breakers.busSlotCounterName)
             return currentInspection.breakers.busSlotCounterValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.busSlotTargetName]){
-        if(currentInspection.breakers.busSlotTargetValue)
+        if(currentInspection.breakers.busSlotTargetName)
             return currentInspection.breakers.busSlotTargetValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.busSlotOperationName]){
-        if(currentInspection.breakers.busSlotOperationValue)
+        if(currentInspection.breakers.busSlotOperationName)
             return currentInspection.breakers.busSlotOperationValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.busSlotPressureName]){
+            if(currentInspection.breakers.busSlotPressureName)
+                return currentInspection.breakers.busSlotPressureValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotOneCounterName]){
-        if(currentInspection.breakers.cktSlotOneCounterValue)
+        if(currentInspection.breakers.cktSlotOneCounterName)
             return currentInspection.breakers.cktSlotOneCounterValue;
-    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFourTargetName]){
-        if(currentInspection.breakers.cktSlotOneTargetValue)
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotOneTargetName]){
+        if(currentInspection.breakers.cktSlotOneTargetName)
             return currentInspection.breakers.cktSlotOneTargetValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotOneOperationName]){
-        if(currentInspection.breakers.cktSlotOneOperationValue)
+        if(currentInspection.breakers.cktSlotOneOperationName)
             return currentInspection.breakers.cktSlotOneOperationValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotOnePressureName]){
+        if(currentInspection.breakers.cktSlotOnePressureName)
+            return currentInspection.breakers.cktSlotOnePressureValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotTwoCounterName]){
+        if(currentInspection.breakers.cktSlotTwoCounterName)
+            return currentInspection.breakers.cktSlotTwoCounterValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotTwoTargetName]){
+        if(currentInspection.breakers.cktSlotTwoTargetName)
+            return currentInspection.breakers.cktSlotTwoTargetValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotTwoOperationName]){
+        if(currentInspection.breakers.cktSlotTwoOperationName)
+            return currentInspection.breakers.cktSlotTwoOperationValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotTwoPressureName]){
+        if(currentInspection.breakers.cktSlotTwoPressureName)
+            return currentInspection.breakers.cktSlotTwoPressureValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotThreeCounterName]){
+        if(currentInspection.breakers.cktSlotThreeCounterName)
+            return currentInspection.breakers.cktSlotThreeCounterValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotThreeTargetName]){
+        if(currentInspection.breakers.cktSlotThreeTargetName)
+            return currentInspection.breakers.cktSlotThreeTargetValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotThreeOperationName]){
+        if(currentInspection.breakers.cktSlotThreeOperationName)
+            return currentInspection.breakers.cktSlotThreeOperationValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotThreePressureName]){
+        if(currentInspection.breakers.cktSlotThreePressureName)
+            return currentInspection.breakers.cktSlotThreePressureValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFourCounterName]){
+        if(currentInspection.breakers.cktSlotFourCounterName)
+            return currentInspection.breakers.cktSlotFourCounterValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFourTargetName]){
+        if(currentInspection.breakers.cktSlotFourTargetName)
+            return currentInspection.breakers.cktSlotFourTargetValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFourOperationName]){
+        if(currentInspection.breakers.cktSlotFourOperationName)
+            return currentInspection.breakers.cktSlotFourOperationValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFourPressureName]){
+        if(currentInspection.breakers.cktSlotFourPressureName)
+            return currentInspection.breakers.cktSlotFourPressureValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFiveCounterName]){
+        if(currentInspection.breakers.cktSlotFiveCounterName)
+            return currentInspection.breakers.cktSlotFiveCounterValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFiveTargetName]){
+        if(currentInspection.breakers.cktSlotFiveTargetName)
+            return currentInspection.breakers.cktSlotFiveTargetValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFiveOperationName]){
+        if(currentInspection.breakers.cktSlotFiveOperationName)
+            return currentInspection.breakers.cktSlotFiveOperationValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFivePressureName]){
+        if(currentInspection.breakers.cktSlotFivePressureName)
+            return currentInspection.breakers.cktSlotFivePressureValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSixCounterName]){
+        if(currentInspection.breakers.cktSlotSixCounterName)
+            return currentInspection.breakers.cktSlotSixCounterValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSixTargetName]){
+        if(currentInspection.breakers.cktSlotSixTargetName)
+            return currentInspection.breakers.cktSlotSixTargetValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSixOperationName]){
+        if(currentInspection.breakers.cktSlotSixOperationName)
+            return currentInspection.breakers.cktSlotSixOperationValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSixPressureName]){
+        if(currentInspection.breakers.cktSlotSixPressureName)
+            return currentInspection.breakers.cktSlotSixPressureValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSevenCounterName]){
+        if(currentInspection.breakers.cktSlotSevenCounterName)
+            return currentInspection.breakers.cktSlotSevenCounterValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSevenTargetName]){
+        if(currentInspection.breakers.cktSlotSevenTargetName)
+            return currentInspection.breakers.cktSlotSevenTargetValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSevenOperationName]){
+        if(currentInspection.breakers.cktSlotSevenOperationName)
+            return currentInspection.breakers.cktSlotSevenOperationValue;
+    }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSevenPressureName]){
+        if(currentInspection.breakers.cktSlotSevenPressureName)
+            return currentInspection.breakers.cktSlotSevenPressureValue;
+    }else if([cellTitle isEqualToString:@"Comments"]){
+        if(currentInspection.breakers.comments)
+            return currentInspection.breakers.comments;
     }else{
         // Do nothing.
     }
@@ -892,7 +1179,7 @@
             
             currentInspection.generalSettings.stationName = [stationInfo objectForKey:@"name"];
             
-            NSArray *sectionsArray = [stationDictionary objectForKey:@"sections"];
+            NSArray *sectionsArray = [stationInfo objectForKey:@"sections"];
             
             NSArray *breakersArray;
             
@@ -944,7 +1231,7 @@
         currentInspection = [inspections objectAtIndex:theIndex];
         currentInspection.generalSettings.stationName = [stationInfo objectForKey:@"name"];
         
-        NSArray *sectionsArray = [stationDictionary objectForKey:@"sections"];
+        NSArray *sectionsArray = [stationInfo objectForKey:@"sections"];
         
         NSArray *breakersArray;
         
@@ -971,7 +1258,10 @@
         
         currentInspection.generalSettings.technician = technicianName;
         
-        currentTextField.text = currentInspection.generalSettings.technician;
+        if(textViewIndexPath){
+            InspectionContentCell *cell = (InspectionContentCell *)[theTableView cellForRowAtIndexPath:textViewIndexPath];
+            cell.cellDetailsLabel.text = currentInspection.generalSettings.technician;
+        }
     }
 }
 
@@ -980,19 +1270,36 @@
         NSDictionary *fieldDictionary = [breakersArray objectAtIndex:i];
         Field *aField = [[Field alloc]init];
         aField.name = [fieldDictionary objectForKey:@"name"];
+        aField.number = [fieldDictionary objectForKey:@"number"];
         
         if([aField.name rangeOfString:@"Bus"].location != NSNotFound){
-            if([aField.name rangeOfString:@"Counter"].location > 0){
+            currentInspection.breakers.busSlotNumber = aField.number;
+            if([aField.name rangeOfString:@"Counter"].location != NSNotFound){
                 currentInspection.breakers.busSlotCounterName = aField.name;
-            }else if([aField.name rangeOfString:@"Target"].location > 0){
+            }else if([aField.name rangeOfString:@"Target"].location != NSNotFound){
                 currentInspection.breakers.busSlotTargetName = aField.name;
-            }else if([aField.name rangeOfString:@"Oper"].location > 0){
+            }else if([aField.name rangeOfString:@"Oper"].location != NSNotFound){
                 currentInspection.breakers.busSlotOperationName = aField.name;
-            }else if([aField.name rangeOfString:@"Pressure"].location > 0){
+            }else if([aField.name rangeOfString:@"Press"].location != NSNotFound){
                 currentInspection.breakers.busSlotPressureName = aField.name;
             }
         }else if([aField.name rangeOfString:@"CKT"].location != NSNotFound){
-            if([aField.name rangeOfString:@"Counter"].location > 0){
+            if(!currentInspection.breakers.cktSlotOneNumber){
+                currentInspection.breakers.cktSlotOneNumber = aField.number;
+            }else if(!currentInspection.breakers.cktSlotTwoNumber){
+                currentInspection.breakers.cktSlotTwoNumber = aField.number;
+            }else if(!currentInspection.breakers.cktSlotThreeNumber){
+                currentInspection.breakers.cktSlotThreeNumber = aField.number;
+            }else if(!currentInspection.breakers.cktSlotFourNumber){
+                currentInspection.breakers.cktSlotFourNumber = aField.number;
+            }else if(!currentInspection.breakers.cktSlotFiveNumber){
+                currentInspection.breakers.cktSlotFiveNumber = aField.number;
+            }else if(!currentInspection.breakers.cktSlotSixNumber){
+                currentInspection.breakers.cktSlotSixNumber = aField.number;
+            }else if(!currentInspection.breakers.cktSlotSevenNumber){
+                currentInspection.breakers.cktSlotSevenNumber = aField.number;
+            }
+            if([aField.name rangeOfString:@"Counter"].location != NSNotFound){
                 if(!currentInspection.breakers.cktSlotOneCounterName){
                     currentInspection.breakers.cktSlotOneCounterName = aField.name;
                 }else if(!currentInspection.breakers.cktSlotTwoCounterName){
@@ -1008,7 +1315,7 @@
                 }else if(!currentInspection.breakers.cktSlotSevenCounterName){
                     currentInspection.breakers.cktSlotSevenCounterName = aField.name;
                 }
-            }else if([aField.name rangeOfString:@"Target"].location > 0){
+            }else if([aField.name rangeOfString:@"Target"].location != NSNotFound){
                 if(!currentInspection.breakers.cktSlotOneTargetName){
                     currentInspection.breakers.cktSlotOneTargetName = aField.name;
                 }else if(!currentInspection.breakers.cktSlotTwoTargetName){
@@ -1024,10 +1331,38 @@
                 }else if(!currentInspection.breakers.cktSlotSevenTargetName){
                     currentInspection.breakers.cktSlotSevenTargetName = aField.name;
                 }
-            }else if([aField.name rangeOfString:@"Oper"].location > 0){
-                
-            }else if([aField.name rangeOfString:@"Pressure"].location > 0){
-                
+            }else if([aField.name rangeOfString:@"Oper"].location != NSNotFound){
+                if(!currentInspection.breakers.cktSlotOneOperationName){
+                    currentInspection.breakers.cktSlotOneOperationName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotTwoOperationName){
+                    currentInspection.breakers.cktSlotTwoOperationName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotThreeOperationName){
+                    currentInspection.breakers.cktSlotThreeOperationName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotFourOperationName){
+                    currentInspection.breakers.cktSlotFourOperationName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotFiveOperationName){
+                    currentInspection.breakers.cktSlotFiveOperationName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotSixOperationName){
+                    currentInspection.breakers.cktSlotSixOperationName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotSevenOperationName){
+                    currentInspection.breakers.cktSlotSevenOperationName = aField.name;
+                }
+            }else if([aField.name rangeOfString:@"Press"].location != NSNotFound){
+                if(!currentInspection.breakers.cktSlotOnePressureName){
+                    currentInspection.breakers.cktSlotOnePressureName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotTwoPressureName){
+                    currentInspection.breakers.cktSlotTwoPressureName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotThreePressureName){
+                    currentInspection.breakers.cktSlotThreePressureName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotFourPressureName){
+                    currentInspection.breakers.cktSlotFourPressureName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotFivePressureName){
+                    currentInspection.breakers.cktSlotFivePressureName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotSixPressureName){
+                    currentInspection.breakers.cktSlotSixPressureName = aField.name;
+                }else if(!currentInspection.breakers.cktSlotSevenPressureName){
+                    currentInspection.breakers.cktSlotSevenPressureName = aField.name;
+                }
             }
         }
     }
@@ -1104,6 +1439,27 @@
     [[MenuButtonHelper sharedHelper]displayMenu];
 }
 
+
+#pragma mark - BackButton Methods
+
+-(void)displayWarning{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Are you sure?" message:@"Are you sure you want to go back?\nLeaving now will cause you to lose your current data." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [alertView show];
+}
+
+-(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch(buttonIndex){
+        case 0:
+            // Cancel pressed. Do nothing.
+            break;
+        case 1:
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
+        default:
+            break;
+    }
+}
+
 #pragma mark - Dismiss TargetsAndAlarms view
 
 -(IBAction)dismissTargetsAndAlarms:(id)sender
@@ -1115,7 +1471,7 @@
     if (![targetsAndAlarmsTextView.text isEqualToString:@"Enter targets and alarms here..."] )
     {
         cell.cellDetailsLabel.text = targetsAndAlarmsTextView.text;
-        currentInspection.switchBoard.targetsAlarms = targetsAndAlarmsTextView.text;
+        currentInspection.switchBoard.targetsAndAlarms = targetsAndAlarmsTextView.text;
     }
 
     [theTableView setUserInteractionEnabled:YES];

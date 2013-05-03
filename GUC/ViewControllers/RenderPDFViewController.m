@@ -8,6 +8,7 @@
 
 #import "RenderPDFViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "MenuButtonHelper.h"
 
 @interface RenderPDFViewController ()
 
@@ -236,10 +237,15 @@
         mailComposer.mailComposeDelegate = self;
     }
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Next Page"
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
                                                                              style:UIBarButtonItemStyleBordered
                                                                             target:self
-                                                                            action:@selector(changePage)];
+                                                                            action:@selector(displayMenu)];
+    [MenuButtonHelper setParentController:self];
+    NSArray *titlesArray = [[NSArray alloc]initWithObjects:@"Next Page", @"Send PDF", nil];
+    [[MenuButtonHelper sharedHelper]addButtonsWithTitlesToActionSheet:titlesArray];
+    [[MenuButtonHelper sharedHelper]setButtonOneTarget:self forSelector:@selector(changePage)];
+    [[MenuButtonHelper sharedHelper]setButtonTwoTarget:self forSelector:@selector(quicklyDrawPDF)];
     
     imageArray = [[NSMutableArray alloc]init];
     
@@ -390,8 +396,8 @@
         }else{
             maxVoltsCLabel.text = notAvailable;
         }
-        if(currentInspection.switchBoard.targetsAlarms){
-            targetsAndAlarmsView.text = currentInspection.switchBoard.targetsAlarms;
+        if(currentInspection.switchBoard.targetsAndAlarms){
+            targetsAndAlarmsView.text = currentInspection.switchBoard.targetsAndAlarms;
         }else{
             targetsAndAlarmsView.text = notAvailable;
         }
@@ -709,23 +715,37 @@
 -(void)changePage{
     switch(pdfPage){
         case 0:
+            if(firstPage.alpha == 0.0){
+                firstPage.alpha = 1.0;
+            }
             [self captureScreen];
             [self makeViewVanish:firstPage];
             break;
         case 1:
+            if(secondPage.alpha == 0.0){
+                secondPage.alpha = 1.0;
+            }
             [self captureScreen];
             [self makeViewVanish:secondPage];
             break;
         case 2:
+            if(thirdPage.alpha == 0.0){
+                thirdPage.alpha = 1.0;
+            }
             [self captureScreen];
             [self makeViewVanish:thirdPage];
             break;
         case 3:
+            if(fourthPage.alpha == 0.0){
+                fourthPage.alpha = 1.0;
+            }
             [self captureScreen];
             [self makeViewVanish:fourthPage];
-            [self.navigationItem.rightBarButtonItem setTitle:@"Finish"];
             break;
         case 4:
+            if(fifthPage.alpha == 0.0){
+                fifthPage.alpha = 1.0;
+            }
             [self captureScreen];
             [self makeViewVanish:fifthPage];
             [self drawPDF];
@@ -799,6 +819,24 @@
     }
     [mailComposer dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - MenuButton Methods
+
+-(void)displayMenu{
+    [[MenuButtonHelper sharedHelper]displayMenu];
+}
+
+-(void)quicklyDrawPDF{
+    if([imageArray count] > 0){
+        [imageArray removeAllObjects];
+    }
+    
+    pdfPage = 0;
+    
+    for(int i = 0; i < 5; i++){
+        [self changePage];
+    }
 }
 
 @end

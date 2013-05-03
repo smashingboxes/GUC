@@ -10,10 +10,11 @@
 
 @interface Field : NSObject
 
-@property(nonatomic)NSArray *choices;
 @property(nonatomic)NSString *name;
 @property(nonatomic)NSArray *range;
 @property(nonatomic)NSString *type;
+@property(nonatomic)NSArray *choices;
+@property(nonatomic)NSString *number;
 @property(nonatomic)NSString *value;
 
 @end

@@ -98,4 +98,6 @@
 @property(nonatomic)NSString *cktSlotSevenPressureName;
 @property(nonatomic)NSString *cktSlotSevenPressureValue;
 
+@property(nonatomic)NSString *comments;
+
 @end

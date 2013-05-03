@@ -10,10 +10,11 @@
 
 @implementation Field
 
-@synthesize choices;
 @synthesize name;
 @synthesize range;
 @synthesize type;
+@synthesize choices;
+@synthesize number;
 @synthesize value;
 
 @end

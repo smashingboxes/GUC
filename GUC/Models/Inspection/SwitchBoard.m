@@ -25,6 +25,6 @@
 @synthesize maxVoltsA;
 @synthesize maxVoltsB;
 @synthesize maxVoltsC;
-@synthesize targetsAlarms;
+@synthesize targetsAndAlarms;
 
 @end

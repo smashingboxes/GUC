@@ -88,5 +88,6 @@
 @synthesize cktSlotSevenOperationValue;
 @synthesize cktSlotSevenPressureName;
 @synthesize cktSlotSevenPressureValue;
+@synthesize comments;
 
 @end

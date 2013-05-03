@@ -147,6 +147,9 @@
     }else{
         cell.nameLabel.text = currentStation.stationIdentifier;
     }
+    
+    cell.accessibilityLabel = currentStation.stationIdentifier;
+    
     int totalFeet = [[currentStationArray objectAtIndex:1]intValue];
     
     if(totalFeet < 1000){
@@ -173,9 +176,9 @@
 -(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath {
     NewInspectionCell *cell = (NewInspectionCell*)[tableView cellForRowAtIndexPath:indexPath];
     
-    stationNameString = cell.nameLabel.text;
+    stationNameString = cell.accessibilityLabel;
     
-    NSString *titleString = [NSString stringWithFormat:@"Begin inspection for %@?", stationNameString];
+    NSString *titleString = [NSString stringWithFormat:@"Begin inspection for %@?", cell.nameLabel.text];
     
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:titleString message:@"Are you ready to begin your inspection of this site?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     [alertView show];
