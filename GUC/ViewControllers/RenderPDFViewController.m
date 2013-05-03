@@ -538,8 +538,8 @@
         }else{
             minStepALabel.text = notAvailable;
         }
-        if(currentInspection.ltcRegulator.presentStepA){
-            presentStepALabel.text = currentInspection.ltcRegulator.presentStepA;
+        if(currentInspection.ltcRegulator.pressureStepA){
+            presentStepALabel.text = currentInspection.ltcRegulator.pressureStepA;
         }else{
             presentStepALabel.text = notAvailable;
         }
@@ -584,8 +584,8 @@
         }else{
             minStepBLabel.text = notAvailable;
         }
-        if(currentInspection.ltcRegulator.presentStepB){
-            presentStepBLabel.text = currentInspection.ltcRegulator.presentStepB;
+        if(currentInspection.ltcRegulator.pressureStepB){
+            presentStepBLabel.text = currentInspection.ltcRegulator.pressureStepB;
         }else{
             presentStepBLabel.text = notAvailable;
         }
@@ -630,8 +630,8 @@
         }else{
             minStepCLabel.text = notAvailable;
         }
-        if(currentInspection.ltcRegulator.presentStepC){
-            presentStepCLabel.text = currentInspection.ltcRegulator.presentStepC;
+        if(currentInspection.ltcRegulator.pressureStepC){
+            presentStepCLabel.text = currentInspection.ltcRegulator.pressureStepC;
         }else{
             presentStepCLabel.text = notAvailable;
         }
