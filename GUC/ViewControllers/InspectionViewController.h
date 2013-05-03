@@ -11,8 +11,9 @@
 #import "AsyncRequest.h"
 #import "PickerViewHelper.h"
 
-@interface InspectionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,InspectionCellHeaderViewDelegate, AsyncResponseDelegate, PickerViewHelperDelegate>
+@interface InspectionViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, InspectionCellHeaderViewDelegate, AsyncResponseDelegate, PickerViewHelperDelegate>
 
 -(id)initWithStation:(NSString*)station;
+-(IBAction)dismissTargetsAndAlarms:(id)sender;
 
 @end

@@ -16,6 +16,7 @@
 #import "NavigationBarHelper.h"
 #import "MenuButtonHelper.h"
 #import "CustomLoadingView.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define kDataPurpose @"Data"
 #define kStringPurpose @"String"
@@ -30,6 +31,9 @@
 
 @property(nonatomic)NSString *stationName;
 @property(nonatomic)IBOutlet UITableView *theTableView;
+@property(nonatomic)IBOutlet UIView *targetsAndAlarmsView;
+@property(nonatomic)IBOutlet UIView *dimBackgroundView;
+@property(nonatomic)IBOutlet UITextView *targetsAndAlarmsTextView;
 @property(nonatomic)InspectionFormHelper *inspectionFormHelper;
 @property(nonatomic)NSInteger openSectionIndex;
 @property(nonatomic)Inspection *currentInspection;
@@ -42,6 +46,10 @@
 @property(nonatomic)NSString *pickerType;
 @property(nonatomic)UITextField *currentTextField;
 @property(nonatomic)NSArray *currentChoices;
+@property(nonatomic) NSIndexPath *textViewIndexPath;
+@property(nonatomic) BOOL isKeyboardPresent;
+
+
 
 @end
 
@@ -49,6 +57,9 @@
 
 @synthesize stationName;
 @synthesize theTableView;
+@synthesize targetsAndAlarmsView;
+@synthesize dimBackgroundView;
+@synthesize targetsAndAlarmsTextView;
 @synthesize inspectionFormHelper;
 @synthesize openSectionIndex;
 @synthesize currentInspection;
@@ -61,6 +72,8 @@
 @synthesize pickerType;
 @synthesize currentTextField;
 @synthesize currentChoices;
+@synthesize textViewIndexPath;
+@synthesize isKeyboardPresent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -87,6 +100,7 @@
     }
     
     checking = NO;
+    isKeyboardPresent=NO;
     
     [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     
@@ -104,6 +118,17 @@
     
     theTableView.sectionHeaderHeight = headerHeight;
     
+    [dimBackgroundView setFrame:CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, [[UIScreen mainScreen]bounds].size.height)];
+    [dimBackgroundView setAlpha:0];
+    [dimBackgroundView setBackgroundColor:[UIColor blackColor]];
+    
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    
+    [targetsAndAlarmsTextView.layer setBorderWidth:2.0];
+    [targetsAndAlarmsTextView.layer setBorderColor:[[UIColor blackColor] CGColor]];
+    [targetsAndAlarmsTextView setDelegate:self];
+    [targetsAndAlarmsView addGestureRecognizer:tgr];
+    [targetsAndAlarmsView setFrame:CGRectMake(39, -41-targetsAndAlarmsView.frame.size.height, targetsAndAlarmsView.frame.size.width, targetsAndAlarmsView.frame.size.height)];
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -243,6 +268,7 @@
         cell.cellField.userInteractionEnabled = YES;
     }
     if([currentField.name isEqualToString:@"TargetsAndAlarms"]){
+        textViewIndexPath = indexPath;
         if(indexPath.row == [fieldsArray count]-1){
             cell.cellField.hidden = YES;
             cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -269,6 +295,14 @@
 
 
 -(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath {
+    if (indexPath.row == textViewIndexPath.row && indexPath.section == textViewIndexPath.section)
+    {
+        [theTableView setUserInteractionEnabled:NO];
+        [UIView animateWithDuration:0.5 animations:^{
+            [dimBackgroundView setAlpha:0.5];
+            [targetsAndAlarmsView setFrame:CGRectMake(39, 41, targetsAndAlarmsView.frame.size.width, targetsAndAlarmsView.frame.size.height)];
+        }];
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -1006,6 +1040,66 @@
 -(void)displayMenuForButton{
     pickerType = kDataPurpose;
     [[MenuButtonHelper sharedHelper]displayMenu];
+}
+
+#pragma mark - Dismiss TargetsAndAlarms view
+
+-(IBAction)dismissTargetsAndAlarms:(id)sender
+{
+    InspectionContentCell *cell = (InspectionContentCell *)[theTableView cellForRowAtIndexPath:textViewIndexPath];
+    
+    isKeyboardPresent = NO;
+    
+    if (![targetsAndAlarmsTextView.text isEqualToString:@"Enter targets and alarms here..."] )
+    {
+        cell.cellDetailsLabel.text = targetsAndAlarmsTextView.text;
+        currentInspection.switchBoard.targetsAlarms = targetsAndAlarmsTextView.text;
+    }
+
+    [theTableView setUserInteractionEnabled:YES];
+    [UIView animateWithDuration:0.5 animations:^{
+        [targetsAndAlarmsView setFrame:CGRectMake(39, -41-targetsAndAlarmsView.frame.size.height, targetsAndAlarmsView.frame.size.width, targetsAndAlarmsView.frame.size.height)];
+        [dimBackgroundView setAlpha:0];
+    }];
+
+    [targetsAndAlarmsTextView resignFirstResponder];
+}
+
+#pragma mark - Dismiss keyboard
+
+- (void) dismissKeyboard
+{
+    if (targetsAndAlarmsTextView && ![targetsAndAlarmsTextView isHidden])
+    {
+        [targetsAndAlarmsTextView resignFirstResponder];
+    }
+}
+
+#pragma mark - TextView Delegates
+
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{    
+    isKeyboardPresent = YES;
+    [UIView animateWithDuration:0.2 animations:^{
+        [targetsAndAlarmsView setCenter:CGPointMake(targetsAndAlarmsView.center.x, 80)];
+    }];
+    if ([textView.text isEqualToString:@"Enter targets and alarms here..."])
+    {
+        [textView setText:@""];
+    }
+}
+
+- (void) textViewDidEndEditing:(UITextView *)textView
+{
+    if (isKeyboardPresent)
+        [UIView animateWithDuration:0.2 animations:^{
+            [targetsAndAlarmsView setCenter:CGPointMake(targetsAndAlarmsView.center.x, 178)];
+        }];
+    isKeyboardPresent = NO;
+    if ([textView.text length] == 0)
+    {
+        [textView setText:@"Enter targets and alarms here..."];
+    }
 }
 
 

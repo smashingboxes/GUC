@@ -14,6 +14,7 @@
 @synthesize cellField;
 @synthesize cellControl;
 @synthesize cellImageView;
+@synthesize cellDetailsLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
