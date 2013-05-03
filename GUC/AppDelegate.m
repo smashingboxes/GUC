@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 
-#import "MainViewController.h"
+#import "NewInspectionsViewController.h"
 
 @implementation AppDelegate
 
@@ -17,7 +17,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     //if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-    UIViewController *aViewController = [[MainViewController alloc] initWithNibName:@"MainViewController_iPhone" bundle:nil];
+    UIViewController *aViewController = [[NewInspectionsViewController alloc] initWithNibName:@"NewInspectionsView" bundle:nil];
     self.viewController = [[UINavigationController alloc]initWithRootViewController:aViewController];
     /*} else {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Not an iPhone!"

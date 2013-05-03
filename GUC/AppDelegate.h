@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class MainViewController;
+@class NewInspectionsViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

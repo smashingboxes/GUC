@@ -358,7 +358,7 @@
     
     NSArray *fieldValues = [self getValuesForCurrentField:textField];
     
-    if(pickerHelper.pickerInView == NO){
+    if(!pickerHelper || pickerHelper.pickerInView == NO){
         if([fieldValues count] > 3){
             pickerType = kStringPurpose;
             currentChoices = [fieldValues objectAtIndex:3];
@@ -1063,6 +1063,10 @@
 
 -(void)displayMenuForButton{
     pickerType = kDataPurpose;
+    if(currentTextField)
+        [currentTextField resignFirstResponder];
+    if(pickerHelper.pickerInView)
+        [pickerHelper removePicker];
     [[MenuButtonHelper sharedHelper]displayMenu];
 }
 
