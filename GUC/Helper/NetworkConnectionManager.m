@@ -81,6 +81,8 @@
 
 -(void)cancelAllRequests{
     [networkQueue cancelAllOperations];
+    if(currentRequest)
+        currentRequest.delegate = nil;
 }
 
 @end
