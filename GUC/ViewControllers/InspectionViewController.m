@@ -1500,6 +1500,7 @@
     }
 }
 
+
 #pragma mark - Dismiss TargetsAndAlarms view
 
 -(IBAction)dismissTargetsAndAlarms:(id)sender
@@ -1523,6 +1524,7 @@
     [targetsAndAlarmsTextView resignFirstResponder];
 }
 
+
 #pragma mark - Dismiss keyboard
 
 - (void) dismissKeyboard
@@ -1532,6 +1534,7 @@
         [targetsAndAlarmsTextView resignFirstResponder];
     }
 }
+
 
 #pragma mark - TextView Delegates
 
