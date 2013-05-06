@@ -1243,14 +1243,6 @@
             self.navigationItem.title = [stationInfo objectForKey:@"name"];
         }
         
-        if(!currentInspection){
-            currentInspection = [[Inspection alloc]init];
-        }
-        
-        currentInspection = [inspections objectAtIndex:theIndex];
-        currentInspection.generalSettings.stationName = [stationInfo objectForKey:@"name"];
-        currentInspection.stationIdentifier = [stationInfo objectForKey:@"id"];
-        
         NSArray *sectionsArray = [stationInfo objectForKey:@"sections"];
         
         NSArray *breakersArray;
@@ -1263,10 +1255,20 @@
             }
         }
         
-        // Set the names of the Bus and Circuit fields.
-        [self setBreakersFieldsFromArray:breakersArray];
+        if(!currentInspection){
+            currentInspection = [[Inspection alloc]init];
+        }
+        
+        currentInspection = [inspections objectAtIndex:theIndex];
+        currentInspection.generalSettings.stationName = [stationInfo objectForKey:@"name"];
+        currentInspection.stationIdentifier = [stationInfo objectForKey:@"id"];
             
         inspectionFormHelper = [[InspectionFormHelper alloc]initWithSections:[stationInfo objectForKey:@"sections"]];
+        
+        if(!currentInspection.breakers.busSlotNumber){
+            // Set the names of the Bus and Circuit fields.
+            [self setBreakersFieldsFromArray:breakersArray];
+        }
         
         theTableView.hidden = NO;
         
