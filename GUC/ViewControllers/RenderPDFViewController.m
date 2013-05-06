@@ -1157,34 +1157,37 @@
     
     NSArray *stationArray = [self stationInformation];
     
-    for(int i = 0; i < [stationArray count]; i++){
-        NSDictionary *aDictionary = [stationArray objectAtIndex:i];
-        if([[aDictionary objectForKey:@"Identifier"] isEqualToString:currentInspection.stationIdentifier]){
-            Station *newStation = [[Station alloc]init];
-            newStation.stationIdentifier = [aDictionary objectForKey:@"Identifier"];
-            newStation.stationName = [aDictionary objectForKey:@"Name"];
-            newStation.stationNumber = [[aDictionary objectForKey:@"Number"] intValue];
-            newStation.stationLatitude = [aDictionary objectForKey:@"Latitude"];
-            newStation.stationLongitude = [aDictionary objectForKey:@"Longitude"];
-            
-            NSLog(@"The coordinates for %@ are: %@, %@", newStation.stationName, newStation.stationLatitude, newStation.stationLongitude);
-            
-            CLLocation *stationLocation = [[CLLocation alloc]initWithLatitude:[newStation.stationLatitude doubleValue] longitude:[newStation.stationLongitude doubleValue]];
-            
-            CLLocationDistance locationDistance = [stationLocation distanceFromLocation:returnedLocation];
-            
-            NSLog(@"The distance from %@ is %f feet.",newStation.stationName,(locationDistance*3.280));
-            
-            NSString *distanceString = [NSString stringWithFormat:@"%f", (locationDistance*3.280)];
-            
-            if([distanceString integerValue] > 1000){
-                locationImageView.backgroundColor = [UIColor redColor];
-            }else if([distanceString integerValue] <= 1000){
-                locationImageView.backgroundColor = [UIColor greenColor];
+    if(stationArray){
+        for(int i = 0; i < [stationArray count]; i++){
+            NSDictionary *aDictionary = [stationArray objectAtIndex:i];
+            if([[aDictionary objectForKey:@"Identifier"] isEqualToString:currentInspection.stationIdentifier]){
+                Station *newStation = [[Station alloc]init];
+                newStation.stationIdentifier = [aDictionary objectForKey:@"Identifier"];
+                newStation.stationName = [aDictionary objectForKey:@"Name"];
+                newStation.stationNumber = [[aDictionary objectForKey:@"Number"] intValue];
+                newStation.stationLatitude = [aDictionary objectForKey:@"Latitude"];
+                newStation.stationLongitude = [aDictionary objectForKey:@"Longitude"];
+                
+                NSLog(@"The coordinates for %@ are: %@, %@", newStation.stationName, newStation.stationLatitude, newStation.stationLongitude);
+                
+                CLLocation *stationLocation = [[CLLocation alloc]initWithLatitude:[newStation.stationLatitude doubleValue] longitude:[newStation.stationLongitude doubleValue]];
+                
+                CLLocationDistance locationDistance = [stationLocation distanceFromLocation:returnedLocation];
+                
+                NSLog(@"The distance from %@ is %f feet.",newStation.stationName,(locationDistance*3.280));
+                
+                NSString *distanceString = [NSString stringWithFormat:@"%f", (locationDistance*3.280)];
+                
+                if([distanceString integerValue] > 1000){
+                    locationImageView.backgroundColor = [UIColor redColor];
+                }else if([distanceString integerValue] <= 1000){
+                    locationImageView.backgroundColor = [UIColor greenColor];
+                }
             }
         }
+    }else{
+        NSLog(@"Error! Unable to access \"Stations\" property list.");
     }
-    
 }
 
 -(void)locationHelperAuthorizationStatusDidChange{

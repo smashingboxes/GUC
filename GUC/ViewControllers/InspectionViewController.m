@@ -1413,7 +1413,7 @@
 -(void)beginInitialLoad{
     theTableView.hidden = YES;
     [customLoadingView beginLoading];
-    [[NetworkConnectionManager sharedManager]beginConnectionWithStation:stationName forCaller:self];
+    [[NetworkConnectionManager sharedManager]beginConnectionWithPurpose:stationName withJSONDictionary:nil forCaller:self];
 }
 
 -(void)transitionToPDFView{
@@ -1439,7 +1439,6 @@
             }
         }
     }*/
-    [pickerHelper setPickerInView:NO];
     RenderPDFViewController *renderPDFVC = [[RenderPDFViewController alloc]initWithInspection:currentInspection];
     [self.navigationController pushViewController:renderPDFVC animated:YES];
 }

@@ -20,6 +20,6 @@
 
 @property(nonatomic,weak)id<StationInformationOperationDelegate> delegate;
 
--(id)initWithURL:(NSURL*)theURL andDelegate:(id<StationInformationOperationDelegate>)theDelegate;
+-(id)initWithURL:(NSURL*)theURL requestType:(NSString*)theType jsonDictionary:(NSDictionary*)theDictionary andDelegate:(id<StationInformationOperationDelegate>)theDelegate;
 
 @end

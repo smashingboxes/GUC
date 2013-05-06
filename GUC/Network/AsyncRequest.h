@@ -17,6 +17,7 @@
 
 @end
 
+
 @interface AsyncRequest : NSObject
 
 @property(nonatomic,weak)id<AsyncResponseDelegate> delegate;

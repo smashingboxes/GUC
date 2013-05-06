@@ -38,34 +38,29 @@
     networkQueue = [[NSOperationQueue alloc]init];
 }
 
--(void)beginConnectionWithStation:(NSString *)stationName forCaller:(id<AsyncResponseDelegate>)theDelegate{
+-(void)beginConnectionWithPurpose:(NSString*)thePurpose withJSONDictionary:(NSDictionary*)theDictionary forCaller:(id<AsyncResponseDelegate>)theDelegate{
     if(!networkQueue){
         [self initializeNetworkQueue];
-        [self beginConnectionWithStation:stationName forCaller:theDelegate];
-    }else{
-        NSURL *connectionURL = [StationNetworkFactory generateURLForStation:stationName];
-        
-        currentRequest = [[AsyncRequest alloc]init];
-        currentRequest.delegate = theDelegate;
-        
-        StationInformationOperation *theOperation = [[StationInformationOperation alloc]initWithURL:connectionURL andDelegate:self];
-        [networkQueue addOperation:theOperation];
-    }
-}
-
--(void)beginConnectionWithPurpose:(NSString*)thePurpose forCaller:(id<AsyncResponseDelegate>)theDelegate{
-    if(!networkQueue){
-        [self initializeNetworkQueue];
-        [self beginConnectionWithPurpose:thePurpose forCaller:theDelegate];
+        [self beginConnectionWithPurpose:thePurpose withJSONDictionary:theDictionary forCaller:theDelegate];
     }else{
         NSURL *connectionURL;
         if([thePurpose isEqualToString:@"Names"]){
             connectionURL = [StationNetworkFactory generateURLForTechnicianNames];
+        }else{
+            // For getting station data.
+            connectionURL = [StationNetworkFactory generateURLForStation:thePurpose];
         }
         currentRequest = [[AsyncRequest alloc]init];
         currentRequest.delegate = theDelegate;
         
-        StationInformationOperation *theOperation = [[StationInformationOperation alloc]initWithURL:connectionURL andDelegate:self];
+        NSString *requestType;
+        if(theDictionary){
+            requestType = @"POST";
+        }else{
+            requestType = @"GET";
+        }
+        
+        StationInformationOperation *theOperation = [[StationInformationOperation alloc]initWithURL:connectionURL requestType:requestType jsonDictionary:theDictionary andDelegate:self];
         [networkQueue addOperation:theOperation];
     }
 }

@@ -10,27 +10,36 @@
 
 @interface StationInformationOperation()
 
-@property(nonatomic,retain)NSURLConnection *theConnection;
-@property(nonatomic,retain)NSURL *stationURL;
-@property(nonatomic,retain)NSMutableData *stationData;
+@property(nonatomic)NSURLConnection *theConnection;
+@property(nonatomic)NSURL *stationURL;
+@property(nonatomic)NSString *requestType;
+@property(nonatomic)NSDictionary *jsonDictionary;
+@property(nonatomic)NSMutableData *stationData;
 @property(nonatomic)BOOL executing;
 @property(nonatomic)BOOL finished;
 
 @end
+
 
 @implementation StationInformationOperation
 
 @synthesize delegate;
 @synthesize theConnection;
 @synthesize stationURL;
+@synthesize requestType;
+@synthesize jsonDictionary;
 @synthesize stationData;
 @synthesize executing;
 @synthesize finished;
 
--(id)initWithURL:(NSURL*)theURL andDelegate:(id<StationInformationOperationDelegate>)theDelegate{
+-(id)initWithURL:(NSURL*)theURL requestType:(NSString*)theType jsonDictionary:(NSDictionary*)theDictionary andDelegate:(id<StationInformationOperationDelegate>)theDelegate{
     if(self == [super init]){
         stationURL = theURL;
         delegate = theDelegate;
+        requestType = theType;
+        if(theDictionary)
+            jsonDictionary = theDictionary;
+        
     }
     return self;
 }
@@ -39,9 +48,23 @@
     @autoreleasepool {
         NSLog(@"Beginning request at URL: %@", stationURL);
         
-        NSURLRequest *request = [NSURLRequest requestWithURL:stationURL];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:stationURL];
+        [request setHTTPMethod:requestType];
         
-        self.stationData = [[NSMutableData alloc]init];
+        if([requestType isEqualToString:@"POST"]){
+            if(jsonDictionary){
+                NSError *error;
+                NSData *theData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error:&error];
+                [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+                NSString *postLength = [[NSString alloc]initWithFormat:@"%d",[theData length]];
+                [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+                [request setHTTPBody:theData];
+            }else{
+                [self operationFailed];
+            }
+        }
+        
+        stationData = [[NSMutableData alloc]init];
         
         theConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self startImmediately:YES];
         
@@ -50,41 +73,42 @@
         }else{
             NSLog(@"Station Information Operation Failed!");
             
-            if(delegate)
-                [delegate operationDidFail];
-            
-            [self finish];
+            [self operationFailed];
         }
     }
 }
 
-- (void)start
-{
+- (void)start{
     if([self isCancelled]){
         [self willChangeValueForKey:@"isFinished"];
-        self.finished = YES;
+        finished = YES;
         [self didChangeValueForKey:@"isFinished"];
         return;
     }else{
         [self willChangeValueForKey:@"isExecuting"];
-        if (![NSThread isMainThread])
-        {
+        if(![NSThread isMainThread]){
             [self performSelectorOnMainThread:@selector(start) withObject:nil waitUntilDone:NO];
         }
         [self main];
-        self.executing = YES;
+        executing = YES;
         [self didChangeValueForKey:@"isExecuting"];
     }
 }
 
--(void)finish
-{    
+-(void)finish{    
     [self willChangeValueForKey:@"isFinished"];
-    self.finished = YES;
+    finished = YES;
     [self didChangeValueForKey:@"isFinished"];
     [self willChangeValueForKey:@"isExecuting"];
-    self.executing = NO;
+    executing = NO;
     [self didChangeValueForKey:@"isExecuting"];
+}
+
+-(void)operationFailed{
+    if(delegate)
+        [delegate operationDidFail];
+    
+    [self finish];
 }
 
 -(BOOL)isConcurrent{
@@ -113,18 +137,16 @@
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     NSLog(@"There was an error! %@", error);
     
-    if(delegate)
-        [delegate operationDidFail];
-    
+    [self operationFailed];
     [self finish];
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection*)connection{
+    NSLog(@"Got data!");
     
     if(delegate && ![self isCancelled]){
         [delegate operationDidReturnWithData:stationData];
     }
-    
     [self finish];
 }
 

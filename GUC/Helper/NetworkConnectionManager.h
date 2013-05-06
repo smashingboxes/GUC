@@ -13,7 +13,6 @@
 @interface NetworkConnectionManager : NSObject <StationInformationOperationDelegate>
 
 +(NetworkConnectionManager*)sharedManager;
--(void)beginConnectionWithStation:(NSString*)stationName forCaller:(id<AsyncResponseDelegate>)theDelegate;
--(void)beginConnectionWithPurpose:(NSString*)thePurpose forCaller:(id<AsyncResponseDelegate>)theDelegate;
+-(void)beginConnectionWithPurpose:(NSString*)thePurpose withJSONDictionary:(NSDictionary*)theDictionary forCaller:(id<AsyncResponseDelegate>)theDelegate;
 
 @end
