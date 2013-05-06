@@ -11,6 +11,7 @@
 @interface StationInformationOperation()
 
 @property(nonatomic)NSURLConnection *theConnection;
+@property(nonatomic)NSOperationQueue *delegateQueue;
 @property(nonatomic)NSURL *stationURL;
 @property(nonatomic)NSString *requestType;
 @property(nonatomic)NSDictionary *jsonDictionary;
@@ -24,6 +25,7 @@
 @implementation StationInformationOperation
 
 @synthesize delegate;
+@synthesize delegateQueue;
 @synthesize theConnection;
 @synthesize stationURL;
 @synthesize requestType;
@@ -39,6 +41,8 @@
         requestType = theType;
         if(theDictionary)
             jsonDictionary = theDictionary;
+        if(!delegateQueue)
+            delegateQueue = [[NSOperationQueue alloc]init];
         
     }
     return self;
@@ -66,7 +70,10 @@
         
         stationData = [[NSMutableData alloc]init];
         
-        theConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self startImmediately:YES];
+        theConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self startImmediately:NO];
+        [theConnection setDelegateQueue:delegateQueue];
+        [theConnection scheduleInRunLoop:[NSRunLoop currentRunLoop]forMode:NSRunLoopCommonModes];
+        [theConnection start];
         
         if(theConnection){
             NSLog(@"Connected!");
@@ -86,9 +93,6 @@
         return;
     }else{
         [self willChangeValueForKey:@"isExecuting"];
-        if(![NSThread isMainThread]){
-            [self performSelectorOnMainThread:@selector(start) withObject:nil waitUntilDone:NO];
-        }
         [self main];
         executing = YES;
         [self didChangeValueForKey:@"isExecuting"];

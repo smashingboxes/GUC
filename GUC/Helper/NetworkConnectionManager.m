@@ -79,4 +79,8 @@
     }
 }
 
+-(void)cancelAllRequests{
+    [networkQueue cancelAllOperations];
+}
+
 @end

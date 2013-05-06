@@ -1492,6 +1492,7 @@
             // Cancel pressed. Do nothing.
             break;
         case 1:
+            [[NetworkConnectionManager sharedManager]cancelAllRequests];
             [self.navigationController popViewControllerAnimated:YES];
             break;
         default:

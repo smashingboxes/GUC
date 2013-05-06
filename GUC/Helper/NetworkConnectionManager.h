@@ -14,5 +14,6 @@
 
 +(NetworkConnectionManager*)sharedManager;
 -(void)beginConnectionWithPurpose:(NSString*)thePurpose withJSONDictionary:(NSDictionary*)theDictionary forCaller:(id<AsyncResponseDelegate>)theDelegate;
+-(void)cancelAllRequests;
 
 @end
