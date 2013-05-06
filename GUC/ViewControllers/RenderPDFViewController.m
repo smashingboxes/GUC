@@ -9,6 +9,7 @@
 #import "RenderPDFViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MenuButtonHelper.h"
+#import "Station.h"
 
 @interface RenderPDFViewController ()
 
@@ -16,11 +17,13 @@
 @property(nonatomic)MFMailComposeViewController *mailComposer;
 @property(nonatomic)NSMutableArray *imageArray;
 @property(nonatomic)NSInteger pdfPage;
+@property(nonatomic)LocationHelper *locationHelper;
 
 // Header Labels
 @property(nonatomic)IBOutlet UILabel *stationNameLabel;
 @property(nonatomic)IBOutlet UILabel *dateTimeLabel;
 @property(nonatomic)IBOutlet UILabel *technicianLabel;
+@property(nonatomic)IBOutlet UIImageView *locationImageView;
 
 // General Labels
 @property(nonatomic)IBOutlet UILabel *kwhLabel;
@@ -106,6 +109,49 @@
 @property(nonatomic)IBOutlet UILabel *oilLevelCLabel;
 @property(nonatomic)IBOutlet UILabel *testOperationCLabel;
 
+// Breakers Labels
+@property(nonatomic)IBOutlet UILabel *busSlotNameLabel;
+@property(nonatomic)IBOutlet UILabel *busSlotCounterLabel;
+@property(nonatomic)IBOutlet UILabel *busSlotTargetLabel;
+@property(nonatomic)IBOutlet UILabel *busSlotOperationLabel;
+@property(nonatomic)IBOutlet UILabel *busSlotPressureLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotOneNameLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotOneCounterLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotOneTargetLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotOneOperationLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotOnePressureLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotTwoNameLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotTwoCounterLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotTwoTargetLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotTwoOperationLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotTwoPressureLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotThreeNameLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotThreeCounterLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotThreeTargetLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotThreeOperationLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotThreePressureLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotFourNameLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotFourCounterLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotFourTargetLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotFourOperationLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotFourPressureLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotFiveNameLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotFiveCounterLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotFiveTargetLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotFiveOperationLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotFivePressureLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotSixNameLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotSixCounterLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotSixTargetLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotSixOperationLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotSixPressureLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotSevenNameLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotSevenCounterLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotSevenTargetLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotSevenOperationLabel;
+@property(nonatomic)IBOutlet UILabel *cktSlotSevenPressureLabel;
+@property(nonatomic)IBOutlet UITextView *commentsTextView;
+
 // Views
 @property(nonatomic)IBOutlet UIView *firstPage;
 @property(nonatomic)IBOutlet UIView *secondPage;
@@ -122,10 +168,12 @@
 @synthesize mailComposer;
 @synthesize imageArray;
 @synthesize pdfPage;
+@synthesize locationHelper;
 
 @synthesize stationNameLabel;
 @synthesize dateTimeLabel;
 @synthesize technicianLabel;
+@synthesize locationImageView;
 
 @synthesize kwhLabel;
 @synthesize mwdLabel;
@@ -211,6 +259,48 @@
 @synthesize oilLevelCLabel;
 @synthesize testOperationCLabel;
 
+@synthesize busSlotNameLabel;
+@synthesize busSlotCounterLabel;
+@synthesize busSlotTargetLabel;
+@synthesize busSlotOperationLabel;
+@synthesize busSlotPressureLabel;
+@synthesize cktSlotOneNameLabel;
+@synthesize cktSlotOneCounterLabel;
+@synthesize cktSlotOneTargetLabel;
+@synthesize cktSlotOneOperationLabel;
+@synthesize cktSlotOnePressureLabel;
+@synthesize cktSlotTwoNameLabel;
+@synthesize cktSlotTwoCounterLabel;
+@synthesize cktSlotTwoTargetLabel;
+@synthesize cktSlotTwoOperationLabel;
+@synthesize cktSlotTwoPressureLabel;
+@synthesize cktSlotThreeNameLabel;
+@synthesize cktSlotThreeCounterLabel;
+@synthesize cktSlotThreeTargetLabel;
+@synthesize cktSlotThreeOperationLabel;
+@synthesize cktSlotThreePressureLabel;
+@synthesize cktSlotFourNameLabel;
+@synthesize cktSlotFourCounterLabel;
+@synthesize cktSlotFourTargetLabel;
+@synthesize cktSlotFourOperationLabel;
+@synthesize cktSlotFourPressureLabel;
+@synthesize cktSlotFiveNameLabel;
+@synthesize cktSlotFiveCounterLabel;
+@synthesize cktSlotFiveTargetLabel;
+@synthesize cktSlotFiveOperationLabel;
+@synthesize cktSlotFivePressureLabel;
+@synthesize cktSlotSixNameLabel;
+@synthesize cktSlotSixCounterLabel;
+@synthesize cktSlotSixTargetLabel;
+@synthesize cktSlotSixOperationLabel;
+@synthesize cktSlotSixPressureLabel;
+@synthesize cktSlotSevenNameLabel;
+@synthesize cktSlotSevenCounterLabel;
+@synthesize cktSlotSevenTargetLabel;
+@synthesize cktSlotSevenOperationLabel;
+@synthesize cktSlotSevenPressureLabel;
+@synthesize commentsTextView;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -250,6 +340,11 @@
     imageArray = [[NSMutableArray alloc]init];
     
     pdfPage = 0;
+    
+    if(!locationHelper){
+        locationHelper = [[LocationHelper alloc]initWithDelegate:self];
+    }
+    [locationHelper findLocation];
     
     [self addInspectionDataToLabels];
     
@@ -677,7 +772,219 @@
         }else{
             testOperationCLabel.text = notAvailable;
         }
+        
+        // Breakers
+        if(currentInspection.breakers.busSlotNumber){
+            busSlotNameLabel.text = [[NSString alloc]initWithFormat:@"BUS. %@", currentInspection.breakers.busSlotNumber];
+        }else{
+            // Do nothing.
+        }
+        if(currentInspection.breakers.busSlotCounterValue){
+            busSlotCounterLabel.text = currentInspection.breakers.busSlotCounterValue;
+        }else{
+            busSlotCounterLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.busSlotTargetValue){
+            busSlotTargetLabel.text = currentInspection.breakers.busSlotTargetValue;
+        }else{
+            busSlotTargetLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.busSlotOperationValue){
+            busSlotOperationLabel.text = currentInspection.breakers.busSlotOperationValue;
+        }else{
+            busSlotOperationLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.busSlotPressureValue){
+            busSlotPressureLabel.text = currentInspection.breakers.busSlotPressureValue;
+        }else{
+            busSlotPressureLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotOneNumber){
+            cktSlotOneNameLabel.text = [self setCircuitName:currentInspection.breakers.cktSlotOneNumber];
+        }else{
+            // Do Nothing.
+        }
+        if(currentInspection.breakers.cktSlotOneCounterValue){
+            cktSlotOneCounterLabel.text = currentInspection.breakers.cktSlotOneCounterValue;
+        }else{
+            cktSlotOneCounterLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotOneTargetValue){
+            cktSlotOneTargetLabel.text = currentInspection.breakers.cktSlotOneTargetValue;
+        }else{
+            cktSlotOneTargetLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotOneOperationValue){
+            cktSlotOneOperationLabel.text = currentInspection.breakers.cktSlotOneOperationValue;
+        }else{
+            cktSlotOneOperationLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotOnePressureValue){
+            cktSlotOnePressureLabel.text = currentInspection.breakers.cktSlotOnePressureValue;
+        }else{
+            cktSlotOnePressureLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotTwoNumber){
+            cktSlotTwoNameLabel.text = [self setCircuitName:currentInspection.breakers.cktSlotTwoNumber];
+        }else{
+            // Do Nothing.
+        }
+        if(currentInspection.breakers.cktSlotTwoCounterValue){
+            cktSlotTwoCounterLabel.text = currentInspection.breakers.cktSlotTwoCounterValue;
+        }else{
+            cktSlotTwoCounterLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotTwoTargetValue){
+            cktSlotTwoTargetLabel.text = currentInspection.breakers.cktSlotTwoTargetValue;
+        }else{
+            cktSlotTwoTargetLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotTwoOperationValue){
+            cktSlotTwoOperationLabel.text = currentInspection.breakers.cktSlotTwoOperationValue;
+        }else{
+            cktSlotTwoOperationLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotTwoPressureValue){
+            cktSlotTwoPressureLabel.text = currentInspection.breakers.cktSlotTwoPressureValue;
+        }else{
+            cktSlotTwoPressureLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotThreeNumber){
+            cktSlotThreeNameLabel.text = [self setCircuitName:currentInspection.breakers.cktSlotThreeNumber];
+        }else{
+            // Do Nothing.
+        }
+        if(currentInspection.breakers.cktSlotThreeCounterValue){
+            cktSlotThreeCounterLabel.text = currentInspection.breakers.cktSlotThreeCounterValue;
+        }else{
+            cktSlotThreeCounterLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotThreeTargetValue){
+            cktSlotThreeTargetLabel.text = currentInspection.breakers.cktSlotThreeTargetValue;
+        }else{
+            cktSlotThreeTargetLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotThreeOperationValue){
+            cktSlotThreeOperationLabel.text = currentInspection.breakers.cktSlotThreeOperationValue;
+        }else{
+            cktSlotThreeOperationLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotThreePressureValue){
+            cktSlotThreePressureLabel.text = currentInspection.breakers.cktSlotThreePressureValue;
+        }else{
+            cktSlotThreePressureLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotFourNumber){
+            cktSlotFourNameLabel.text = [self setCircuitName:currentInspection.breakers.cktSlotFourNumber];
+        }else{
+            // Do Nothing.
+        }
+        if(currentInspection.breakers.cktSlotFourCounterValue){
+            cktSlotFourCounterLabel.text = currentInspection.breakers.cktSlotFourCounterValue;
+        }else{
+            cktSlotFourCounterLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotFourTargetValue){
+            cktSlotFourTargetLabel.text = currentInspection.breakers.cktSlotFourTargetValue;
+        }else{
+            cktSlotFourTargetLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotFourOperationValue){
+            cktSlotFourOperationLabel.text = currentInspection.breakers.cktSlotFourOperationValue;
+        }else{
+            cktSlotFourOperationLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotFourPressureValue){
+            cktSlotFourPressureLabel.text = currentInspection.breakers.cktSlotFourPressureValue;
+        }else{
+            cktSlotFourPressureLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotFiveNumber){
+            cktSlotFiveNameLabel.text = [self setCircuitName:currentInspection.breakers.cktSlotFiveNumber];
+        }else{
+            // Do Nothing.
+        }
+        if(currentInspection.breakers.cktSlotFiveCounterValue){
+            cktSlotFiveCounterLabel.text = currentInspection.breakers.cktSlotFiveCounterValue;
+        }else{
+            cktSlotFiveCounterLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotFiveTargetValue){
+            cktSlotFiveTargetLabel.text = currentInspection.breakers.cktSlotFiveTargetValue;
+        }else{
+            cktSlotFiveTargetLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotFiveOperationValue){
+            cktSlotFiveOperationLabel.text = currentInspection.breakers.cktSlotFiveOperationValue;
+        }else{
+            cktSlotFiveOperationLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotFivePressureValue){
+            cktSlotFivePressureLabel.text = currentInspection.breakers.cktSlotFivePressureValue;
+        }else{
+            cktSlotFivePressureLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotSixNumber){
+            cktSlotSixNameLabel.text = [self setCircuitName:currentInspection.breakers.cktSlotSixNumber];
+        }else{
+            // Do Nothing.
+        }
+        if(currentInspection.breakers.cktSlotSixCounterValue){
+            cktSlotSixCounterLabel.text = currentInspection.breakers.cktSlotSixCounterValue;
+        }else{
+            cktSlotSixCounterLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotSixTargetValue){
+            cktSlotSixTargetLabel.text = currentInspection.breakers.cktSlotSixTargetValue;
+        }else{
+            cktSlotSixTargetLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotSixOperationValue){
+            cktSlotSixOperationLabel.text = currentInspection.breakers.cktSlotSixOperationValue;
+        }else{
+            cktSlotSixOperationLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotSixPressureValue){
+            cktSlotSixPressureLabel.text = currentInspection.breakers.cktSlotSixPressureValue;
+        }else{
+            cktSlotSixPressureLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotSevenNumber){
+            cktSlotSevenNameLabel.text = [self setCircuitName:currentInspection.breakers.cktSlotSevenNumber];
+        }else{
+            // Do Nothing.
+        }
+        if(currentInspection.breakers.cktSlotSevenCounterValue){
+            cktSlotSevenCounterLabel.text = currentInspection.breakers.cktSlotSevenCounterValue;
+        }else{
+            cktSlotSevenCounterLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotSevenTargetValue){
+            cktSlotSevenTargetLabel.text = currentInspection.breakers.cktSlotSevenTargetValue;
+        }else{
+            cktSlotSevenTargetLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotSevenOperationValue){
+            cktSlotSevenOperationLabel.text = currentInspection.breakers.cktSlotSevenOperationValue;
+        }else{
+            cktSlotSevenOperationLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.cktSlotSevenPressureValue){
+            cktSlotSevenPressureLabel.text = currentInspection.breakers.cktSlotSevenPressureValue;
+        }else{
+            cktSlotSevenPressureLabel.text = notAvailable;
+        }
+        if(currentInspection.breakers.comments){
+            commentsTextView.text = currentInspection.breakers.comments;
+        }else{
+            commentsTextView.text = notAvailable;
+        }
     }
+}
+
+-(NSString*)setCircuitName:(NSString*)circuitNumber{
+    NSString *circuitName = [[NSString alloc]initWithFormat:@"CKT. %@",circuitNumber];
+    return circuitName;
 }
 
 - (void)didReceiveMemoryWarning
@@ -837,6 +1144,61 @@
     for(int i = 0; i < 5; i++){
         [self changePage];
     }
+}
+
+#pragma mark - Location Helper Methods
+
+-(void)locationHelperDidFail{
+    NSLog(@"Location Helper Failed!");
+}
+
+-(void)locationHelperDidSucceed:(CLLocation *)theLocation{
+    CLLocation *returnedLocation = theLocation;
+    
+    NSArray *stationArray = [self stationInformation];
+    
+    for(int i = 0; i < [stationArray count]; i++){
+        NSDictionary *aDictionary = [stationArray objectAtIndex:i];
+        if([[aDictionary objectForKey:@"Identifier"] isEqualToString:currentInspection.stationIdentifier]){
+            Station *newStation = [[Station alloc]init];
+            newStation.stationIdentifier = [aDictionary objectForKey:@"Identifier"];
+            newStation.stationName = [aDictionary objectForKey:@"Name"];
+            newStation.stationNumber = [[aDictionary objectForKey:@"Number"] intValue];
+            newStation.stationLatitude = [aDictionary objectForKey:@"Latitude"];
+            newStation.stationLongitude = [aDictionary objectForKey:@"Longitude"];
+            
+            NSLog(@"The coordinates for %@ are: %@, %@", newStation.stationName, newStation.stationLatitude, newStation.stationLongitude);
+            
+            CLLocation *stationLocation = [[CLLocation alloc]initWithLatitude:[newStation.stationLatitude doubleValue] longitude:[newStation.stationLongitude doubleValue]];
+            
+            CLLocationDistance locationDistance = [stationLocation distanceFromLocation:returnedLocation];
+            
+            NSLog(@"The distance from %@ is %f feet.",newStation.stationName,(locationDistance*3.280));
+            
+            NSString *distanceString = [NSString stringWithFormat:@"%f", (locationDistance*3.280)];
+            
+            if([distanceString integerValue] > 1000){
+                locationImageView.backgroundColor = [UIColor redColor];
+            }else if([distanceString integerValue] <= 1000){
+                locationImageView.backgroundColor = [UIColor greenColor];
+            }
+        }
+    }
+    
+}
+
+-(void)locationHelperAuthorizationStatusDidChange{
+    // Do nothing.
+}
+
+-(NSArray*)stationInformation{
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"Stations" withExtension:@"plist"];
+    if(url){
+        NSDictionary *stationsDictionary = [[NSDictionary alloc] initWithContentsOfURL:url];
+        NSArray *stationsArray = [stationsDictionary objectForKey:@"Stations"];
+        return stationsArray;
+    }
+    return nil;
 }
 
 @end

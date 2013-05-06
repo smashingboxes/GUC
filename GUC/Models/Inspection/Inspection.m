@@ -10,6 +10,7 @@
 
 @implementation Inspection
 
+@synthesize stationIdentifier;
 @synthesize generalSettings;
 @synthesize switchBoard;
 @synthesize batteryCharger;

@@ -11,7 +11,6 @@
 
 @protocol LocationHelperDelegate<NSObject>
 
-@optional
 -(void)locationHelperDidFail;
 -(void)locationHelperDidSucceed:(CLLocation*)theLocation;
 -(void)locationHelperAuthorizationStatusDidChange;

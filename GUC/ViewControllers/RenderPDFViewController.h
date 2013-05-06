@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import "Inspection.h"
+#import "LocationHelper.h"
 
 
-@interface RenderPDFViewController : UIViewController <MFMailComposeViewControllerDelegate>
+@interface RenderPDFViewController : UIViewController <MFMailComposeViewControllerDelegate, LocationHelperDelegate>
 
 -(id)initWithInspection:(Inspection*)theInspection;
 

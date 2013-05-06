@@ -48,6 +48,7 @@
 @property(nonatomic)NSArray *currentChoices;
 @property(nonatomic) NSIndexPath *textViewIndexPath;
 @property(nonatomic) BOOL isKeyboardPresent;
+//@property(nonatomic)BOOL refreshing;
 
 
 
@@ -74,6 +75,7 @@
 @synthesize currentChoices;
 @synthesize textViewIndexPath;
 @synthesize isKeyboardPresent;
+//@synthesize refreshing;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -100,7 +102,8 @@
     }
     
     checking = NO;
-    isKeyboardPresent=NO;
+    isKeyboardPresent = NO;
+    //refreshing = NO;
     
     [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     
@@ -149,19 +152,26 @@
                                                                             target:self
                                                                             action:@selector(displayMenuForButton)];
     [self setMenuButtons];
+    [PickerViewHelper setParentView:self];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    [PickerViewHelper setParentView:nil];
 }
 
 -(void)setMenuButtons{
     if([substations count] > 1){
-        NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"Create Report", @"Refresh Form", @"Change Substation",nil];
+        NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"Create Report", @"Refresh Station", @"Change Substation",nil];
         [[MenuButtonHelper sharedHelper]addButtonsWithTitlesToActionSheet:buttonTitlesArray];
         [[MenuButtonHelper sharedHelper]setButtonThreeTarget:self forSelector:@selector(showPicker)];
     }else{
-        NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"Create Report", @"Refresh Form", nil];
+        NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"Create Report", @"Refresh Station", nil];
         [[MenuButtonHelper sharedHelper]addButtonsWithTitlesToActionSheet:buttonTitlesArray];
     }
     [[MenuButtonHelper sharedHelper]setButtonOneTarget:self forSelector:@selector(transitionToPDFView)];
-    [[MenuButtonHelper sharedHelper]setButtonTwoTarget:self forSelector:@selector(beginInitialLoad)];
+    [[MenuButtonHelper sharedHelper]setButtonTwoTarget:self forSelector:@selector(refreshButtonPressed)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -199,7 +209,6 @@
 
 
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section {
-    
     BOOL openState = [[inspectionFormHelper.infoArray objectAtIndex:section]boolValue];
     NSArray *headerTitleArray = [inspectionFormHelper.containerArray objectAtIndex:section];
     NSArray *titleArray = [headerTitleArray objectAtIndex:1];
@@ -948,100 +957,100 @@
         if(currentInspection.ltcRegulator.voltageC)
             return currentInspection.ltcRegulator.voltageC;
     }else if([cellTitle isEqualToString:currentInspection.breakers.busSlotCounterName]){
-        if(currentInspection.breakers.busSlotCounterName)
+        if(currentInspection.breakers.busSlotCounterValue)
             return currentInspection.breakers.busSlotCounterValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.busSlotTargetName]){
-        if(currentInspection.breakers.busSlotTargetName)
+        if(currentInspection.breakers.busSlotTargetValue)
             return currentInspection.breakers.busSlotTargetValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.busSlotOperationName]){
-        if(currentInspection.breakers.busSlotOperationName)
+        if(currentInspection.breakers.busSlotOperationValue)
             return currentInspection.breakers.busSlotOperationValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.busSlotPressureName]){
-            if(currentInspection.breakers.busSlotPressureName)
+            if(currentInspection.breakers.busSlotPressureValue)
                 return currentInspection.breakers.busSlotPressureValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotOneCounterName]){
-        if(currentInspection.breakers.cktSlotOneCounterName)
+        if(currentInspection.breakers.cktSlotOneCounterValue)
             return currentInspection.breakers.cktSlotOneCounterValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotOneTargetName]){
-        if(currentInspection.breakers.cktSlotOneTargetName)
+        if(currentInspection.breakers.cktSlotOneTargetValue)
             return currentInspection.breakers.cktSlotOneTargetValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotOneOperationName]){
-        if(currentInspection.breakers.cktSlotOneOperationName)
+        if(currentInspection.breakers.cktSlotOneOperationValue)
             return currentInspection.breakers.cktSlotOneOperationValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotOnePressureName]){
-        if(currentInspection.breakers.cktSlotOnePressureName)
+        if(currentInspection.breakers.cktSlotOnePressureValue)
             return currentInspection.breakers.cktSlotOnePressureValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotTwoCounterName]){
-        if(currentInspection.breakers.cktSlotTwoCounterName)
+        if(currentInspection.breakers.cktSlotTwoCounterValue)
             return currentInspection.breakers.cktSlotTwoCounterValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotTwoTargetName]){
-        if(currentInspection.breakers.cktSlotTwoTargetName)
+        if(currentInspection.breakers.cktSlotTwoTargetValue)
             return currentInspection.breakers.cktSlotTwoTargetValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotTwoOperationName]){
-        if(currentInspection.breakers.cktSlotTwoOperationName)
+        if(currentInspection.breakers.cktSlotTwoOperationValue)
             return currentInspection.breakers.cktSlotTwoOperationValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotTwoPressureName]){
-        if(currentInspection.breakers.cktSlotTwoPressureName)
+        if(currentInspection.breakers.cktSlotTwoPressureValue)
             return currentInspection.breakers.cktSlotTwoPressureValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotThreeCounterName]){
-        if(currentInspection.breakers.cktSlotThreeCounterName)
+        if(currentInspection.breakers.cktSlotThreeCounterValue)
             return currentInspection.breakers.cktSlotThreeCounterValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotThreeTargetName]){
-        if(currentInspection.breakers.cktSlotThreeTargetName)
+        if(currentInspection.breakers.cktSlotThreeTargetValue)
             return currentInspection.breakers.cktSlotThreeTargetValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotThreeOperationName]){
-        if(currentInspection.breakers.cktSlotThreeOperationName)
+        if(currentInspection.breakers.cktSlotThreeOperationValue)
             return currentInspection.breakers.cktSlotThreeOperationValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotThreePressureName]){
-        if(currentInspection.breakers.cktSlotThreePressureName)
+        if(currentInspection.breakers.cktSlotThreePressureValue)
             return currentInspection.breakers.cktSlotThreePressureValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFourCounterName]){
-        if(currentInspection.breakers.cktSlotFourCounterName)
+        if(currentInspection.breakers.cktSlotFourCounterValue)
             return currentInspection.breakers.cktSlotFourCounterValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFourTargetName]){
-        if(currentInspection.breakers.cktSlotFourTargetName)
+        if(currentInspection.breakers.cktSlotFourTargetValue)
             return currentInspection.breakers.cktSlotFourTargetValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFourOperationName]){
-        if(currentInspection.breakers.cktSlotFourOperationName)
+        if(currentInspection.breakers.cktSlotFourOperationValue)
             return currentInspection.breakers.cktSlotFourOperationValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFourPressureName]){
-        if(currentInspection.breakers.cktSlotFourPressureName)
+        if(currentInspection.breakers.cktSlotFourPressureValue)
             return currentInspection.breakers.cktSlotFourPressureValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFiveCounterName]){
-        if(currentInspection.breakers.cktSlotFiveCounterName)
+        if(currentInspection.breakers.cktSlotFiveCounterValue)
             return currentInspection.breakers.cktSlotFiveCounterValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFiveTargetName]){
-        if(currentInspection.breakers.cktSlotFiveTargetName)
+        if(currentInspection.breakers.cktSlotFiveTargetValue)
             return currentInspection.breakers.cktSlotFiveTargetValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFiveOperationName]){
-        if(currentInspection.breakers.cktSlotFiveOperationName)
+        if(currentInspection.breakers.cktSlotFiveOperationValue)
             return currentInspection.breakers.cktSlotFiveOperationValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotFivePressureName]){
-        if(currentInspection.breakers.cktSlotFivePressureName)
+        if(currentInspection.breakers.cktSlotFivePressureValue)
             return currentInspection.breakers.cktSlotFivePressureValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSixCounterName]){
-        if(currentInspection.breakers.cktSlotSixCounterName)
+        if(currentInspection.breakers.cktSlotSixCounterValue)
             return currentInspection.breakers.cktSlotSixCounterValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSixTargetName]){
-        if(currentInspection.breakers.cktSlotSixTargetName)
+        if(currentInspection.breakers.cktSlotSixTargetValue)
             return currentInspection.breakers.cktSlotSixTargetValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSixOperationName]){
-        if(currentInspection.breakers.cktSlotSixOperationName)
+        if(currentInspection.breakers.cktSlotSixOperationValue)
             return currentInspection.breakers.cktSlotSixOperationValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSixPressureName]){
-        if(currentInspection.breakers.cktSlotSixPressureName)
+        if(currentInspection.breakers.cktSlotSixPressureValue)
             return currentInspection.breakers.cktSlotSixPressureValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSevenCounterName]){
-        if(currentInspection.breakers.cktSlotSevenCounterName)
+        if(currentInspection.breakers.cktSlotSevenCounterValue)
             return currentInspection.breakers.cktSlotSevenCounterValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSevenTargetName]){
-        if(currentInspection.breakers.cktSlotSevenTargetName)
+        if(currentInspection.breakers.cktSlotSevenTargetValue)
             return currentInspection.breakers.cktSlotSevenTargetValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSevenOperationName]){
-        if(currentInspection.breakers.cktSlotSevenOperationName)
+        if(currentInspection.breakers.cktSlotSevenOperationValue)
             return currentInspection.breakers.cktSlotSevenOperationValue;
     }else if([cellTitle isEqualToString:currentInspection.breakers.cktSlotSevenPressureName]){
-        if(currentInspection.breakers.cktSlotSevenPressureName)
+        if(currentInspection.breakers.cktSlotSevenPressureValue)
             return currentInspection.breakers.cktSlotSevenPressureValue;
     }else if([cellTitle isEqualToString:@"Comments"]){
         if(currentInspection.breakers.comments)
@@ -1161,7 +1170,17 @@
             }
             
             [self setMenuButtons];
+            //if(refreshing == NO){
             [self showPicker];
+            /*}else{
+                refreshing = NO;
+                theTableView.hidden = NO;
+                openSectionIndex = NSNotFound;
+                NSDictionary *stationDictionary = [theObjects objectAtIndex:0];
+                NSDictionary *stationInfo = [stationDictionary objectForKey:@"stationInfo"];
+                inspectionFormHelper = [[InspectionFormHelper alloc]initWithSections:[stationInfo objectForKey:@"sections"]];
+                [theTableView reloadData];
+            }*/
         }else{
             //Handle for if there is only one substation at the site.
             
@@ -1178,6 +1197,7 @@
             }
             
             currentInspection.generalSettings.stationName = [stationInfo objectForKey:@"name"];
+            currentInspection.stationIdentifier = [stationInfo objectForKey:@"id"];
             
             NSArray *sectionsArray = [stationInfo objectForKey:@"sections"];
             
@@ -1197,7 +1217,6 @@
             if(!inspectionFormHelper){
                 inspectionFormHelper = [[InspectionFormHelper alloc]initWithSections:[stationInfo objectForKey:@"sections"]];
             }
-            
             theTableView.hidden = NO;
             [theTableView reloadData];
         }
@@ -1230,6 +1249,7 @@
         
         currentInspection = [inspections objectAtIndex:theIndex];
         currentInspection.generalSettings.stationName = [stationInfo objectForKey:@"name"];
+        currentInspection.stationIdentifier = [stationInfo objectForKey:@"id"];
         
         NSArray *sectionsArray = [stationInfo objectForKey:@"sections"];
         
@@ -1270,7 +1290,7 @@
         NSDictionary *fieldDictionary = [breakersArray objectAtIndex:i];
         Field *aField = [[Field alloc]init];
         aField.name = [fieldDictionary objectForKey:@"name"];
-        aField.number = [fieldDictionary objectForKey:@"number"];
+        aField.number = [[NSString alloc]initWithFormat:@"%@",[fieldDictionary objectForKey:@"number"]];
         
         if([aField.name rangeOfString:@"Bus"].location != NSNotFound){
             currentInspection.breakers.busSlotNumber = aField.number;
@@ -1287,17 +1307,29 @@
             if(!currentInspection.breakers.cktSlotOneNumber){
                 currentInspection.breakers.cktSlotOneNumber = aField.number;
             }else if(!currentInspection.breakers.cktSlotTwoNumber){
-                currentInspection.breakers.cktSlotTwoNumber = aField.number;
+                if(![aField.number isEqualToString:currentInspection.breakers.cktSlotOneNumber]){
+                    currentInspection.breakers.cktSlotTwoNumber = aField.number;
+                }
             }else if(!currentInspection.breakers.cktSlotThreeNumber){
-                currentInspection.breakers.cktSlotThreeNumber = aField.number;
+                if(![aField.number isEqualToString:currentInspection.breakers.cktSlotTwoNumber]){
+                    currentInspection.breakers.cktSlotThreeNumber = aField.number;
+                }
             }else if(!currentInspection.breakers.cktSlotFourNumber){
-                currentInspection.breakers.cktSlotFourNumber = aField.number;
+                if(![aField.number isEqualToString:currentInspection.breakers.cktSlotThreeNumber]){
+                    currentInspection.breakers.cktSlotFourNumber = aField.number;
+                }
             }else if(!currentInspection.breakers.cktSlotFiveNumber){
-                currentInspection.breakers.cktSlotFiveNumber = aField.number;
+                if(![aField.number isEqualToString:currentInspection.breakers.cktSlotFourNumber]){
+                    currentInspection.breakers.cktSlotFiveNumber = aField.number;
+                }
             }else if(!currentInspection.breakers.cktSlotSixNumber){
-                currentInspection.breakers.cktSlotSixNumber = aField.number;
+                if(![aField.number isEqualToString:currentInspection.breakers.cktSlotFiveNumber]){
+                    currentInspection.breakers.cktSlotSixNumber = aField.number;
+                }
             }else if(!currentInspection.breakers.cktSlotSevenNumber){
-                currentInspection.breakers.cktSlotSevenNumber = aField.number;
+                if(![aField.number isEqualToString:currentInspection.breakers.cktSlotSixNumber]){
+                    currentInspection.breakers.cktSlotSevenNumber = aField.number;
+                }
             }
             if([aField.name rangeOfString:@"Counter"].location != NSNotFound){
                 if(!currentInspection.breakers.cktSlotOneCounterName){
@@ -1371,6 +1403,11 @@
 
 #pragma mark - Class Related Methods
 
+-(void)refreshButtonPressed{
+    //refreshing = YES;
+    [self beginInitialLoad];
+}
+
 -(void)beginInitialLoad{
     theTableView.hidden = YES;
     [customLoadingView beginLoading];
@@ -1400,6 +1437,7 @@
             }
         }
     }*/
+    [pickerHelper setPickerInView:NO];
     RenderPDFViewController *renderPDFVC = [[RenderPDFViewController alloc]initWithInspection:currentInspection];
     [self.navigationController pushViewController:renderPDFVC animated:YES];
 }

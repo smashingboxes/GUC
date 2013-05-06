@@ -31,7 +31,9 @@
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    [delegate locationHelperDidFail];
+    if(delegate){
+        [delegate locationHelperDidFail];
+    }
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
@@ -48,8 +50,9 @@
         [locationManager stopUpdatingLocation];
         
         NSLog(@"Update finished.");
-        
-        [delegate locationHelperDidSucceed:theLocation];
+        if(delegate){
+            [delegate locationHelperDidSucceed:theLocation];
+        }
     }
 }
 
@@ -57,7 +60,9 @@
     if(status == kCLAuthorizationStatusAuthorized){
         NSLog(@"Authorized");
     }
-    [delegate locationHelperAuthorizationStatusDidChange];
+    if(delegate){
+        [delegate locationHelperAuthorizationStatusDidChange];
+    }
 }
 
 @end

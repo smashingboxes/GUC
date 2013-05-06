@@ -18,6 +18,7 @@
 
 @interface Inspection : NSObject
 
+@property (nonatomic) NSString *stationIdentifier;
 @property (nonatomic) GeneralSettings *generalSettings;
 @property (nonatomic) SwitchBoard *switchBoard;
 @property (nonatomic) BatteryCharger *batteryCharger;
