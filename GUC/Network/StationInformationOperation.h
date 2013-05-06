@@ -18,7 +18,7 @@
 
 @interface StationInformationOperation : NSOperation <NSURLConnectionDelegate>
 
-@property(nonatomic,weak)id<StationInformationOperationDelegate> delegate;
+@property(nonatomic, weak)id<StationInformationOperationDelegate> delegate;
 
 -(id)initWithURL:(NSURL*)theURL requestType:(NSString*)theType jsonDictionary:(NSDictionary*)theDictionary andDelegate:(id<StationInformationOperationDelegate>)theDelegate;
 

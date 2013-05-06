@@ -60,7 +60,7 @@
                 NSError *error;
                 NSData *theData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error:&error];
                 [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-                NSString *postLength = [[NSString alloc]initWithFormat:@"%d",[theData length]];
+                NSString *postLength = [[NSString alloc]initWithFormat:@"%i",[theData length]];
                 [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
                 [request setHTTPBody:theData];
             }else{
@@ -85,7 +85,7 @@
     }
 }
 
-- (void)start{
+-(void)start{
     if([self isCancelled]){
         [self willChangeValueForKey:@"isFinished"];
         finished = YES;
