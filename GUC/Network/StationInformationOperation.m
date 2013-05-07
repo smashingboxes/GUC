@@ -90,6 +90,9 @@
 -(void)checkConnection{
     if([stationData length] == 0){
         NSLog(@"Operation failed!");
+        if(theConnection){
+            [theConnection cancel];
+        }
         [self operationFailed];
     }
 }
