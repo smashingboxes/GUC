@@ -1119,6 +1119,12 @@
 -(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
     if(result == MFMailComposeResultSent){
         NSLog(@"Mail sent!");
+        NSString *pdfFilePath = [self pdfFilePathWithStation:currentInspection.generalSettings.stationName date:currentInspection.generalSettings.dateTime andTechnician:currentInspection.generalSettings.technician];
+        if(pdfFilePath){
+            // Remove the PDF so we don't waste storage on the device.
+            NSError *error;
+            [[NSFileManager defaultManager] removeItemAtPath:pdfFilePath error:&error];
+        }
     }else if(result == MFMailComposeResultFailed){
         NSLog(@"Mail failed to be sent.");
     }else if(result == MFMailComposeResultCancelled){

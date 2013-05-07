@@ -72,7 +72,6 @@
         
         theConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self startImmediately:NO];
         [theConnection setDelegateQueue:delegateQueue];
-        [theConnection scheduleInRunLoop:[NSRunLoop currentRunLoop]forMode:NSRunLoopCommonModes];
         [theConnection start];
         
         if(theConnection){

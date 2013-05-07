@@ -249,7 +249,6 @@
     
     cell.cellLabel.text = currentField.name;
     cell.cellField.delegate = self;
-    cell.cellField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     cell.cellField.userInteractionEnabled = YES;
     cell.cellField.accessibilityLabel = fieldIndexPath;
     cell.cellField.text = [self checkModelForTextValue:cell.cellLabel.text];
@@ -317,13 +316,6 @@
         }
         cell.cellDetailsLabel.text = currentInspection.generalSettings.technician;
     }
-    /*if([currentField.name isEqualToString:@"TargetsAndAlarms"]){
-        textViewIndexPath = indexPath;
-        if(indexPath.row == [fieldsArray count]-1){
-            cell.cellField.hidden = YES;
-            cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-        }
-    }*/
     
     return cell;
 }
@@ -493,7 +485,8 @@
     if(checking == NO){
         checking = YES;
         NSArray *fieldValues = [self getValuesForCurrentField:textField];
-        BOOL inRange = [self isValueOutOfRange:fieldValues];
+        NSArray *fieldRange = [[NSArray alloc]initWithObjects:[fieldValues objectAtIndex:1], [fieldValues objectAtIndex:2],nil];
+        BOOL inRange = [self isValueOutOfRange:fieldRange];
         
         NSArray *valueArray = [self getIndexPathForCurrentTextField:textField];
         int section = [[valueArray objectAtIndex:0]integerValue];
