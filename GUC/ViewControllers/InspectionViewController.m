@@ -1221,6 +1221,9 @@
 
 -(void)asyncResponseDidFailWithError{
     NSLog(@"Error! Connection failed.");
+    
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Connection Error!" message:@"The network may not be responding, or there is a connection issue.\nPlease try again." delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
+    [alertView show];
 }
 
 
