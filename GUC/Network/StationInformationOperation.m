@@ -71,7 +71,7 @@
         stationData = [[NSMutableData alloc]init];
         
         theConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self startImmediately:NO];
-        [theConnection setDelegateQueue:delegateQueue];
+        //[theConnection setDelegateQueue:delegateQueue];
         [theConnection start];
         
         if(theConnection){
@@ -81,6 +81,16 @@
             
             [self operationFailed];
         }
+        
+        [self performSelector:@selector(checkConnection) withObject:nil afterDelay:30.0];
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:30.0]];
+    }
+}
+
+-(void)checkConnection{
+    if([stationData length] == 0){
+        NSLog(@"Operation failed!");
+        [self operationFailed];
     }
 }
 
