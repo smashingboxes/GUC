@@ -67,7 +67,6 @@
 						<string key="NSFrame">{{260, 361}, {60, 35}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -85,7 +84,7 @@
 							<object class="IBUIImageView" id="128678580">
 								<reference key="NSNextResponder" ref="506294748"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{0, 1}, {242, 56}}</string>
+								<string key="NSFrameSize">{242, 57}</string>
 								<reference key="NSSuperview" ref="506294748"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="358853340"/>

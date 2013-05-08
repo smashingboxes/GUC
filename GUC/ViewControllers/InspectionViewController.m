@@ -256,7 +256,8 @@
     toolBar.barStyle = UIBarStyleBlackTranslucent;
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(donePressed)];
-    [toolBar setItems:[NSArray arrayWithObjects:flexibleSpace, btn, nil]];
+    UIBarButtonItem *minusBtn = [[UIBarButtonItem alloc] initWithTitle:@"-" style:UIBarButtonItemStyleBordered target:self action:@selector(minusButtonPressed)];
+    [toolBar setItems:[NSArray arrayWithObjects:minusBtn, flexibleSpace, btn, nil]];
     cell.cellField.inputAccessoryView = toolBar;
     
     cell.cellControl.accessibilityLabel = cell.cellLabel.text;
@@ -520,6 +521,16 @@
     }
     
     return YES;
+}
+
+-(void)minusButtonPressed{
+    NSString *minusString;
+    if([currentTextField.text length] > 0){
+        minusString = [[NSString alloc]initWithFormat:@"-%@",currentTextField.text];
+    }else{
+        minusString = @"-";
+    }
+    [currentTextField setText:minusString];
 }
 
 -(void)donePressed{
@@ -1405,7 +1416,6 @@
 #pragma mark - Class Related Methods
 
 -(void)refreshButtonPressed{
-    //refreshing = YES;
     [self beginInitialLoad];
 }
 
@@ -1508,20 +1518,19 @@
     
     isKeyboardPresent = NO;
     
-    if (![targetsAndAlarmsTextView.text isEqualToString:@"Enter text here..."] )
-    {
+    if(![targetsAndAlarmsTextView.text isEqualToString:@"Enter text here..."]){
         cell.cellDetailsLabel.text = targetsAndAlarmsTextView.text;
         cell.cellImageView.backgroundColor = [UIColor greenColor];
         NSArray *dataArray = [[NSArray alloc]initWithObjects:dropDownFormLabel.text, targetsAndAlarmsTextView.text, nil];
         [self saveValueForCurrentField:dataArray];
-        
-        targetsAndAlarmsTextView.text = @"Enter text here...";
     }
-
+    
     [theTableView setUserInteractionEnabled:YES];
     [UIView animateWithDuration:0.5 animations:^{
         [targetsAndAlarmsView setFrame:CGRectMake(39, -41-targetsAndAlarmsView.frame.size.height, targetsAndAlarmsView.frame.size.width, targetsAndAlarmsView.frame.size.height)];
         [dimBackgroundView setAlpha:0];
+    }completion:^(BOOL finished){
+        targetsAndAlarmsTextView.text = @"Enter text here...";
     }];
 
     [targetsAndAlarmsTextView resignFirstResponder];
