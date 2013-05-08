@@ -49,6 +49,7 @@
 @property(nonatomic) NSIndexPath *textViewIndexPath;
 @property(nonatomic) BOOL isKeyboardPresent;
 @property(nonatomic)IBOutlet UILabel *dropDownFormLabel;
+@property(nonatomic)UIToolbar *toolbar;
 
 @end
 
@@ -75,6 +76,7 @@
 @synthesize textViewIndexPath;
 @synthesize isKeyboardPresent;
 @synthesize dropDownFormLabel;
+@synthesize toolbar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -252,13 +254,16 @@
     cell.cellField.text = [self checkModelForTextValue:cell.cellLabel.text];
     
     // For setting the "Done" button at the top of the keyboard.
-    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    toolBar.barStyle = UIBarStyleBlackTranslucent;
+    toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    toolbar.barStyle = UIBarStyleBlackTranslucent;
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(donePressed)];
-    UIBarButtonItem *minusBtn = [[UIBarButtonItem alloc] initWithTitle:@"-" style:UIBarButtonItemStyleBordered target:self action:@selector(minusButtonPressed)];
-    [toolBar setItems:[NSArray arrayWithObjects:minusBtn, flexibleSpace, btn, nil]];
-    cell.cellField.inputAccessoryView = toolBar;
+    UIBarButtonItem *plusButton = [[UIBarButtonItem alloc]initWithTitle:@"+" style:UIBarButtonItemStyleBordered target:self action:@selector(plusButtonPressed)];
+    [plusButton setWidth:50.0];
+    UIBarButtonItem *minusButton = [[UIBarButtonItem alloc]initWithTitle:@"-" style:UIBarButtonItemStyleBordered target:self action:@selector(minusButtonPressed)];
+    [minusButton setWidth:50.0];
+    [toolbar setItems:[NSArray arrayWithObjects:plusButton, minusButton, flexibleSpace, btn, nil]];
+    cell.cellField.inputAccessoryView = toolbar;
     
     cell.cellControl.accessibilityLabel = cell.cellLabel.text;
     cell.cellControl.selectedSegmentIndex = [self checkModelForBoolValue:cell.cellLabel.text];
@@ -524,13 +529,28 @@
 }
 
 -(void)minusButtonPressed{
-    NSString *minusString;
+    NSString *theString;
+    
     if([currentTextField.text length] > 0){
-        minusString = [[NSString alloc]initWithFormat:@"-%@",currentTextField.text];
-    }else{
-        minusString = @"-";
+        if([currentTextField.text rangeOfString:@"-"].location == NSNotFound){
+            theString = [[NSString alloc]initWithFormat:@"-%@",currentTextField.text];
+            [currentTextField setText:theString];
+        }
+    }else if([currentTextField.text isEqualToString:@""]){
+        theString = @"-";
+        [currentTextField setText:theString];
     }
-    [currentTextField setText:minusString];
+}
+
+-(void)plusButtonPressed{
+    NSString *theString;
+    
+    if([currentTextField.text length] > 0){
+        if([currentTextField.text rangeOfString:@"-"].location != NSNotFound){
+            theString = [currentTextField.text stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            [currentTextField setText:theString];
+        }
+    }
 }
 
 -(void)donePressed{
