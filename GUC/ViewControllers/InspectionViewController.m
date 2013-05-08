@@ -1539,10 +1539,12 @@
     isKeyboardPresent = NO;
     
     if(![targetsAndAlarmsTextView.text isEqualToString:@"Enter text here..."]){
-        cell.cellDetailsLabel.text = targetsAndAlarmsTextView.text;
-        cell.cellImageView.backgroundColor = [UIColor greenColor];
-        NSArray *dataArray = [[NSArray alloc]initWithObjects:dropDownFormLabel.text, targetsAndAlarmsTextView.text, nil];
-        [self saveValueForCurrentField:dataArray];
+        if(![targetsAndAlarmsTextView.text isEqualToString:@""]){
+            cell.cellDetailsLabel.text = targetsAndAlarmsTextView.text;
+            cell.cellImageView.backgroundColor = [UIColor greenColor];
+            NSArray *dataArray = [[NSArray alloc]initWithObjects:dropDownFormLabel.text, targetsAndAlarmsTextView.text, nil];
+            [self saveValueForCurrentField:dataArray];
+        }
     }
     
     [theTableView setUserInteractionEnabled:YES];
