@@ -48,11 +48,10 @@
 @property(nonatomic)NSArray *currentChoices;
 @property(nonatomic) NSIndexPath *textViewIndexPath;
 @property(nonatomic) BOOL isKeyboardPresent;
-//@property(nonatomic)BOOL refreshing;
-
-
+@property(nonatomic)IBOutlet UILabel *dropDownFormLabel;
 
 @end
+
 
 @implementation InspectionViewController
 
@@ -75,7 +74,7 @@
 @synthesize currentChoices;
 @synthesize textViewIndexPath;
 @synthesize isKeyboardPresent;
-//@synthesize refreshing;
+@synthesize dropDownFormLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -103,7 +102,6 @@
     
     checking = NO;
     isKeyboardPresent = NO;
-    //refreshing = NO;
     
     [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     
@@ -252,6 +250,15 @@
     cell.cellField.userInteractionEnabled = YES;
     cell.cellField.accessibilityLabel = fieldIndexPath;
     cell.cellField.text = [self checkModelForTextValue:cell.cellLabel.text];
+    
+    // For setting the "Done" button at the top of the keyboard.
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    toolBar.barStyle = UIBarStyleBlackTranslucent;
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(donePressed)];
+    [toolBar setItems:[NSArray arrayWithObjects:flexibleSpace, btn, nil]];
+    cell.cellField.inputAccessoryView = toolBar;
+    
     cell.cellControl.accessibilityLabel = cell.cellLabel.text;
     cell.cellControl.selectedSegmentIndex = [self checkModelForBoolValue:cell.cellLabel.text];
     [cell.cellControl addTarget:self action:@selector(controlPressed:) forControlEvents:UIControlEventValueChanged];
@@ -290,7 +297,7 @@
         cell.cellDetailsLabel.hidden = NO;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         cell.accessibilityLabel = @"MultiLineString";
-        cell.cellDetailsLabel.text = [self checkModelForTextValue:cell.cellDetailsLabel.text];
+        cell.cellDetailsLabel.text = [self checkModelForTextValue:cell.cellLabel.text];
         if([cell.cellDetailsLabel.text length] > 0){
            cell.cellImageView.backgroundColor = [UIColor greenColor];
         }
@@ -346,6 +353,7 @@
     if ([cell.accessibilityLabel isEqualToString:@"MultiLineString"])
     {
         [theTableView setUserInteractionEnabled:NO];
+        dropDownFormLabel.text = cell.cellLabel.text;
         [UIView animateWithDuration:0.5 animations:^{
             [dimBackgroundView setAlpha:0.5];
             [targetsAndAlarmsView setFrame:CGRectMake(39, 41, targetsAndAlarmsView.frame.size.width, targetsAndAlarmsView.frame.size.height)];
@@ -512,6 +520,11 @@
     }
     
     return YES;
+}
+
+-(void)donePressed{
+    if(currentTextField)
+        [currentTextField resignFirstResponder];
 }
                                                                
 -(NSArray*)getIndexPathForCurrentTextField:(UITextField*)textField{
@@ -1163,17 +1176,7 @@
             }
             
             [self setMenuButtons];
-            //if(refreshing == NO){
             [self showPicker];
-            /*}else{
-                refreshing = NO;
-                theTableView.hidden = NO;
-                openSectionIndex = NSNotFound;
-                NSDictionary *stationDictionary = [theObjects objectAtIndex:0];
-                NSDictionary *stationInfo = [stationDictionary objectForKey:@"stationInfo"];
-                inspectionFormHelper = [[InspectionFormHelper alloc]initWithSections:[stationInfo objectForKey:@"sections"]];
-                [theTableView reloadData];
-            }*/
         }else{
             //Handle for if there is only one substation at the site.
             
@@ -1505,10 +1508,14 @@
     
     isKeyboardPresent = NO;
     
-    if (![targetsAndAlarmsTextView.text isEqualToString:@"Enter targets and alarms here..."] )
+    if (![targetsAndAlarmsTextView.text isEqualToString:@"Enter text here..."] )
     {
         cell.cellDetailsLabel.text = targetsAndAlarmsTextView.text;
-        currentInspection.switchBoard.targetsAndAlarms = targetsAndAlarmsTextView.text;
+        cell.cellImageView.backgroundColor = [UIColor greenColor];
+        NSArray *dataArray = [[NSArray alloc]initWithObjects:dropDownFormLabel.text, targetsAndAlarmsTextView.text, nil];
+        [self saveValueForCurrentField:dataArray];
+        
+        targetsAndAlarmsTextView.text = @"Enter text here...";
     }
 
     [theTableView setUserInteractionEnabled:YES];
@@ -1540,7 +1547,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         [targetsAndAlarmsView setCenter:CGPointMake(targetsAndAlarmsView.center.x, 80)];
     }];
-    if ([textView.text isEqualToString:@"Enter targets and alarms here..."])
+    if ([textView.text isEqualToString:@"Enter text here..."])
     {
         [textView setText:@""];
     }
@@ -1555,7 +1562,7 @@
     isKeyboardPresent = NO;
     if ([textView.text length] == 0)
     {
-        [textView setText:@"Enter targets and alarms here..."];
+        [textView setText:@"Enter text here..."];
     }
 }
 

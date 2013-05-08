@@ -70,9 +70,7 @@
         
         stationData = [[NSMutableData alloc]init];
         
-        theConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self startImmediately:NO];
-        //[theConnection setDelegateQueue:delegateQueue];
-        [theConnection start];
+        theConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
         
         if(theConnection){
             NSLog(@"Connected!");
@@ -90,10 +88,10 @@
 -(void)checkConnection{
     if([stationData length] == 0){
         NSLog(@"Operation failed!");
-        if(theConnection){
+        if(theConnection)
             [theConnection cancel];
-        }
-        [self operationFailed];
+        if(![self isCancelled])
+            [self operationFailed];
     }
 }
 
@@ -160,9 +158,8 @@
 -(void)connectionDidFinishLoading:(NSURLConnection*)connection{
     NSLog(@"Got data!");
     
-    if(delegate && ![self isCancelled]){
+    if(delegate && ![self isCancelled])
         [delegate operationDidReturnWithData:stationData];
-    }
     [self finish];
 }
 
