@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AsyncRequest.h"
 
-@interface PastInspectionsViewController : UIViewController
+@interface PastInspectionsViewController : UIViewController <AsyncResponseDelegate>
 
 @end

@@ -24,4 +24,11 @@
     return theURL;
 }
 
++(NSURL*)generateURLForPDF{
+    NSString *urlString = @"https://wsvcs.guc.com/SubInspections/inspectionservice.php";
+    NSURL *theURL = [[NSURL alloc]initWithString:urlString];
+    
+    return theURL;
+}
+
 @end

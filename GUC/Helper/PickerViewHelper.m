@@ -53,7 +53,7 @@ static UIViewController *parentViewController;
         thePicker.showsSelectionIndicator = YES;
         
         UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-        toolBar.barStyle = UIBarStyleBlackOpaque;
+        toolBar.barStyle = UIBarStyleBlackTranslucent;
         
         UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         

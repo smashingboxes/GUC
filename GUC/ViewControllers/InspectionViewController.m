@@ -49,7 +49,7 @@
 @property(nonatomic) NSIndexPath *textViewIndexPath;
 @property(nonatomic) BOOL isKeyboardPresent;
 @property(nonatomic)IBOutlet UILabel *dropDownFormLabel;
-@property(nonatomic)UIToolbar *toolbar;
+@property(nonatomic)UIAlertView *connectionAlertView;
 
 @end
 
@@ -76,7 +76,7 @@
 @synthesize textViewIndexPath;
 @synthesize isKeyboardPresent;
 @synthesize dropDownFormLabel;
-@synthesize toolbar;
+@synthesize connectionAlertView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -254,7 +254,7 @@
     cell.cellField.text = [self checkModelForTextValue:cell.cellLabel.text];
     
     // For setting the "Done" button at the top of the keyboard.
-    toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UIToolbar *toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
     toolbar.barStyle = UIBarStyleBlackTranslucent;
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(donePressed)];
@@ -332,7 +332,6 @@
     
     return cell;
 }
-
 
 -(UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section {
     NSArray *headerTitleArray = [inspectionFormHelper.containerArray objectAtIndex:section];
@@ -1256,8 +1255,8 @@
 -(void)asyncResponseDidFailWithError{
     NSLog(@"Error! Connection failed.");
     
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Connection Error!" message:@"The network may not be responding, or there is a connection issue.\nPlease try again." delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
-    [alertView show];
+    connectionAlertView = [[UIAlertView alloc]initWithTitle:@"Connection Error!" message:@"The network may not be responding, or there is a connection issue.\nPlease try again." delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
+    [connectionAlertView show];
 }
 
 
@@ -1519,6 +1518,10 @@
     switch(buttonIndex){
         case 0:
             // Cancel pressed. Do nothing.
+            if(alertView == connectionAlertView){
+                [[NetworkConnectionManager sharedManager]cancelAllRequests];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
             break;
         case 1:
             [[NetworkConnectionManager sharedManager]cancelAllRequests];

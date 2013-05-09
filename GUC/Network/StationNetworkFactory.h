@@ -12,5 +12,6 @@
 
 +(NSURL*)generateURLForStation:(NSString*)stationName;
 +(NSURL*)generateURLForTechnicianNames;
++(NSURL*)generateURLForPDF;
 
 @end

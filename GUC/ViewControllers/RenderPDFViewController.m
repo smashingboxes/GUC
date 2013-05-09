@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MenuButtonHelper.h"
 #import "Station.h"
+#import "NetworkConnectionManager.h"
 
 @interface RenderPDFViewController ()
 
@@ -322,11 +323,6 @@
 
 - (void)viewDidLoad
 {
-    if(!mailComposer){
-        mailComposer = [[MFMailComposeViewController alloc]init];
-        mailComposer.mailComposeDelegate = self;
-    }
-    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
                                                                              style:UIBarButtonItemStyleBordered
                                                                             target:self
@@ -1063,6 +1059,26 @@
     pdfPage += 1;
 }
 
+-(void)resetPages{
+    pdfPage = 0;
+    
+    if(firstPage.alpha == 0.0){
+        firstPage.alpha = 1.0;
+    }
+    if(secondPage.alpha == 0.0){
+        secondPage.alpha = 1.0;
+    }
+    if(thirdPage.alpha == 0.0){
+        thirdPage.alpha = 1.0;
+    }
+    if(fourthPage.alpha == 0.0){
+        fourthPage.alpha = 1.0;
+    }
+    if(fifthPage.alpha == 0.0){
+        fifthPage.alpha = 1.0;
+    }
+}
+
 -(void)makeViewVanish:(UIView*)aView{
     [UIView animateWithDuration:0.5 animations:^{
         aView.alpha = 0.0;
@@ -1103,6 +1119,12 @@
 #pragma mark - MailPicker Methods
 
 -(void)displayMailComposer{
+    if(mailComposer){
+        mailComposer = nil;
+    }
+    mailComposer = [[MFMailComposeViewController alloc]init];
+    mailComposer.mailComposeDelegate = self;
+    
     NSString *pdfFilePath = [self pdfFilePathWithStation:currentInspection.generalSettings.stationName date:currentInspection.generalSettings.dateTime andTechnician:currentInspection.generalSettings.technician];
     
     NSData *pdfData = [[NSData alloc]initWithContentsOfFile:pdfFilePath];
@@ -1121,6 +1143,7 @@
         NSLog(@"Mail sent!");
         NSString *pdfFilePath = [self pdfFilePathWithStation:currentInspection.generalSettings.stationName date:currentInspection.generalSettings.dateTime andTechnician:currentInspection.generalSettings.technician];
         if(pdfFilePath){
+            [self createJSONDictionaryWithFile:pdfFilePath];
             // Remove the PDF so we don't waste storage on the device.
             NSError *error;
             [[NSFileManager defaultManager] removeItemAtPath:pdfFilePath error:&error];
@@ -1129,10 +1152,59 @@
         NSLog(@"Mail failed to be sent.");
     }else if(result == MFMailComposeResultCancelled){
         NSLog(@"Mail cancelled");
+        [self resetPages];
+        [mailComposer dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+
+#pragma mark - Network-Related Methods
+
+-(void)createJSONDictionaryWithFile:(NSString*)theFilePath{
+    NSString *filePath = theFilePath;
+    NSData *pdfFileData = [[NSData alloc]initWithContentsOfFile:filePath];
+    if(currentInspection && pdfFileData){
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+        [dateFormat setDateFormat:@"YYYYMMdd"];
+        NSString *dateString = [dateFormat stringFromDate:[NSDate date]];
+        NSDictionary *JSONDictionary = [[NSDictionary alloc]initWithObjectsAndKeys:currentInspection.generalSettings.stationName, @"station_name", dateString, @"date", [NSString stringWithFormat:@"%@", pdfFileData], @"file", nil];
+        NSLog(@"JSON Dictionary created contains:\n%@", JSONDictionary);
+        [[NetworkConnectionManager sharedManager]beginConnectionWithPurpose:@"PDF" withJSONDictionary:JSONDictionary forCaller:self];
+    }else{
+        [self showFileErrorAlertView];
+    }
+}
+
+-(void)asyncResponseDidReturnObjects:(NSArray *)theObjects{
+    if(theObjects){
+        NSLog(@"Objects returned are:\n%@", theObjects);
+        NSDictionary *resultDictionary = [theObjects objectAtIndex:0];
+        if([[resultDictionary objectForKey:@"result"] isEqualToString:@"Created"]){
+            NSLog(@"Success");
+        }else{
+            NSLog(@"Error!");
+            [self showResponseErrorAlertView];
+        }
     }
     [mailComposer dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+-(void)showResponseErrorAlertView{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Response Error!" message:@"There was an error returned from the server.\nPlease try again." delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
+    [alertView show];
+}
+
+-(void)showFileErrorAlertView{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"File Error!" message:@"The PDF file you're trying to send does not exist.\nPlease go back and try again." delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
+    [alertView show];
+}
+
+-(void)asyncResponseDidFailWithError{
+    NSLog(@"Error!");
+    [self showResponseErrorAlertView];
+}
+
 
 #pragma mark - MenuButton Methods
 
@@ -1151,6 +1223,7 @@
         [self changePage];
     }
 }
+
 
 #pragma mark - Location Helper Methods
 

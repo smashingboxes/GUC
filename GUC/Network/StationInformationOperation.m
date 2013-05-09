@@ -18,6 +18,7 @@
 @property(nonatomic)NSMutableData *stationData;
 @property(nonatomic)BOOL executing;
 @property(nonatomic)BOOL finished;
+@property(nonatomic)NSRunLoop *theRunLoop;
 
 @end
 
@@ -33,6 +34,7 @@
 @synthesize stationData;
 @synthesize executing;
 @synthesize finished;
+@synthesize theRunLoop;
 
 -(id)initWithURL:(NSURL*)theURL requestType:(NSString*)theType jsonDictionary:(NSDictionary*)theDictionary andDelegate:(id<StationInformationOperationDelegate>)theDelegate{
     if(self == [super init]){
@@ -81,7 +83,8 @@
         }
         
         [self performSelector:@selector(checkConnection) withObject:nil afterDelay:30.0];
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:30.0]];
+        theRunLoop = [NSRunLoop currentRunLoop];
+        [theRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:30.0]];
     }
 }
 
@@ -109,7 +112,7 @@
     }
 }
 
--(void)finish{    
+-(void)finish{
     [self willChangeValueForKey:@"isFinished"];
     finished = YES;
     [self didChangeValueForKey:@"isFinished"];
@@ -120,7 +123,9 @@
 
 -(void)operationFailed{
     if(delegate)
-        [delegate operationDidFail];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [delegate operationDidFail];
+        });
     
     [self finish];
 }
@@ -159,7 +164,10 @@
     NSLog(@"Got data!");
     
     if(delegate && ![self isCancelled])
-        [delegate operationDidReturnWithData:stationData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [delegate operationDidReturnWithData:stationData];
+        });
+    
     [self finish];
 }
 

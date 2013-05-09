@@ -46,6 +46,8 @@
         NSURL *connectionURL;
         if([thePurpose isEqualToString:@"Names"]){
             connectionURL = [StationNetworkFactory generateURLForTechnicianNames];
+        }else if([thePurpose isEqualToString:@"PDF"]){
+            connectionURL = [StationNetworkFactory generateURLForPDF];
         }else{
             // For getting station data.
             connectionURL = [StationNetworkFactory generateURLForStation:thePurpose];
@@ -68,15 +70,21 @@
 -(void)operationDidReturnWithData:(NSMutableData *)theData{
     if(currentRequest){
         NSError *error;
-        NSArray *jsonInfo = [NSJSONSerialization JSONObjectWithData:theData options:kNilOptions error:&error];
-        [currentRequest.delegate asyncResponseDidReturnObjects:jsonInfo];
+        NSString *jsonInfo = [[NSString alloc]initWithFormat:@"%@",[NSJSONSerialization JSONObjectWithData:theData options:kNilOptions error:&error]];
+        if([jsonInfo rangeOfString:@"("].location == 0){
+            NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:theData options:kNilOptions error:&error];
+            [currentRequest.delegate asyncResponseDidReturnObjects:jsonArray];
+        }else if([jsonInfo rangeOfString:@"{"].location == 0){
+            NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:theData options:kNilOptions error:&error];
+            NSArray *dataArray = [[NSArray alloc]initWithObjects:jsonDictionary, nil];
+            [currentRequest.delegate asyncResponseDidReturnObjects:dataArray];
+        }
     }
 }
 
 -(void)operationDidFail{
-    if(currentRequest){
+    if(currentRequest)
         [currentRequest.delegate asyncResponseDidFailWithError];
-    }
 }
 
 -(void)cancelAllRequests{

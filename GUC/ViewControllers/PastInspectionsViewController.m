@@ -7,6 +7,7 @@
 //
 
 #import "PastInspectionsViewController.h"
+#import "NetworkConnectionManager.h"
 
 @interface PastInspectionsViewController ()
 
@@ -27,6 +28,8 @@
 {
     self.navigationItem.title = @"Past Inspections";
     
+    [self beginInitialLoad];
+    
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
@@ -35,6 +38,22 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)beginInitialLoad{
+    [[NetworkConnectionManager sharedManager]beginConnectionWithPurpose:@"PDF" withJSONDictionary:nil forCaller:self];
+}
+
+
+#pragma mark - AsyncResponse Delegate Methods
+
+-(void)asyncResponseDidReturnObjects:(NSArray *)theObjects{
+    if(theObjects)
+        NSLog(@"Objects returned are:\n%@", theObjects);
+}
+
+-(void)asyncResponseDidFailWithError{
+    NSLog(@"Error!");
 }
 
 @end
