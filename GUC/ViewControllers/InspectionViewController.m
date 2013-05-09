@@ -169,6 +169,7 @@
     }else{
         NSArray *buttonTitlesArray = [[NSArray alloc]initWithObjects:@"Create Report", @"Refresh Station", nil];
         [[MenuButtonHelper sharedHelper]addButtonsWithTitlesToActionSheet:buttonTitlesArray];
+        [[MenuButtonHelper sharedHelper]setButtonThreeTarget:nil forSelector:nil];
     }
     [[MenuButtonHelper sharedHelper]setButtonOneTarget:self forSelector:@selector(transitionToPDFView)];
     [[MenuButtonHelper sharedHelper]setButtonTwoTarget:self forSelector:@selector(refreshButtonPressed)];
