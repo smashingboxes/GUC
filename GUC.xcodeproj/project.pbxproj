@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7211D9DC17185CD600BA8135 /* CustomLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7211D9DB17185CD600BA8135 /* CustomLoadingView.m */; };
 		7211D9DF17189ED700BA8135 /* MenuButtonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */; };
+		7228679F173D4CF500DB1EEA /* PastInspectionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7228679E173D4CF500DB1EEA /* PastInspectionsCell.m */; };
+		722867A1173D4D0E00DB1EEA /* PastInspectionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 722867A0173D4D0E00DB1EEA /* PastInspectionsCell.xib */; };
 		72383C651726E337003F9FE3 /* RenderPDFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72383C641726E337003F9FE3 /* RenderPDFViewController.m */; };
 		72383C671726E389003F9FE3 /* RenderPDFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72383C661726E389003F9FE3 /* RenderPDFViewController.xib */; };
 		724CC8981715A64700EBD6B8 /* LocationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 724CC8971715A64700EBD6B8 /* LocationHelper.m */; };
@@ -67,6 +69,9 @@
 		7211D9DB17185CD600BA8135 /* CustomLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomLoadingView.m; path = CustomWidgets/CustomLoadingView.m; sourceTree = "<group>"; };
 		7211D9DD17189ED600BA8135 /* MenuButtonHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuButtonHelper.h; path = Helper/MenuButtonHelper.h; sourceTree = "<group>"; };
 		7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuButtonHelper.m; path = Helper/MenuButtonHelper.m; sourceTree = "<group>"; };
+		7228679D173D4CF500DB1EEA /* PastInspectionsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PastInspectionsCell.h; path = TableViewCells/PastInspectionsCell.h; sourceTree = "<group>"; };
+		7228679E173D4CF500DB1EEA /* PastInspectionsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PastInspectionsCell.m; path = TableViewCells/PastInspectionsCell.m; sourceTree = "<group>"; };
+		722867A0173D4D0E00DB1EEA /* PastInspectionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PastInspectionsCell.xib; path = TableViewCells/PastInspectionsCell.xib; sourceTree = "<group>"; };
 		72383C631726E337003F9FE3 /* RenderPDFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderPDFViewController.h; path = ViewControllers/RenderPDFViewController.h; sourceTree = "<group>"; };
 		72383C641726E337003F9FE3 /* RenderPDFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RenderPDFViewController.m; path = ViewControllers/RenderPDFViewController.m; sourceTree = "<group>"; };
 		72383C661726E389003F9FE3 /* RenderPDFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RenderPDFViewController.xib; path = NIBs/RenderPDFViewController.xib; sourceTree = "<group>"; };
@@ -186,6 +191,9 @@
 				72BC63A3171C5A1A003090A6 /* InspectionContentCell.h */,
 				72BC63A4171C5A1A003090A6 /* InspectionContentCell.m */,
 				72BC63A6171C5A32003090A6 /* InspectionContentCell.xib */,
+				7228679D173D4CF500DB1EEA /* PastInspectionsCell.h */,
+				7228679E173D4CF500DB1EEA /* PastInspectionsCell.m */,
+				722867A0173D4D0E00DB1EEA /* PastInspectionsCell.xib */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -447,6 +455,7 @@
 				72BC63AE171CAFD4003090A6 /* carat-open.png in Resources */,
 				72BC63AF171CAFD4003090A6 /* carat.png in Resources */,
 				72383C671726E389003F9FE3 /* RenderPDFViewController.xib in Resources */,
+				722867A1173D4D0E00DB1EEA /* PastInspectionsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +497,7 @@
 				72BA7F751725D2B100AE3901 /* Field.m in Sources */,
 				72383C651726E337003F9FE3 /* RenderPDFViewController.m in Sources */,
 				725C8A53172986D3006F7A10 /* PickerViewHelper.m in Sources */,
+				7228679F173D4CF500DB1EEA /* PastInspectionsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

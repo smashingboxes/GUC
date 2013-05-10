@@ -42,7 +42,7 @@
     [super viewDidAppear:animated];
     
     [PickerViewHelper setParentView:self];
-    [[NetworkConnectionManager sharedManager]beginConnectionWithPurpose:@"Names" withJSONDictionary:nil forCaller:self];
+    [[NetworkConnectionManager sharedManager]beginConnectionWithPurpose:@"Names" withParameters:nil withJSONDictionary:nil forCaller:self];
 }
 
 /*-(IBAction)loginButtonPressed:(id)sender{

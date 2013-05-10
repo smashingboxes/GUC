@@ -210,6 +210,8 @@
 
 -(void)locationHelperDidFail{
     NSLog(@"Reverse Geocoding failed.");
+    [customLoadingView stopLoading];
+    [self startFindingLocation];
 }
 
 -(void)locationHelperDidSucceed:(CLLocation *)theLocation{

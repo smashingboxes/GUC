@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AsyncRequest.h"
 
-@interface PastInspectionsSummaryViewController : UIViewController
+@interface PastInspectionsSummaryViewController : UIViewController <AsyncResponseDelegate>
+
+//-(id)initWithInspectionId:(NSString*)theInspectionID stationName:(NSString*)theStationName andDate:(NSString*)theDate;
 
 @end

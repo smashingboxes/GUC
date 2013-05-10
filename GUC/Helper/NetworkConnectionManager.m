@@ -38,19 +38,23 @@
     networkQueue = [[NSOperationQueue alloc]init];
 }
 
--(void)beginConnectionWithPurpose:(NSString*)thePurpose withJSONDictionary:(NSDictionary*)theDictionary forCaller:(id<AsyncResponseDelegate>)theDelegate{
+-(void)beginConnectionWithPurpose:(NSString*)thePurpose withParameters:(NSDictionary*)parameters withJSONDictionary:(NSDictionary*)theDictionary forCaller:(id<AsyncResponseDelegate>)theDelegate{
     if(!networkQueue){
         [self initializeNetworkQueue];
-        [self beginConnectionWithPurpose:thePurpose withJSONDictionary:theDictionary forCaller:theDelegate];
+        [self beginConnectionWithPurpose:thePurpose withParameters:parameters withJSONDictionary:theDictionary forCaller:theDelegate];
     }else{
         NSURL *connectionURL;
         if([thePurpose isEqualToString:@"Names"]){
             connectionURL = [StationNetworkFactory generateURLForTechnicianNames];
         }else if([thePurpose isEqualToString:@"PDF"]){
-            connectionURL = [StationNetworkFactory generateURLForPDF];
+            if(!parameters){
+                connectionURL = [StationNetworkFactory generateURLForPDF];
+            }else{
+                connectionURL = [StationNetworkFactory generateURLForPDFDownloadWithInspectionID:[parameters objectForKey:@"inspection_id"] stationName:[parameters objectForKey:@"station_name"] andDate:[parameters objectForKey:@"date"]];
+            }
         }else{
             // For getting station data.
-            connectionURL = [StationNetworkFactory generateURLForStation:thePurpose];
+            connectionURL = [StationNetworkFactory generateURLForStation:[parameters objectForKey:@"station_name"]];
         }
         currentRequest = [[AsyncRequest alloc]init];
         currentRequest.delegate = theDelegate;
@@ -71,13 +75,15 @@
     if(currentRequest){
         NSError *error;
         NSString *jsonInfo = [[NSString alloc]initWithFormat:@"%@",[NSJSONSerialization JSONObjectWithData:theData options:kNilOptions error:&error]];
-        if([jsonInfo rangeOfString:@"("].location == 0){
-            NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:theData options:kNilOptions error:&error];
-            [currentRequest.delegate asyncResponseDidReturnObjects:jsonArray];
-        }else if([jsonInfo rangeOfString:@"{"].location == 0){
-            NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:theData options:kNilOptions error:&error];
-            NSArray *dataArray = [[NSArray alloc]initWithObjects:jsonDictionary, nil];
-            [currentRequest.delegate asyncResponseDidReturnObjects:dataArray];
+        if(jsonInfo){
+            if([jsonInfo rangeOfString:@"("].location == 0){
+                NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:theData options:kNilOptions error:&error];
+                [currentRequest.delegate asyncResponseDidReturnObjects:jsonArray];
+            }else if([jsonInfo rangeOfString:@"{"].location == 0){
+                NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:theData options:kNilOptions error:&error];
+                NSArray *dataArray = [[NSArray alloc]initWithObjects:jsonDictionary, nil];
+                [currentRequest.delegate asyncResponseDidReturnObjects:dataArray];
+            }
         }
     }
 }

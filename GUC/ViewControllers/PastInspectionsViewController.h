@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "AsyncRequest.h"
 
-@interface PastInspectionsViewController : UIViewController <AsyncResponseDelegate>
+@interface PastInspectionsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, AsyncResponseDelegate>
 
 @end

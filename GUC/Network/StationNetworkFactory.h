@@ -13,5 +13,6 @@
 +(NSURL*)generateURLForStation:(NSString*)stationName;
 +(NSURL*)generateURLForTechnicianNames;
 +(NSURL*)generateURLForPDF;
++(NSURL*)generateURLForPDFDownloadWithInspectionID:(NSString *)inspectionID stationName:(NSString *)stationName andDate:(NSString *)date;
 
 @end

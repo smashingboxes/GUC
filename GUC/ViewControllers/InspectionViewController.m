@@ -1442,7 +1442,8 @@
 -(void)beginInitialLoad{
     theTableView.hidden = YES;
     [customLoadingView beginLoading];
-    [[NetworkConnectionManager sharedManager]beginConnectionWithPurpose:stationName withJSONDictionary:nil forCaller:self];
+    NSDictionary *aDictionary = [[NSDictionary alloc]initWithObjectsAndKeys:stationName, @"station_name", nil];
+    [[NetworkConnectionManager sharedManager]beginConnectionWithPurpose:@"Station" withParameters:aDictionary withJSONDictionary:nil forCaller:self];
 }
 
 -(void)transitionToPDFView{

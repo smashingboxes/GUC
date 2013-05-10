@@ -53,6 +53,10 @@
 -(void)main{
     @autoreleasepool {
         NSLog(@"Beginning request at URL: %@", stationURL);
+        NSStringEncoding encoding;
+        NSString *pageData = [NSString stringWithContentsOfURL:stationURL usedEncoding:&encoding error:NULL];
+        NSLog(@"%@", pageData);
+        NSLog(@"Encoding %d",encoding);
         
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:stationURL];
         [request setHTTPMethod:requestType];
@@ -82,9 +86,9 @@
             [self operationFailed];
         }
         
-        [self performSelector:@selector(checkConnection) withObject:nil afterDelay:30.0];
+        [self performSelector:@selector(checkConnection) withObject:nil afterDelay:60.0];
         theRunLoop = [NSRunLoop currentRunLoop];
-        [theRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:30.0]];
+        [theRunLoop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:60.0]];
     }
 }
 

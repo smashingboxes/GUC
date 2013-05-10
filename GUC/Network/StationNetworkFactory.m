@@ -31,4 +31,11 @@
     return theURL;
 }
 
++(NSURL*)generateURLForPDFDownloadWithInspectionID:(NSString *)inspectionID stationName:(NSString *)stationName andDate:(NSString *)date{
+    NSString *urlString = [[NSString alloc]initWithFormat:@"https://wsvcs.guc.com/SubInspections/inspectionservice.php?station_id=%@&station_name=%@&date=%@", inspectionID, stationName, date];
+    NSURL *theURL = [[NSURL alloc]initWithString:urlString];
+    
+    return theURL;
+}
+
 @end
