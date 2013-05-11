@@ -52,11 +52,11 @@
 
 -(void)main{
     @autoreleasepool {
-        NSLog(@"Beginning request at URL: %@", stationURL);
+        /*NSLog(@"Beginning request at URL: %@", stationURL);
         NSStringEncoding encoding;
         NSString *pageData = [NSString stringWithContentsOfURL:stationURL usedEncoding:&encoding error:NULL];
         NSLog(@"%@", pageData);
-        NSLog(@"Encoding %d",encoding);
+        NSLog(@"Encoding %d",encoding);*/
         
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:stationURL];
         [request setHTTPMethod:requestType];

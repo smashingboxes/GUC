@@ -1168,10 +1168,10 @@
         [dateFormat setDateFormat:@"YYYYMMdd"];
         NSString *dateString = [dateFormat stringFromDate:[NSDate date]];
         NSString *dataString = [[NSString alloc]initWithFormat:@"%@",pdfFileData];
-        NSLog(@"%@",dataString);
+        //NSLog(@"%@",dataString);
         if(dataString != (id)[NSNull null]){
             NSDictionary *JSONDictionary = [[NSDictionary alloc]initWithObjectsAndKeys:currentInspection.generalSettings.stationName, @"station_name", dateString, @"date", dataString, @"file", nil];
-            NSLog(@"JSON Dictionary created contains:\n%@", JSONDictionary);
+            //NSLog(@"JSON Dictionary created contains:\n%@", JSONDictionary);
             [[NetworkConnectionManager sharedManager]beginConnectionWithPurpose:@"PDF" withParameters:nil withJSONDictionary:JSONDictionary forCaller:self];
         }
     }else{

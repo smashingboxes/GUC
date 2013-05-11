@@ -89,11 +89,11 @@
 
 -(void)asyncResponseDidReturnObjects:(NSArray *)theObjects{
     if(theObjects){
-        NSLog(@"Objects returned are:\n%@", theObjects);
+        //NSLog(@"Objects returned are:\n%@", theObjects);
         NSDictionary *dataDictionary = [theObjects objectAtIndex:0];
         NSString *dataString = [dataDictionary objectForKey:@"data"];
         NSData *pdfData = [[NSData alloc]initWithHexString:dataString];
-        NSLog(@"Data condensed is: %@", pdfData);
+        //NSLog(@"Data condensed is: %@", pdfData);
         [theWebView loadData:pdfData MIMEType:@"application/pdf" textEncodingName:nil baseURL:nil];
         // Above method loads a blurry PDF. Below is for rebuilding the document from scratch.
         // [self recreatePDFFromData:pdfData];
