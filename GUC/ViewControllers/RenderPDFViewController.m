@@ -323,6 +323,8 @@
 
 - (void)viewDidLoad
 {
+    self.navigationItem.title = @"Create Report";
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
                                                                              style:UIBarButtonItemStyleBordered
                                                                             target:self
