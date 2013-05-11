@@ -11,6 +11,4 @@
 
 @interface PastInspectionsSummaryViewController : UIViewController <AsyncResponseDelegate>
 
-//-(id)initWithInspectionId:(NSString*)theInspectionID stationName:(NSString*)theStationName andDate:(NSString*)theDate;
-
 @end

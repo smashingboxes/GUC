@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7211D9DC17185CD600BA8135 /* CustomLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7211D9DB17185CD600BA8135 /* CustomLoadingView.m */; };
 		7211D9DF17189ED700BA8135 /* MenuButtonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */; };
+		72244DD0173DCC0200279B80 /* NSData+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 72244DCF173DCC0200279B80 /* NSData+HexString.m */; };
 		7228679F173D4CF500DB1EEA /* PastInspectionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7228679E173D4CF500DB1EEA /* PastInspectionsCell.m */; };
 		722867A1173D4D0E00DB1EEA /* PastInspectionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 722867A0173D4D0E00DB1EEA /* PastInspectionsCell.xib */; };
 		72383C651726E337003F9FE3 /* RenderPDFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72383C641726E337003F9FE3 /* RenderPDFViewController.m */; };
@@ -69,6 +70,8 @@
 		7211D9DB17185CD600BA8135 /* CustomLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomLoadingView.m; path = CustomWidgets/CustomLoadingView.m; sourceTree = "<group>"; };
 		7211D9DD17189ED600BA8135 /* MenuButtonHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuButtonHelper.h; path = Helper/MenuButtonHelper.h; sourceTree = "<group>"; };
 		7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuButtonHelper.m; path = Helper/MenuButtonHelper.m; sourceTree = "<group>"; };
+		72244DCE173DCC0200279B80 /* NSData+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+HexString.h"; path = "Helper/NSData+HexString.h"; sourceTree = "<group>"; };
+		72244DCF173DCC0200279B80 /* NSData+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+HexString.m"; path = "Helper/NSData+HexString.m"; sourceTree = "<group>"; };
 		7228679D173D4CF500DB1EEA /* PastInspectionsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PastInspectionsCell.h; path = TableViewCells/PastInspectionsCell.h; sourceTree = "<group>"; };
 		7228679E173D4CF500DB1EEA /* PastInspectionsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PastInspectionsCell.m; path = TableViewCells/PastInspectionsCell.m; sourceTree = "<group>"; };
 		722867A0173D4D0E00DB1EEA /* PastInspectionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PastInspectionsCell.xib; path = TableViewCells/PastInspectionsCell.xib; sourceTree = "<group>"; };
@@ -362,6 +365,8 @@
 				72BC63A1171C509A003090A6 /* InspectionFormHelper.m */,
 				72BA7F671725883A00AE3901 /* NetworkConnectionManager.h */,
 				72BA7F681725883A00AE3901 /* NetworkConnectionManager.m */,
+				72244DCE173DCC0200279B80 /* NSData+HexString.h */,
+				72244DCF173DCC0200279B80 /* NSData+HexString.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -498,6 +503,7 @@
 				72383C651726E337003F9FE3 /* RenderPDFViewController.m in Sources */,
 				725C8A53172986D3006F7A10 /* PickerViewHelper.m in Sources */,
 				7228679F173D4CF500DB1EEA /* PastInspectionsCell.m in Sources */,
+				72244DD0173DCC0200279B80 /* NSData+HexString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

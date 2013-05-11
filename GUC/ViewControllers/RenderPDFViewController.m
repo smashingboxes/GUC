@@ -1167,8 +1167,7 @@
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
         [dateFormat setDateFormat:@"YYYYMMdd"];
         NSString *dateString = [dateFormat stringFromDate:[NSDate date]];
-        //NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:imageArray];
-        NSString *dataString = [[NSString alloc]initWithData:pdfFileData encoding:NSASCIIStringEncoding];
+        NSString *dataString = [[NSString alloc]initWithFormat:@"%@",pdfFileData];
         NSLog(@"%@",dataString);
         if(dataString != (id)[NSNull null]){
             NSDictionary *JSONDictionary = [[NSDictionary alloc]initWithObjectsAndKeys:currentInspection.generalSettings.stationName, @"station_name", dateString, @"date", dataString, @"file", nil];

@@ -9,6 +9,8 @@
 #import "PastInspectionsSummaryViewController.h"
 #import "NetworkConnectionManager.h"
 #import <QuartzCore/QuartzCore.h>
+#import "NSData+HexString.h"
+#import "CustomLoadingView.h"
 
 #define kInspectionPropertyList @"guc_inspection.plist"
 
@@ -18,8 +20,7 @@
 @property(nonatomic)NSString *stationName;
 @property(nonatomic)NSString *inspectionDate;
 @property(nonatomic)IBOutlet UIWebView *theWebView;
-@property(nonatomic)CGPDFDocumentRef pdf;
-@property(nonatomic)NSInteger currentPage;
+@property(nonatomic)CustomLoadingView *customLoadingView;
 
 @end
 
@@ -30,8 +31,7 @@
 @synthesize stationName;
 @synthesize inspectionDate;
 @synthesize theWebView;
-@synthesize pdf;
-@synthesize currentPage;
+@synthesize customLoadingView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,18 +42,14 @@
     return self;
 }
 
-/*-(id)initWithInspectionId:(NSString *)theInspectionID stationName:(NSString *)theStationName andDate:(NSString *)theDate{
-    if(self == [super init]){
-        inspectionID = theInspectionID;
-        stationName = theStationName;
-        inspectionDate = theDate;
-    }
-    
-    return self;
-}*/
-
 - (void)viewDidLoad
 {
+    self.navigationItem.title = @"PDF";
+    
+    customLoadingView = [[CustomLoadingView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) andTitle:@"Loading..."];
+    [self.view addSubview:customLoadingView];
+    [customLoadingView beginLoading];
+    
     [self loadPDF];
     
     [super viewDidLoad];
@@ -95,19 +91,13 @@
     if(theObjects){
         NSLog(@"Objects returned are:\n%@", theObjects);
         NSDictionary *dataDictionary = [theObjects objectAtIndex:0];
-        //NSString *pdfDataString = [[NSString alloc]initWithFormat:@"%@", [dataDictionary objectForKey:@"data"]];
-        NSData *pdfData = [[NSData alloc]initWithBytes:[[dataDictionary objectForKey:@"data"] bytes] length:[[dataDictionary objectForKey:@"data"]length]];
-        NSArray *imageArray = [NSKeyedUnarchiver unarchiveObjectWithData:pdfData];
-        NSLog(@"The array contains %i pages.", [imageArray count]);
-        //[theWebView loadData:pdfData MIMEType:@"application/pdf" textEncodingName:nil baseURL:nil];
-        //theWebView.hidden = YES;
-        //UIGraphicsBeginPDFContextToFile(@"temp_file.pdf", , <#NSDictionary *documentInfo#>)
-        //CFDataRef myPDFData = (__bridge CFDataRef)pdfData;
-        //CGDataProviderRef provider = CGDataProviderCreateWithCFData(myPDFData);
-        //pdf = CGPDFDocumentCreateWithProvider(provider);
-        //CFRelease(myPDFData);
-        //currentPage = 1;
-        //[self drawRect:self.view.bounds];
+        NSString *dataString = [dataDictionary objectForKey:@"data"];
+        NSData *pdfData = [[NSData alloc]initWithHexString:dataString];
+        NSLog(@"Data condensed is: %@", pdfData);
+        [theWebView loadData:pdfData MIMEType:@"application/pdf" textEncodingName:nil baseURL:nil];
+        // Above method loads a blurry PDF. Below is for rebuilding the document from scratch.
+        // [self recreatePDFFromData:pdfData];
+        [customLoadingView stopLoading];
     }
 }
 
@@ -116,19 +106,61 @@
 }
 
 
-#pragma mark - PDF Drawing Methods
+/*#pragma mark - PDF Rendering Methods  // --UN-COMMENT TO USE--
 
--(void)drawRect:(CGRect)inRect{
-    if(pdf){
-        CGPDFPageRef page = CGPDFDocumentGetPage(pdf, currentPage);
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
-        //CGContextSaveGState(ctx);
-        //CGContextTranslateCTM(ctx, 0.0, self.view.bounds.size.height);
-        //CGContextScaleCTM(ctx, 1.0, -1.0);
-        //CGContextConcatCTM(ctx, CGPDFPageGetDrawingTransform(page, kCGPDFCropBox, self.view.bounds, 0, true));
-        CGContextDrawPDFPage(ctx, page);
-        //CGContextRestoreGState(ctx);
+-(void)recreatePDFFromData:(NSData*)pdfData{
+    CFDataRef myPDFData = (__bridge CFDataRef)pdfData;
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData(myPDFData);
+    CGPDFDocumentRef pdf = CGPDFDocumentCreateWithProvider(provider);
+    NSInteger numberOfPages = CGPDFDocumentGetNumberOfPages(pdf);
+    NSMutableArray *imageArray = [[NSMutableArray alloc]init];
+    for(int i = 1; i < numberOfPages+1; i++){
+        UIImage *anImage = [self imageFromPDF:pdf withPageNumber:i withScale:15.0];
+        
+        [imageArray addObject:anImage];
     }
+    NSLog(@"Array contains %i images.", [imageArray count]);
+    [self drawPDFFromImageArray:imageArray];
+    NSString *filePath = [self inspectionPropertyList];
+    NSData *pdfFileData;
+    if(filePath){
+        pdfFileData = [[NSData alloc]initWithContentsOfFile:filePath];
+        [theWebView loadData:pdfFileData MIMEType:@"application/pdf" textEncodingName:nil baseURL:nil];
+    }
+    CFRelease(myPDFData);
 }
+
+-(UIImage*)imageFromPDF:(CGPDFDocumentRef)pdf withPageNumber:(NSUInteger)pageNumber withScale:(CGFloat)scale
+{
+	if(pageNumber > 0 && pageNumber < CGPDFDocumentGetNumberOfPages(pdf)+1)
+	{
+		CGPDFPageRef pdfPage = CGPDFDocumentGetPage(pdf,pageNumber);
+		CGRect tmpRect = CGPDFPageGetBoxRect(pdfPage,kCGPDFMediaBox);
+		CGRect rect = CGRectMake(tmpRect.origin.x,tmpRect.origin.y,tmpRect.size.width*scale,tmpRect.size.height*scale);
+		UIGraphicsBeginImageContext(rect.size);
+		CGContextRef context = UIGraphicsGetCurrentContext();
+		CGContextTranslateCTM(context,0,rect.size.height);
+		CGContextScaleCTM(context,scale,-scale);
+		CGContextDrawPDFPage(context,pdfPage);
+		UIImage* pdfImage = UIGraphicsGetImageFromCurrentImageContext();
+		UIGraphicsEndImageContext();
+		return pdfImage;
+	}
+	return nil;
+}
+
+-(void)drawPDFFromImageArray:(NSArray*)imageArray{
+    // Create the PDF context using the default page size of 612 x 792.
+    UIGraphicsBeginPDFContextToFile([self inspectionPropertyList], CGRectZero, nil);
+    
+    for(int i = 0; i < 5; i++){
+        UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, 612, 792), nil);
+        
+        [[imageArray objectAtIndex:i] drawInRect:CGRectMake(0, 0, 612, 792)];
+    }
+    
+    // End and save the PDF.
+    UIGraphicsEndPDFContext();
+}*/
 
 @end

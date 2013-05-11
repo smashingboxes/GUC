@@ -11,6 +11,7 @@
 #import "PastInspectionsCell.h"
 #import "PastInspectionsSummaryViewController.h"
 #import "CustomLoadingView.h"
+#import "NavigationBarHelper.h"
 
 #define kInspectionPropertyList @"guc_inspection.plist"
 
@@ -41,6 +42,8 @@
 - (void)viewDidLoad
 {
     self.navigationItem.title = @"Past Inspections";
+    
+    [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     
     [self beginInitialLoad];
     
