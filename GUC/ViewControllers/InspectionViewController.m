@@ -330,7 +330,9 @@
         if(!currentInspection.generalSettings.technician){
             currentInspection.generalSettings.technician = @"";
         }else{
-            cell.cellImageView.backgroundColor = [UIColor greenColor];
+            if(![currentInspection.generalSettings.technician isEqualToString:@""]){
+                cell.cellImageView.backgroundColor = [UIColor greenColor];
+            }
         }
         cell.cellDetailsLabel.text = currentInspection.generalSettings.technician;
     }
