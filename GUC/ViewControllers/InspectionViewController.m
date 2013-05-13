@@ -313,6 +313,7 @@
     if([currentField.name isEqualToString:@"StationName"]){
         cell.cellField.text = currentInspection.generalSettings.stationName;
         cell.cellField.userInteractionEnabled = NO;
+        cell.cellImageView.backgroundColor = [UIColor greenColor];
     }
     if([currentField.name isEqualToString:@"DateTime"]){
         if(!currentInspection.generalSettings.dateTime){
@@ -323,10 +324,13 @@
         }
         cell.cellField.text = currentInspection.generalSettings.dateTime;
         cell.cellField.userInteractionEnabled = NO;
+        cell.cellImageView.backgroundColor = [UIColor greenColor];
     }
     if([currentField.name isEqualToString:@"Technician"]){
         if(!currentInspection.generalSettings.technician){
-            currentInspection.generalSettings.technician = currentField.value;
+            currentInspection.generalSettings.technician = @"";
+        }else{
+            cell.cellImageView.backgroundColor = [UIColor greenColor];
         }
         cell.cellDetailsLabel.text = currentInspection.generalSettings.technician;
     }
@@ -1301,6 +1305,13 @@
         currentInspection = [inspections objectAtIndex:theIndex];
         currentInspection.generalSettings.stationName = [stationInfo objectForKey:@"name"];
         currentInspection.stationIdentifier = [stationInfo objectForKey:@"id"];
+        
+        if(!currentInspection.generalSettings.dateTime){
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+            [dateFormat setDateFormat:@"MMMM dd, yyyy"];
+            NSString *dateString = [dateFormat stringFromDate:[NSDate date]];
+            currentInspection.generalSettings.dateTime = dateString;
+        }
             
         inspectionFormHelper = [[InspectionFormHelper alloc]initWithSections:[stationInfo objectForKey:@"sections"]];
         
@@ -1322,6 +1333,7 @@
         if(textViewIndexPath){
             InspectionContentCell *cell = (InspectionContentCell *)[theTableView cellForRowAtIndexPath:textViewIndexPath];
             cell.cellDetailsLabel.text = currentInspection.generalSettings.technician;
+            cell.cellImageView.backgroundColor = [UIColor greenColor];
         }
     }
 }
