@@ -820,7 +820,16 @@
 }
 
 -(NSString*)checkModelForTextValue:(NSString*)cellTitle{
-    if([cellTitle isEqualToString:@"KWH"]){
+    if([cellTitle isEqualToString:@"StationName"]){
+        if(currentInspection.generalSettings.stationName)
+            return currentInspection.generalSettings.stationName;
+    }else if([cellTitle isEqualToString:@"DateTime"]){
+        if(currentInspection.generalSettings.dateTime)
+            return currentInspection.generalSettings.dateTime;
+    }else if([cellTitle isEqualToString:@"Technician"]){
+        if(currentInspection.generalSettings.technician)
+            return currentInspection.generalSettings.technician;
+    }else if([cellTitle isEqualToString:@"KWH"]){
         if(currentInspection.generalSettings.kwh)
             return currentInspection.generalSettings.kwh;
     }else if([cellTitle isEqualToString:@"MWD"]){
@@ -1447,7 +1456,7 @@
 }
 
 -(void)transitionToPDFView{
-    /*for(int i = 0; i < [inspectionFormHelper.containerArray count]; i++){
+    for(int i = 0; i < [inspectionFormHelper.containerArray count]; i++){
         NSArray *firstArray = [inspectionFormHelper.containerArray objectAtIndex:i];
         NSArray *fieldsArray = [firstArray objectAtIndex:1];
         
@@ -1461,16 +1470,28 @@
             currentField.type = [fieldDictionary objectForKey:@"type"];
             currentField.value = [fieldDictionary objectForKey:@"value"];
             
-            NSString *returnedString = [self checkModelForTextValue:currentField.name];
+            NSString *returnedString;
+            BOOL checkValue = [self isFieldABooleanValue:currentField.name];
             
-            if(returnedString == nil || returnedString == (id)[NSNull null] || [returnedString isEqualToString:@""]){
-                [self createAlertViewForField:currentField.name];
-                return;
+            if(checkValue == NO){
+                returnedString = [self checkModelForTextValue:currentField.name];
+                
+                if(returnedString == nil || returnedString == (id)[NSNull null] || [returnedString isEqualToString:@""]){
+                    [self createAlertViewForField:currentField.name];
+                    return;
+                }
             }
         }
-    }*/
+    }
     RenderPDFViewController *renderPDFVC = [[RenderPDFViewController alloc]initWithInspection:currentInspection];
     [self.navigationController pushViewController:renderPDFVC animated:YES];
+}
+
+-(BOOL)isFieldABooleanValue:(NSString*)fieldName{
+    if([fieldName isEqualToString:@"Tank Oil Level"] || [fieldName isEqualToString:@"Bushing Oil Level"] || [fieldName isEqualToString:@"Pressure A"] || [fieldName isEqualToString:@"Oil Level A"] || [fieldName isEqualToString:@"Test Operation A"] || [fieldName isEqualToString:@"Pressure B"] || [fieldName isEqualToString:@"Oil Level B"] || [fieldName isEqualToString:@"Test Operation B"] || [fieldName isEqualToString:@"Pressure C"] || [fieldName isEqualToString:@"Oil Level C"] || [fieldName isEqualToString:@"Test Operation C"]){
+        return YES;
+    }
+    return NO;
 }
 
 -(void)showPicker{
