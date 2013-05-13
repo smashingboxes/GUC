@@ -1495,7 +1495,7 @@
             }
         }
     }
-    RenderPDFViewController *renderPDFVC = [[RenderPDFViewController alloc]initWithInspection:currentInspection];
+    RenderPDFViewController *renderPDFVC = [[RenderPDFViewController alloc]initWithInspection:currentInspection andSectionArray:inspectionFormHelper.containerArray];
     [self.navigationController pushViewController:renderPDFVC animated:YES];
 }
 

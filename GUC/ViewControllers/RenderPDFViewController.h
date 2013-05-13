@@ -15,6 +15,6 @@
 
 @interface RenderPDFViewController : UIViewController <MFMailComposeViewControllerDelegate, LocationHelperDelegate, AsyncResponseDelegate>
 
--(id)initWithInspection:(Inspection*)theInspection;
+-(id)initWithInspection:(Inspection*)theInspection andSectionArray:(NSArray*)sections;
 
 @end
