@@ -272,6 +272,8 @@
     cell.cellDetailsLabel.hidden = YES;
     cell.cellImageView.backgroundColor = [UIColor clearColor];
     
+    cell.accessibilityLabel = @"NoValue";
+    
     // "If" block for determining which controls exist for each individual cell
     if([currentField.type isEqualToString:@"String"] || [currentField.type isEqualToString:@"Float"]){
         cell.cellField.hidden = NO;
