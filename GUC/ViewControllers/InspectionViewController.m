@@ -238,7 +238,7 @@
     Field *currentField = [[Field alloc]init];
     currentField.choices = [fieldDictionary objectForKey:@"choices"];
     currentField.name = [fieldDictionary objectForKey:@"name"];
-    if(![[fieldDictionary objectForKey:@"range"] isEqualToString:@""]){
+    if([[fieldDictionary objectForKey:@"range"] respondsToSelector:@selector(initWithObjects:)]){
         currentField.range = [fieldDictionary objectForKey:@"range"];
     }else{
         currentField.range = [[NSArray alloc]initWithObjects:@"",@"",nil];
@@ -586,7 +586,7 @@
     Field *currentField = [[Field alloc]init];
     currentField.choices = [fieldDictionary objectForKey:@"choices"];
     currentField.name = [fieldDictionary objectForKey:@"name"];
-    if(![[fieldDictionary objectForKey:@"range"] isEqualToString:@""]){
+    if([[fieldDictionary objectForKey:@"range"] respondsToSelector:@selector(initWithObjects:)]){
         currentField.range = [fieldDictionary objectForKey:@"range"];
     }else{
         currentField.range = [[NSArray alloc]initWithObjects:@"",@"",nil];
@@ -611,7 +611,7 @@
     NSArray *fieldRange = [fieldValues objectAtIndex:1];
     
     if(![fieldRange containsObject:@""]){
-        if(![fieldValue isEqualToString:@""] && [fieldRange count] > 0){
+        if(![fieldValue isEqualToString:@""] && [fieldRange count] > 1){
             float rangeA = [[fieldRange objectAtIndex:0]floatValue];
             float rangeB = [[fieldRange objectAtIndex:1]floatValue];
             float value = [fieldValue floatValue];
@@ -1527,7 +1527,7 @@
 #pragma mark - UIAlertView Methods
 
 -(void)createAlertViewForField:(NSString*)fieldName{
-    NSString *message = [[NSString alloc]initWithFormat:@"The %@ field requires a value.\nPlease fill it out and try again.",fieldName];
+    NSString *message = [[NSString alloc]initWithFormat:@"The %@ field is either out-of-range or empty.\nPlease fill it out properly and try again.",fieldName];
     
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Form Incomplete!" message:message delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
     [alertView show];
