@@ -13,7 +13,9 @@
 @synthesize cellLabel;
 @synthesize cellField;
 @synthesize cellControl;
-@synthesize cellImageView;
+@synthesize cellBackgroundImageView;
+@synthesize cellTopDropShadow;
+@synthesize cellBottomDivider;
 @synthesize cellDetailsLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

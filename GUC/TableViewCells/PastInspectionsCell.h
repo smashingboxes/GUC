@@ -12,5 +12,6 @@
 
 @property(nonatomic)IBOutlet UILabel *dateLabel;
 @property(nonatomic)IBOutlet UILabel *stationNameLabel;
+@property(nonatomic)IBOutlet UIImageView *backgroundImageView;
 
 @end

@@ -11,8 +11,7 @@
 @implementation NewInspectionCell
 
 @synthesize backgroundColorImageView;
-@synthesize typeLabel;
-@synthesize typeImageView;
+@synthesize dotImageView;
 @synthesize nameLabel;
 @synthesize feetLabel;
 

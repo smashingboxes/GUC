@@ -12,6 +12,7 @@
 
 @synthesize dateLabel;
 @synthesize stationNameLabel;
+@synthesize backgroundImageView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

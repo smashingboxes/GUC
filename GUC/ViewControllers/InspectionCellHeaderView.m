@@ -8,6 +8,7 @@
 
 #import "InspectionCellHeaderView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIColor+HexString.h"
 
 @implementation InspectionCellHeaderView
 
@@ -53,6 +54,14 @@
         delegate = theDelegate;
         self.userInteractionEnabled = YES;
         
+        // Create the background.
+        UIImageView *backgroundImageView = [[UIImageView alloc]initWithFrame:frame];
+        backgroundImageView.backgroundColor = [UIColor colorWithHexString:@"C9B7A0"];
+        
+        UIImageView *darkBorderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, frame.size.height - 4, frame.size.width, 4)];
+        darkBorderImageView.image = [UIImage imageNamed:@"darktanlinebreak.png"];
+        [self addSubview:backgroundImageView];
+        [self addSubview:darkBorderImageView];
         
         // Create and configure the title label.
         section = sectionNumber;
@@ -65,22 +74,23 @@
         label.font = [UIFont boldSystemFontOfSize:17.0];
         label.textColor = [UIColor whiteColor];
         label.backgroundColor = [UIColor clearColor];
+        label.shadowColor = [UIColor colorWithHexString:@"B4A48F"];
+        label.shadowOffset = CGSizeMake(0.0f, 2.0f);
         [self addSubview:label];
         titleLabel = label;
         
         
         // Create and configure the disclosure button.
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(0.0, 5.0, 35.0, 35.0);
-        [button setImage:[UIImage imageNamed:@"carat.png"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"carat-open.png"] forState:UIControlStateSelected];
+        button.frame = CGRectMake(15.0, (frame.size.height/2)-4, 9.0, 9.0);
+        [button setImage:[UIImage imageNamed:@"closed.png"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"open.png"] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(toggleOpen:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
         disclosureButton = button;
         
-        
         // Set the colors for the gradient layer.
-        static NSMutableArray *colors = nil;
+        /*static NSMutableArray *colors = nil;
         if (colors == nil) {
             colors = [[NSMutableArray alloc] initWithCapacity:3];
             UIColor *color = nil;
@@ -92,7 +102,8 @@
             [colors addObject:(id)[color CGColor]];
         }
         [(CAGradientLayer *)self.layer setColors:colors];
-        [(CAGradientLayer *)self.layer setLocations:[NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.48], [NSNumber numberWithFloat:1.0], nil]];
+        [(CAGradientLayer *)self.layer setLocations:[NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0], [NSNumber numberWithFloat:0.48], [NSNumber numberWithFloat:1.0], nil]];*/
+        
     }
     
     return self;

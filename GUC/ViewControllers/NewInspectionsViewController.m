@@ -14,6 +14,7 @@
 #import "CustomLoadingView.h"
 #import "PastInspectionsViewController.h"
 #import "MenuButtonHelper.h"
+#import "UIColor+HexString.h"
 
 @interface NewInspectionsViewController ()
 
@@ -49,6 +50,7 @@
     [NavigationBarHelper setBackButtonTitle:@"Back" forViewController:self];
     
     self.navigationItem.title = @"New Inspection";
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithHexString:@"1B8179"];
     
     stationInfoArray = [[NSArray alloc] initWithArray:[self stationInformation]];
     stationArray = [[NSMutableArray alloc]init];
@@ -140,24 +142,25 @@
     NSArray *currentStationArray = [stationArray objectAtIndex:indexPath.row];
     Station *currentStation = [currentStationArray objectAtIndex:0];
     
-    cell.typeLabel.text = @"Type";
-    cell.typeImageView.backgroundColor = [UIColor blueColor];
     if((currentStation.stationName != nil) && (![currentStation.stationName isEqualToString:@""])){
         cell.nameLabel.text = currentStation.stationName;
     }else{
         cell.nameLabel.text = currentStation.stationIdentifier;
     }
+    cell.nameLabel.textColor = [UIColor colorWithHexString:@"666666"];
     
+    cell.backgroundColorImageView.backgroundColor = [UIColor colorWithHexString:@"E8E1D6"];
     cell.accessibilityLabel = currentStation.stationIdentifier;
     
     int totalFeet = [[currentStationArray objectAtIndex:1]intValue];
     
     if(totalFeet < 1000){
-        cell.backgroundColorImageView.backgroundColor = [UIColor greenColor];
+        cell.dotImageView.image = [UIImage imageNamed:@"greendot.png"];
     }else{
-        cell.backgroundColorImageView.backgroundColor = [UIColor redColor];
+        cell.dotImageView.image = [UIImage imageNamed:@"reddot.png"];
     }
-    cell.feetLabel.text = [NSString stringWithFormat:@"%i", totalFeet];
+    cell.feetLabel.text = [NSString stringWithFormat:@"%ift", totalFeet];
+    cell.feetLabel.textColor = [UIColor colorWithHexString:@"666666"];
     
     return cell;
 }

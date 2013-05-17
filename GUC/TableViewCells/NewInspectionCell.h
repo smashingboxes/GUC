@@ -11,8 +11,7 @@
 @interface NewInspectionCell : UITableViewCell
 
 @property(nonatomic)IBOutlet UIImageView *backgroundColorImageView;
-@property(nonatomic)IBOutlet UILabel *typeLabel;
-@property(nonatomic)IBOutlet UIImageView *typeImageView;
+@property(nonatomic)IBOutlet UIImageView *dotImageView;
 @property(nonatomic)IBOutlet UILabel *nameLabel;
 @property(nonatomic)IBOutlet UILabel *feetLabel;
 

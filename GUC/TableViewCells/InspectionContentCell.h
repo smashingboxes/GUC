@@ -14,6 +14,8 @@
 @property(nonatomic)IBOutlet UILabel *cellDetailsLabel;
 @property(nonatomic)IBOutlet UITextField *cellField;
 @property(nonatomic)IBOutlet UISegmentedControl *cellControl;
-@property(nonatomic)IBOutlet UIImageView *cellImageView;
+@property(nonatomic)IBOutlet UIImageView *cellBackgroundImageView;
+@property(nonatomic)IBOutlet UIImageView *cellTopDropShadow;
+@property(nonatomic)IBOutlet UIImageView *cellBottomDivider;
 
 @end

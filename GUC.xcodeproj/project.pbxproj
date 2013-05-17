@@ -10,6 +10,14 @@
 		7211D9DC17185CD600BA8135 /* CustomLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7211D9DB17185CD600BA8135 /* CustomLoadingView.m */; };
 		7211D9DF17189ED700BA8135 /* MenuButtonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */; };
 		72244DD0173DCC0200279B80 /* NSData+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 72244DCF173DCC0200279B80 /* NSData+HexString.m */; };
+		72263BF21746796300AAC461 /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 72263BF11746796300AAC461 /* UIColor+HexString.m */; };
+		72263BFA17467C9000AAC461 /* closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 72263BF317467C9000AAC461 /* closed.png */; };
+		72263BFB17467C9000AAC461 /* darktanlinebreak.png in Resources */ = {isa = PBXBuildFile; fileRef = 72263BF417467C9000AAC461 /* darktanlinebreak.png */; };
+		72263BFC17467C9000AAC461 /* greendot.png in Resources */ = {isa = PBXBuildFile; fileRef = 72263BF517467C9000AAC461 /* greendot.png */; };
+		72263BFD17467C9000AAC461 /* open.png in Resources */ = {isa = PBXBuildFile; fileRef = 72263BF617467C9000AAC461 /* open.png */; };
+		72263BFE17467C9000AAC461 /* reddot.png in Resources */ = {isa = PBXBuildFile; fileRef = 72263BF717467C9000AAC461 /* reddot.png */; };
+		72263BFF17467C9000AAC461 /* shadowgradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 72263BF817467C9000AAC461 /* shadowgradient.png */; };
+		72263C0017467C9000AAC461 /* tanlinebreak.png in Resources */ = {isa = PBXBuildFile; fileRef = 72263BF917467C9000AAC461 /* tanlinebreak.png */; };
 		7228679F173D4CF500DB1EEA /* PastInspectionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7228679E173D4CF500DB1EEA /* PastInspectionsCell.m */; };
 		722867A1173D4D0E00DB1EEA /* PastInspectionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 722867A0173D4D0E00DB1EEA /* PastInspectionsCell.xib */; };
 		72383C651726E337003F9FE3 /* RenderPDFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72383C641726E337003F9FE3 /* RenderPDFViewController.m */; };
@@ -72,6 +80,15 @@
 		7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuButtonHelper.m; path = Helper/MenuButtonHelper.m; sourceTree = "<group>"; };
 		72244DCE173DCC0200279B80 /* NSData+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+HexString.h"; path = "Helper/NSData+HexString.h"; sourceTree = "<group>"; };
 		72244DCF173DCC0200279B80 /* NSData+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+HexString.m"; path = "Helper/NSData+HexString.m"; sourceTree = "<group>"; };
+		72263BF01746796300AAC461 /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+HexString.h"; path = "Helper/UIColor+HexString.h"; sourceTree = "<group>"; };
+		72263BF11746796300AAC461 /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+HexString.m"; path = "Helper/UIColor+HexString.m"; sourceTree = "<group>"; };
+		72263BF317467C9000AAC461 /* closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = closed.png; path = Resources/Images/closed.png; sourceTree = "<group>"; };
+		72263BF417467C9000AAC461 /* darktanlinebreak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = darktanlinebreak.png; path = Resources/Images/darktanlinebreak.png; sourceTree = "<group>"; };
+		72263BF517467C9000AAC461 /* greendot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = greendot.png; path = Resources/Images/greendot.png; sourceTree = "<group>"; };
+		72263BF617467C9000AAC461 /* open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = open.png; path = Resources/Images/open.png; sourceTree = "<group>"; };
+		72263BF717467C9000AAC461 /* reddot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reddot.png; path = Resources/Images/reddot.png; sourceTree = "<group>"; };
+		72263BF817467C9000AAC461 /* shadowgradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shadowgradient.png; path = Resources/Images/shadowgradient.png; sourceTree = "<group>"; };
+		72263BF917467C9000AAC461 /* tanlinebreak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tanlinebreak.png; path = Resources/Images/tanlinebreak.png; sourceTree = "<group>"; };
 		7228679D173D4CF500DB1EEA /* PastInspectionsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PastInspectionsCell.h; path = TableViewCells/PastInspectionsCell.h; sourceTree = "<group>"; };
 		7228679E173D4CF500DB1EEA /* PastInspectionsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PastInspectionsCell.m; path = TableViewCells/PastInspectionsCell.m; sourceTree = "<group>"; };
 		722867A0173D4D0E00DB1EEA /* PastInspectionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PastInspectionsCell.xib; path = TableViewCells/PastInspectionsCell.xib; sourceTree = "<group>"; };
@@ -367,6 +384,8 @@
 				72BA7F681725883A00AE3901 /* NetworkConnectionManager.m */,
 				72244DCE173DCC0200279B80 /* NSData+HexString.h */,
 				72244DCF173DCC0200279B80 /* NSData+HexString.m */,
+				72263BF01746796300AAC461 /* UIColor+HexString.h */,
+				72263BF11746796300AAC461 /* UIColor+HexString.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -389,6 +408,13 @@
 			children = (
 				72BC63AC171CAFD4003090A6 /* carat-open.png */,
 				72BC63AD171CAFD4003090A6 /* carat.png */,
+				72263BF317467C9000AAC461 /* closed.png */,
+				72263BF417467C9000AAC461 /* darktanlinebreak.png */,
+				72263BF517467C9000AAC461 /* greendot.png */,
+				72263BF617467C9000AAC461 /* open.png */,
+				72263BF717467C9000AAC461 /* reddot.png */,
+				72263BF817467C9000AAC461 /* shadowgradient.png */,
+				72263BF917467C9000AAC461 /* tanlinebreak.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -461,6 +487,13 @@
 				72BC63AF171CAFD4003090A6 /* carat.png in Resources */,
 				72383C671726E389003F9FE3 /* RenderPDFViewController.xib in Resources */,
 				722867A1173D4D0E00DB1EEA /* PastInspectionsCell.xib in Resources */,
+				72263BFA17467C9000AAC461 /* closed.png in Resources */,
+				72263BFB17467C9000AAC461 /* darktanlinebreak.png in Resources */,
+				72263BFC17467C9000AAC461 /* greendot.png in Resources */,
+				72263BFD17467C9000AAC461 /* open.png in Resources */,
+				72263BFE17467C9000AAC461 /* reddot.png in Resources */,
+				72263BFF17467C9000AAC461 /* shadowgradient.png in Resources */,
+				72263C0017467C9000AAC461 /* tanlinebreak.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,6 +537,7 @@
 				725C8A53172986D3006F7A10 /* PickerViewHelper.m in Sources */,
 				7228679F173D4CF500DB1EEA /* PastInspectionsCell.m in Sources */,
 				72244DD0173DCC0200279B80 /* NSData+HexString.m in Sources */,
+				72263BF21746796300AAC461 /* UIColor+HexString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,13 +632,13 @@
 		727F48851713133900BE87CE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Brodeur (33K6W7R64A)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Brodeur (KQSGMAESD5)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GUC/GUC-Prefix.pch";
 				INFOPLIST_FILE = "GUC/GUC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1127FD23-184F-4720-B92A-DC9E633AFB8D";
+				PROVISIONING_PROFILE = "B924CE69-783C-4754-BBD7-E8F9B5A4CB52";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -612,13 +646,13 @@
 		727F48861713133900BE87CE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Brodeur (33K6W7R64A)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Brodeur (KQSGMAESD5)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GUC/GUC-Prefix.pch";
 				INFOPLIST_FILE = "GUC/GUC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1127FD23-184F-4720-B92A-DC9E633AFB8D";
+				PROVISIONING_PROFILE = "B924CE69-783C-4754-BBD7-E8F9B5A4CB52";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

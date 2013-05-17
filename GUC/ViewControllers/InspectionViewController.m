@@ -17,13 +17,14 @@
 #import "MenuButtonHelper.h"
 #import "CustomLoadingView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIColor+HexString.h"
 
 #define kDataPurpose @"Data"
 #define kStringPurpose @"String"
 
 #define kOperatorInformation @"guc_operator.plist"
 
-#define DEFAULT_ROW_HEIGHT 64
+#define DEFAULT_ROW_HEIGHT 75
 #define HEADER_HEIGHT 60
 #define HEADER_HEIGHT_TALLSCREEN 72
 
@@ -134,8 +135,11 @@
     
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     
+    targetsAndAlarmsView.layer.cornerRadius = 7.0f;
+    targetsAndAlarmsTextView.layer.cornerRadius = 7.0f;
     [targetsAndAlarmsTextView.layer setBorderWidth:2.0];
-    [targetsAndAlarmsTextView.layer setBorderColor:[[UIColor blackColor] CGColor]];
+    [targetsAndAlarmsTextView.layer setBorderColor:[[UIColor colorWithHexString:@"666666"] CGColor]];
+    [targetsAndAlarmsTextView setTextColor:[UIColor colorWithHexString:@"666666"]];
     [targetsAndAlarmsTextView setDelegate:self];
     [targetsAndAlarmsView addGestureRecognizer:tgr];
     [targetsAndAlarmsView setFrame:CGRectMake(39, -41-targetsAndAlarmsView.frame.size.height, targetsAndAlarmsView.frame.size.width, targetsAndAlarmsView.frame.size.height)];
@@ -249,10 +253,19 @@
     NSString *fieldIndexPath = [[NSString alloc]initWithFormat:@"%i,%i", indexPath.section, indexPath.row];
     
     cell.cellLabel.text = currentField.name;
+    cell.cellLabel.textColor = [UIColor colorWithHexString:@"666666"];
     cell.cellField.delegate = self;
     cell.cellField.userInteractionEnabled = YES;
     cell.cellField.accessibilityLabel = fieldIndexPath;
     cell.cellField.text = [self checkModelForTextValue:cell.cellLabel.text];
+    
+    cell.cellBackgroundImageView.backgroundColor = [UIColor colorWithHexString:@"E8E1D6"];
+    
+    cell.cellTopDropShadow.hidden = YES;
+    
+    if(indexPath.row == 0){
+        cell.cellTopDropShadow.hidden = NO;
+    }
     
     // For setting the "Done" button at the top of the keyboard.
     UIToolbar *toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
@@ -269,8 +282,8 @@
     cell.cellControl.accessibilityLabel = cell.cellLabel.text;
     cell.cellControl.selectedSegmentIndex = [self checkModelForBoolValue:cell.cellLabel.text];
     [cell.cellControl addTarget:self action:@selector(controlPressed:) forControlEvents:UIControlEventValueChanged];
+    cell.cellDetailsLabel.textColor = [UIColor colorWithHexString:@"666666"];
     cell.cellDetailsLabel.hidden = YES;
-    cell.cellImageView.backgroundColor = [UIColor clearColor];
     
     cell.accessibilityLabel = @"NoValue";
     
@@ -286,9 +299,9 @@
             BOOL inRange = [self isValueOutOfRange:fieldValues];
             
             if(inRange){
-                cell.cellImageView.backgroundColor = [UIColor greenColor];
+                cell.cellLabel.textColor = [UIColor colorWithHexString:@"6DA19D"];
             }else{
-                cell.cellImageView.backgroundColor = [UIColor redColor];
+                cell.cellLabel.textColor = [UIColor colorWithHexString:@"A3373D"];
             }
         }
     }else if([currentField.type isEqualToString:@"Boolean"]){
@@ -308,14 +321,14 @@
         cell.accessibilityLabel = @"MultiLineString";
         cell.cellDetailsLabel.text = [self checkModelForTextValue:cell.cellLabel.text];
         if([cell.cellDetailsLabel.text length] > 0){
-           cell.cellImageView.backgroundColor = [UIColor greenColor];
+           cell.cellLabel.textColor = [UIColor colorWithHexString:@"6DA19D"];
         }
     }
     
     if([currentField.name isEqualToString:@"StationName"]){
         cell.cellField.text = currentInspection.generalSettings.stationName;
         cell.cellField.userInteractionEnabled = NO;
-        cell.cellImageView.backgroundColor = [UIColor greenColor];
+        cell.cellLabel.textColor = [UIColor colorWithHexString:@"6DA19D"];
     }
     if([currentField.name isEqualToString:@"DateTime"]){
         if(!currentInspection.generalSettings.dateTime){
@@ -326,14 +339,14 @@
         }
         cell.cellField.text = currentInspection.generalSettings.dateTime;
         cell.cellField.userInteractionEnabled = NO;
-        cell.cellImageView.backgroundColor = [UIColor greenColor];
+        cell.cellLabel.textColor = [UIColor colorWithHexString:@"6DA19D"];
     }
     if([currentField.name isEqualToString:@"Technician"]){
         if(!currentInspection.generalSettings.technician){
             currentInspection.generalSettings.technician = @"";
         }else{
             if(![currentInspection.generalSettings.technician isEqualToString:@""]){
-                cell.cellImageView.backgroundColor = [UIColor greenColor];
+                cell.cellLabel.textColor = [UIColor colorWithHexString:@"6DA19D"];
             }
         }
         cell.cellDetailsLabel.text = currentInspection.generalSettings.technician;
@@ -490,13 +503,13 @@
         
         InspectionContentCell *cell = (InspectionContentCell*)[theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
         if(dataSaved){
-            cell.cellImageView.backgroundColor = [UIColor greenColor];
+            cell.cellLabel.textColor = [UIColor colorWithHexString:@"6DA19D"];
         }else{
-            cell.cellImageView.backgroundColor = [UIColor redColor];
+            cell.cellLabel.textColor = [UIColor colorWithHexString:@"A3373D"];
         }
         
         if([textField.text isEqualToString:@""]){
-            cell.cellImageView.backgroundColor = [UIColor clearColor];
+            cell.cellLabel.textColor = [UIColor colorWithHexString:@"666666"];
         }
     }
     
@@ -517,9 +530,9 @@
         InspectionContentCell *cell = (InspectionContentCell*)[theTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
         
         if(inRange){
-            cell.cellImageView.backgroundColor = [UIColor greenColor];
+            cell.cellLabel.textColor = [UIColor colorWithHexString:@"6DA19D"];
         }else{
-            cell.cellImageView.backgroundColor = [UIColor redColor];
+            cell.cellLabel.textColor = [UIColor colorWithHexString:@"A3373D"];
         }
         
         BOOL dataSaved = [self saveValueForCurrentField:fieldValues];
@@ -529,7 +542,7 @@
         }
         
         if([textField.text isEqualToString:@""]){
-            cell.cellImageView.backgroundColor = [UIColor clearColor];
+            cell.cellLabel.textColor = [UIColor colorWithHexString:@"666666"];
         }
     }
     
@@ -1337,7 +1350,7 @@
         if(textViewIndexPath){
             InspectionContentCell *cell = (InspectionContentCell *)[theTableView cellForRowAtIndexPath:textViewIndexPath];
             cell.cellDetailsLabel.text = currentInspection.generalSettings.technician;
-            cell.cellImageView.backgroundColor = [UIColor greenColor];
+            cell.cellLabel.textColor = [UIColor colorWithHexString:@"6DA19D"];
         }
     }
 }
@@ -1504,7 +1517,7 @@
 }
 
 -(BOOL)isFieldABooleanValue:(NSString*)fieldName{
-    if([fieldName isEqualToString:@"Tank Oil Level"] || [fieldName isEqualToString:@"Bushing Oil Level"] || [fieldName isEqualToString:@"Pressure A"] || [fieldName isEqualToString:@"Oil Level A"] || [fieldName isEqualToString:@"Test Operation A"] || [fieldName isEqualToString:@"Pressure B"] || [fieldName isEqualToString:@"Oil Level B"] || [fieldName isEqualToString:@"Test Operation B"] || [fieldName isEqualToString:@"Pressure C"] || [fieldName isEqualToString:@"Oil Level C"] || [fieldName isEqualToString:@"Test Operation C"]){
+    if([fieldName isEqualToString:@"Gas A"] || [fieldName isEqualToString:@"Gas B"] || [fieldName isEqualToString:@"Gas C"] || [fieldName isEqualToString:@"Tank Oil Level"] || [fieldName isEqualToString:@"Bushing Oil Level"] || [fieldName isEqualToString:@"Pressure A"] || [fieldName isEqualToString:@"Oil Level A"] || [fieldName isEqualToString:@"Test Operation A"] || [fieldName isEqualToString:@"Pressure B"] || [fieldName isEqualToString:@"Oil Level B"] || [fieldName isEqualToString:@"Test Operation B"] || [fieldName isEqualToString:@"Pressure C"] || [fieldName isEqualToString:@"Oil Level C"] || [fieldName isEqualToString:@"Test Operation C"]){
         return YES;
     }
     return NO;
@@ -1583,7 +1596,7 @@
     if(![targetsAndAlarmsTextView.text isEqualToString:@"Enter text here..."]){
         if(![targetsAndAlarmsTextView.text isEqualToString:@""]){
             cell.cellDetailsLabel.text = targetsAndAlarmsTextView.text;
-            cell.cellImageView.backgroundColor = [UIColor greenColor];
+            cell.cellLabel.textColor = [UIColor colorWithHexString:@"6DA19D"];
             NSArray *dataArray = [[NSArray alloc]initWithObjects:dropDownFormLabel.text, targetsAndAlarmsTextView.text, nil];
             [self saveValueForCurrentField:dataArray];
         }

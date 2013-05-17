@@ -12,6 +12,7 @@
 #import "PastInspectionsSummaryViewController.h"
 #import "CustomLoadingView.h"
 #import "NavigationBarHelper.h"
+#import "UIColor+HexString.h"
 
 #define kInspectionPropertyList @"guc_inspection.plist"
 
@@ -92,8 +93,12 @@
     NSDictionary *currentObject = [dataArray objectAtIndex:indexPath.row];
     
     cell.dateLabel.text = [currentObject objectForKey:@"date"];
+    cell.dateLabel.textColor = [UIColor colorWithHexString:@"666666"];
     cell.stationNameLabel.text = [currentObject objectForKey:@"station_name"];
+    cell.stationNameLabel.textColor = [UIColor colorWithHexString:@"666666"];;
+    cell.backgroundImageView.backgroundColor = [UIColor colorWithHexString:@"E8E1D6"];
     cell.accessibilityLabel = [currentObject objectForKey:@"station_id"];
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     return cell;
 }
