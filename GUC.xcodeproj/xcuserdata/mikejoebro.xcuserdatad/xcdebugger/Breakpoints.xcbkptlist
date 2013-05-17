@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "367"
-         endingLineNumber = "367"
+         startingLineNumber = "370"
+         endingLineNumber = "370"
          landmarkName = "@implementation InspectionViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -268,11 +268,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1210"
-         endingLineNumber = "1210"
+         startingLineNumber = "1213"
+         endingLineNumber = "1213"
          landmarkName = "-checkModelForBoolValue:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -281,11 +281,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1205"
-         endingLineNumber = "1205"
+         startingLineNumber = "1208"
+         endingLineNumber = "1208"
          landmarkName = "-checkModelForBoolValue:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -294,11 +294,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1211"
-         endingLineNumber = "1211"
+         startingLineNumber = "1214"
+         endingLineNumber = "1214"
          landmarkName = "-checkModelForBoolValue:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -359,11 +359,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "458"
-         endingLineNumber = "458"
+         startingLineNumber = "461"
+         endingLineNumber = "461"
          landmarkName = "-inspectionCellHeaderView:sectionOpened:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -372,11 +372,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "363"
-         endingLineNumber = "363"
+         startingLineNumber = "366"
+         endingLineNumber = "366"
          landmarkName = "-tableView:viewForHeaderInSection:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -385,11 +385,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "341"
-         endingLineNumber = "341"
+         startingLineNumber = "344"
+         endingLineNumber = "344"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -398,11 +398,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500116.739436"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "197"
-         endingLineNumber = "197"
+         startingLineNumber = "200"
+         endingLineNumber = "200"
          landmarkName = "-loadOperatorName"
          landmarkType = "5">
       </FileBreakpoint>
@@ -476,11 +476,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "391"
-         endingLineNumber = "391"
+         startingLineNumber = "394"
+         endingLineNumber = "394"
          landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -489,11 +489,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "376"
-         endingLineNumber = "376"
+         startingLineNumber = "379"
+         endingLineNumber = "379"
          landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -502,11 +502,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "522"
-         endingLineNumber = "522"
+         startingLineNumber = "525"
+         endingLineNumber = "525"
          landmarkName = "-textFieldShouldEndEditing:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -515,11 +515,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "648"
-         endingLineNumber = "648"
+         startingLineNumber = "651"
+         endingLineNumber = "651"
          landmarkName = "-saveValueForCurrentField:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -528,11 +528,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "604"
-         endingLineNumber = "604"
+         startingLineNumber = "607"
+         endingLineNumber = "607"
          landmarkName = "-getValuesForCurrentField:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -541,11 +541,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "606"
-         endingLineNumber = "606"
+         startingLineNumber = "609"
+         endingLineNumber = "609"
          landmarkName = "-getValuesForCurrentField:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -554,11 +554,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "768"
-         endingLineNumber = "768"
+         startingLineNumber = "771"
+         endingLineNumber = "771"
          landmarkName = "-saveValueForCurrentField:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -567,11 +567,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1407"
-         endingLineNumber = "1407"
+         startingLineNumber = "1410"
+         endingLineNumber = "1410"
          landmarkName = "-setBreakersFieldsFromArray:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -580,11 +580,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1409"
-         endingLineNumber = "1409"
+         startingLineNumber = "1412"
+         endingLineNumber = "1412"
          landmarkName = "-setBreakersFieldsFromArray:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -593,11 +593,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1423"
-         endingLineNumber = "1423"
+         startingLineNumber = "1426"
+         endingLineNumber = "1426"
          landmarkName = "-setBreakersFieldsFromArray:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -606,11 +606,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1425"
-         endingLineNumber = "1425"
+         startingLineNumber = "1428"
+         endingLineNumber = "1428"
          landmarkName = "-setBreakersFieldsFromArray:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -619,20 +619,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1366"
-         endingLineNumber = "1366"
-         landmarkName = "-setBreakersFieldsFromArray:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1369"
@@ -645,46 +632,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1371"
-         endingLineNumber = "1371"
-         landmarkName = "-setBreakersFieldsFromArray:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1373"
-         endingLineNumber = "1373"
-         landmarkName = "-setBreakersFieldsFromArray:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1375"
-         endingLineNumber = "1375"
-         landmarkName = "-setBreakersFieldsFromArray:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1372"
@@ -697,11 +645,63 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1424"
-         endingLineNumber = "1424"
+         startingLineNumber = "1374"
+         endingLineNumber = "1374"
+         landmarkName = "-setBreakersFieldsFromArray:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "GUC/ViewControllers/InspectionViewController.m"
+         timestampString = "390504525.65534"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1376"
+         endingLineNumber = "1376"
+         landmarkName = "-setBreakersFieldsFromArray:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "GUC/ViewControllers/InspectionViewController.m"
+         timestampString = "390504525.65534"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1378"
+         endingLineNumber = "1378"
+         landmarkName = "-setBreakersFieldsFromArray:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "GUC/ViewControllers/InspectionViewController.m"
+         timestampString = "390504525.65534"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1375"
+         endingLineNumber = "1375"
+         landmarkName = "-setBreakersFieldsFromArray:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "GUC/ViewControllers/InspectionViewController.m"
+         timestampString = "390504525.65534"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1427"
+         endingLineNumber = "1427"
          landmarkName = "-setBreakersFieldsFromArray:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -710,11 +710,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "625"
-         endingLineNumber = "625"
+         startingLineNumber = "628"
+         endingLineNumber = "628"
          landmarkName = "-isValueOutOfRange:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -723,11 +723,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "627"
-         endingLineNumber = "627"
+         startingLineNumber = "630"
+         endingLineNumber = "630"
          landmarkName = "-isValueOutOfRange:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -736,11 +736,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500116.739436"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "247"
-         endingLineNumber = "247"
+         startingLineNumber = "250"
+         endingLineNumber = "250"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -749,11 +749,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500116.739436"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "249"
-         endingLineNumber = "249"
+         startingLineNumber = "252"
+         endingLineNumber = "252"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -762,11 +762,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "643"
-         endingLineNumber = "643"
+         startingLineNumber = "646"
+         endingLineNumber = "646"
          landmarkName = "-isValueOutOfRange:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -775,11 +775,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "554"
-         endingLineNumber = "554"
+         startingLineNumber = "557"
+         endingLineNumber = "557"
          landmarkName = "-minusButtonPressed"
          landmarkType = "5">
       </FileBreakpoint>
@@ -788,11 +788,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500116.739436"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "274"
-         endingLineNumber = "274"
+         startingLineNumber = "277"
+         endingLineNumber = "277"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -851,11 +851,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390500184.924766"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1504"
-         endingLineNumber = "1504"
+         startingLineNumber = "1507"
+         endingLineNumber = "1507"
          landmarkName = "-transitionToPDFView"
          landmarkType = "5">
       </FileBreakpoint>
@@ -864,11 +864,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "GUC/ViewControllers/InspectionViewController.m"
-         timestampString = "390501680.570255"
+         timestampString = "390504525.65534"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1501"
-         endingLineNumber = "1501"
+         startingLineNumber = "1504"
+         endingLineNumber = "1504"
          landmarkName = "-transitionToPDFView"
          landmarkType = "5">
       </FileBreakpoint>

@@ -632,13 +632,13 @@
 		727F48851713133900BE87CE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Brodeur (KQSGMAESD5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Brodeur (33K6W7R64A)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GUC/GUC-Prefix.pch";
 				INFOPLIST_FILE = "GUC/GUC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B924CE69-783C-4754-BBD7-E8F9B5A4CB52";
+				PROVISIONING_PROFILE = "1127FD23-184F-4720-B92A-DC9E633AFB8D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -646,13 +646,13 @@
 		727F48861713133900BE87CE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Brodeur (KQSGMAESD5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Brodeur (33K6W7R64A)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GUC/GUC-Prefix.pch";
 				INFOPLIST_FILE = "GUC/GUC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B924CE69-783C-4754-BBD7-E8F9B5A4CB52";
+				PROVISIONING_PROFILE = "1127FD23-184F-4720-B92A-DC9E633AFB8D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

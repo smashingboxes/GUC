@@ -35,6 +35,7 @@
 @property(nonatomic)IBOutlet UIView *targetsAndAlarmsView;
 @property(nonatomic)IBOutlet UIView *dimBackgroundView;
 @property(nonatomic)IBOutlet UITextView *targetsAndAlarmsTextView;
+@property(nonatomic)IBOutlet UIImageView *targetsAndAlarmsBGImageView;
 @property(nonatomic)InspectionFormHelper *inspectionFormHelper;
 @property(nonatomic)NSInteger openSectionIndex;
 @property(nonatomic)Inspection *currentInspection;
@@ -62,6 +63,7 @@
 @synthesize targetsAndAlarmsView;
 @synthesize dimBackgroundView;
 @synthesize targetsAndAlarmsTextView;
+@synthesize targetsAndAlarmsBGImageView;
 @synthesize inspectionFormHelper;
 @synthesize openSectionIndex;
 @synthesize currentInspection;
@@ -136,6 +138,7 @@
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     
     targetsAndAlarmsView.layer.cornerRadius = 7.0f;
+    targetsAndAlarmsBGImageView.layer.cornerRadius = 7.0f;
     targetsAndAlarmsTextView.layer.cornerRadius = 7.0f;
     [targetsAndAlarmsTextView.layer setBorderWidth:2.0];
     [targetsAndAlarmsTextView.layer setBorderColor:[[UIColor colorWithHexString:@"666666"] CGColor]];
