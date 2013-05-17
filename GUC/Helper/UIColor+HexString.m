@@ -13,7 +13,7 @@
 +(UIColor*)colorWithHexString:(NSString*)hexString{
     NSString *colorString = [hexString uppercaseString];
     
-    NSLog(@"%@",colorString);
+    //NSLog(@"%@",colorString);
     
     char colorBytes[3] = {'\0', '\0', '\0'};
     NSInteger redValue;
@@ -26,13 +26,13 @@
         
         if(i == 0){
             redValue = strtol(colorBytes, NULL, 16);
-            NSLog(@"Red: %i", redValue);
+            //NSLog(@"Red: %i", redValue);
         }else if(i == 1){
             greenValue = strtol(colorBytes, NULL, 16);
-            NSLog(@"Green: %i", greenValue);
+            //NSLog(@"Green: %i", greenValue);
         }else if(i == 2){
             blueValue = strtol(colorBytes, NULL, 16);
-            NSLog(@"Blue: %i", blueValue);
+            //NSLog(@"Blue: %i", blueValue);
         }
     }
     
@@ -40,7 +40,7 @@
     float greenFloat = greenValue;
     float blueFloat = blueValue;
     
-    NSLog(@"Values are: Red:%f, Green:%f, Blue:%f", redFloat, greenFloat, blueFloat);
+    //NSLog(@"Values are: Red:%f, Green:%f, Blue:%f", redFloat, greenFloat, blueFloat);
     
     return [UIColor colorWithRed:redFloat/255.0f green:greenFloat/255.0f blue:blueFloat/255.0f alpha:1.0f];
 }
