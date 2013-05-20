@@ -134,21 +134,37 @@
     return [documentsDirectory stringByAppendingPathComponent:kInspectionPropertyList];
 }
 
+
 #pragma mark - AsyncResponse Delegate Methods
 
 -(void)asyncResponseDidReturnObjects:(NSArray *)theObjects{
-    if(theObjects){
+    if([theObjects count] > 0){
         dataArray = [[NSArray alloc]initWithArray:theObjects];
         NSLog(@"Objects returned are:\n%@", dataArray);
         [theTableView reloadData];
         theTableView.hidden = NO;
-        [customLoadingView stopLoading];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"No Data!" message:@"There are currently no entries for this section.\nPlease try again later." delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
+        [alertView show];
     }
-    
+    [customLoadingView stopLoading];
 }
 
 -(void)asyncResponseDidFailWithError{
     NSLog(@"Error!");
+}
+
+
+#pragma mark - UIAlertView Delegate Methods
+
+-(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 0:
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
+        default:
+            break;
+    }
 }
 
 @end

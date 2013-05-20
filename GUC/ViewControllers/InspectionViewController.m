@@ -1280,6 +1280,9 @@
             theTableView.hidden = NO;
             [theTableView reloadData];
         }
+    }else{
+        connectionAlertView = [[UIAlertView alloc]initWithTitle:@"No Data!" message:@"There is no data for this station. Please contact the system administrator for further assistance." delegate:self cancelButtonTitle:@"Okay." otherButtonTitles:nil];
+        [connectionAlertView show];
     }
     if(customLoadingView.isLoading == YES){
         [customLoadingView stopLoading];

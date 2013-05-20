@@ -10,6 +10,8 @@
 		7211D9DC17185CD600BA8135 /* CustomLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7211D9DB17185CD600BA8135 /* CustomLoadingView.m */; };
 		7211D9DF17189ED700BA8135 /* MenuButtonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */; };
 		72244DD0173DCC0200279B80 /* NSData+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 72244DCF173DCC0200279B80 /* NSData+HexString.m */; };
+		72261222174A6B6900CCB5D6 /* iphone_launchimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 72261220174A6B6900CCB5D6 /* iphone_launchimage@2x.png */; };
+		72261223174A6B6900CCB5D6 /* iphone_launchimage-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 72261221174A6B6900CCB5D6 /* iphone_launchimage-568h@2x.png */; };
 		72263BF21746796300AAC461 /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 72263BF11746796300AAC461 /* UIColor+HexString.m */; };
 		72263BFA17467C9000AAC461 /* closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 72263BF317467C9000AAC461 /* closed.png */; };
 		72263BFB17467C9000AAC461 /* darktanlinebreak.png in Resources */ = {isa = PBXBuildFile; fileRef = 72263BF417467C9000AAC461 /* darktanlinebreak.png */; };
@@ -82,6 +84,8 @@
 		7211D9DE17189ED600BA8135 /* MenuButtonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuButtonHelper.m; path = Helper/MenuButtonHelper.m; sourceTree = "<group>"; };
 		72244DCE173DCC0200279B80 /* NSData+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+HexString.h"; path = "Helper/NSData+HexString.h"; sourceTree = "<group>"; };
 		72244DCF173DCC0200279B80 /* NSData+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+HexString.m"; path = "Helper/NSData+HexString.m"; sourceTree = "<group>"; };
+		72261220174A6B6900CCB5D6 /* iphone_launchimage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iphone_launchimage@2x.png"; path = "Resources/Images/iphone_launchimage@2x.png"; sourceTree = "<group>"; };
+		72261221174A6B6900CCB5D6 /* iphone_launchimage-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iphone_launchimage-568h@2x.png"; path = "Resources/Images/iphone_launchimage-568h@2x.png"; sourceTree = "<group>"; };
 		72263BF01746796300AAC461 /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+HexString.h"; path = "Helper/UIColor+HexString.h"; sourceTree = "<group>"; };
 		72263BF11746796300AAC461 /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+HexString.m"; path = "Helper/UIColor+HexString.m"; sourceTree = "<group>"; };
 		72263BF317467C9000AAC461 /* closed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = closed.png; path = Resources/Images/closed.png; sourceTree = "<group>"; };
@@ -410,6 +414,8 @@
 		72BC63AB171CAFA2003090A6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				72261220174A6B6900CCB5D6 /* iphone_launchimage@2x.png */,
+				72261221174A6B6900CCB5D6 /* iphone_launchimage-568h@2x.png */,
 				72263C011746DCC300AAC461 /* icon.png */,
 				72263C021746DCC300AAC461 /* icon@2x.png */,
 				72BC63AC171CAFD4003090A6 /* carat-open.png */,
@@ -502,6 +508,8 @@
 				72263C0017467C9000AAC461 /* tanlinebreak.png in Resources */,
 				72263C031746DCC300AAC461 /* icon.png in Resources */,
 				72263C041746DCC300AAC461 /* icon@2x.png in Resources */,
+				72261222174A6B6900CCB5D6 /* iphone_launchimage@2x.png in Resources */,
+				72261223174A6B6900CCB5D6 /* iphone_launchimage-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
